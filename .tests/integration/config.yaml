@@ -3,3 +3,11 @@ units: "units.tsv"
 
 tools:
   common: "docker://marrip/common:1.1.0"
+  default: "docker://gmsuppsala/somatic:develop"
+
+ references:
+   genome: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
+
+ bwa-mem:
+   threads: 2
+   extra: r"-R '@RG\tID:{sample}\tSM:{sample}\tPL:illumina\tPU:{sample} -v 1 '"
