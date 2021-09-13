@@ -50,5 +50,9 @@ def get_sample_fastq(wildcards):
     fastqs = units.loc[(wildcards.sample, wildcards.unit), ["fastq1", "fastq2"]].dropna()
     return {"fwd": fastqs["fastq1"].tolist(), "rev": fastqs["fastq2"].tolist()}
 
+
 def compile_output_list(wildcards):
-    return ["dummy.txt"]
+    output_list = []
+    output_list += expand("/Alignment/bwa-mem/{sample}.bam", sample=samples["sample"])
+    output_list += expand("/Alignment/bwa-mem/{sample}.bam.bai", sample=samples["sample"])
+    return output_list

@@ -7,20 +7,9 @@ __email__ = "patrik.smeds@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 include: "rules/common.smk"
+include: "rules/bwa-mem.smk"
 
 report: "report/workflow.rst"
-
-rule dummy:
-    output:
-        "dummy.txt"
-    log:
-        "logs/alignment/bash/dummy/test.log"
-    conda:
-        "envs/dummay.yaml"
-    shell:
-        """
-        touch dummy.txt
-        """
 
 rule all:
     input:
