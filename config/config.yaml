@@ -1,8 +1,8 @@
 ---
 
- samples: "samples.tsv"
- units: "units.tsv"
+samples: "samples.tsv"
+units: "units.tsv"
 
- tools:
-   common: "docker://hydra/common:1.1.0"
-   default: "docker://gmsuppsala/somatic:develop"
+tools:
+  common: "docker://hydra/common:1.1.0"
+  default: "docker://gmsuppsala/somatic:develop"

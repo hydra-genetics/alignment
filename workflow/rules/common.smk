@@ -28,9 +28,7 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 
-units = pd.read_table(config["units"], dtype=str).set_index(
-    ["sample", "unit", "run", "lane"], drop=False
-)
+units = pd.read_table(config["units"], dtype=str).set_index(["sample", "unit", "run", "lane"], drop=False)
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -39,10 +37,9 @@ validate(units, schema="../schemas/units.schema.yaml")
 wildcard_constraints:
     sample="|".join(samples.index),
 
+
 def get_fastq(wildcards):
-    fastqs = units.loc[
-        (wildcards.sample, wildcards.unit, wildcards.run, wildcards.lane), ["fastq1", "fastq2"]
-    ].dropna()
+    fastqs = units.loc[(wildcards.sample, wildcards.unit, wildcards.run, wildcards.lane), ["fastq1", "fastq2"]].dropna()
     return {"fwd": fastqs.fastq1, "rev": fastqs.fastq2}
 
 
@@ -53,6 +50,6 @@ def get_sample_fastq(wildcards):
 
 def compile_output_list(wildcards):
     output_list = []
-    output_list += expand("/Alignment/bwa-mem/{sample}.bam", sample=samples["sample"])
-    output_list += expand("/Alignment/bwa-mem/{sample}.bam.bai", sample=samples["sample"])
+    output_list += expand("alignment/bwa_mem/{sample}.bam", sample=samples.index())
+    output_list += expand("alignment/bwa_mem/{sample}.bam.bai", sample=samples.index())
     return output_list
