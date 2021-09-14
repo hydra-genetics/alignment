@@ -8,7 +8,7 @@ __license__ = "GPL-3"
 
 rule bwa_mem:
     input:
-        reads=["pre-alignment/merge/{sample}_{unit}_R1.fq.gz", "Pre-alignment/merge/{sample}_{unit}_R2.fq.gz"],
+        reads=["pre-alignment/merge/{sample}_{unit}_R1.fq.gz", "pre-alignment/merge/{sample}_{unit}_R2.fq.gz"],
         index=config["reference"]["fasta"],
     output:
         bam="alignment/bwa_mem/{sample}_{unit}.bam",
@@ -17,14 +17,14 @@ rule bwa_mem:
         extra=config["bwa_mem"]["params"]["extra"],
         sort=config["bwa_mem"]["params"].get("sort", "samtools"),
         sort_order=config["bwa_mem"]["params"].get("sort_order", "coordinate"),
-        sort_extra="-@ " + str(config["bwa_mem"]["threads"]),
+        sort_extra="-@ %s" % str(config["bwa_mem"]["threads"]),
     log:
         "aligment/bwa_mem/{sample}_{unit}.bam.log",
     benchmark:
         "alignment/bwa_mem/{sample}_{unit}.bam.benchmark.tsv"
     threads: config["bwa_mem"]["threads"]
     container:
-        config["tools"].get("bwa_mem", config["tools"].get("default", ""))
+        config["bwa_mem"]["container"]
     message:
         "{rule}: Align {wildcards.sample}_{wildcards.unit} with bwa and sort"
     wrapper:

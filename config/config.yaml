@@ -5,4 +5,6 @@ units: "units.tsv"
 
 tools:
   common: "docker://hydra/common:1.1.0"
-  default: "docker://gmsuppsala/somatic:develop"
+
+bwa_mem:
+  container: "docker://gmsuppsala/somatic:develop"

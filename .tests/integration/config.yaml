@@ -3,12 +3,12 @@ units: "units.tsv"
 
 tools:
   common: "docker://marrip/common:1.1.0"
-  default: "docker://gmsuppsala/somatic:develop"
 
 reference:
   fasta: "reference/WASH7P.fna"
 
 bwa_mem:
+  container: "docker://gmsuppsala/somatic:develop"
   threads: 2
   params:
     extra: r"-R '@RG\tID:{sample}\tSM:{sample}\tPL:illumina\tPU:{sample} -v 1 '"
