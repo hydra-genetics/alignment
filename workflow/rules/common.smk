@@ -50,6 +50,6 @@ def get_sample_fastq(wildcards):
 
 def compile_output_list(wildcards):
     output_list = []
-    output_list += expand("alignment/bwa_mem/{sample}.bam", sample=samples.index)
-    output_list += expand("alignment/bwa_mem/{sample}.bam.bai", sample=samples.index)
+    output_list += expand("alignment/bwa_mem/{sample}_{unit}.bam", sample=samples.index)
+    output_list += expand("alignment/bwa_mem/{sample}_{unit}.bam.bai", sample=samples.index)
     return output_list

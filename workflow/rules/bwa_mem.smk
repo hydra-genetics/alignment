@@ -9,7 +9,6 @@ __license__ = "GPL-3"
 rule bwa_mem:
     input:
         reads=["pre-alignment/merge/{sample}_{unit}_R1.fq.gz", "pre-alignment/merge/{sample}_{unit}_R2.fq.gz"],
-        index=config["reference"]["fasta"],
     output:
         bam="alignment/bwa_mem/{sample}_{unit}.bam",
     params:
