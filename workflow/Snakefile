@@ -6,10 +6,13 @@ __copyright__ = "Copyright 2021, Patrik Smeds"
 __email__ = "patrik.smeds@scilifelab.uu.se"
 __license__ = "GPL-3"
 
+
 include: "rules/common.smk"
 include: "rules/bwa_mem.smk"
 
+
 report: "report/workflow.rst"
+
 
 rule all:
     input:

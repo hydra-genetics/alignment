@@ -1,4 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
 # coding: utf-8
 
 __author__ = "Jonas Almlöf"
@@ -10,17 +9,17 @@ __license__ = "GPL-3"
 rule bwa_mem:
     input:
         reads=["pre-alignment/merge/{sample}_{unit}_R1.fq.gz", "Pre-alignment/merge/{sample}_{unit}_R2.fq.gz"],
-        index=config["references"]["genome"],
+        index=config["reference"]["fasta"],
     output:
         bam="alignment/bwa_mem/{sample}_{unit}.bam",
     params:
-        index=config["references"]["genome"],
-        extra=config["bwa_mem"]["extra"],
-        sort=config["bwa_mem"].get("sort", "samtools"),
-        sort_order=config["bwa_mem"].get("sort_order", "coordinate"),
+        index=config["reference"]["fasta"],
+        extra=config["bwa_mem"]["params"]["extra"],
+        sort=config["bwa_mem"]["params"].get("sort", "samtools"),
+        sort_order=config["bwa_mem"]["params"].get("sort_order", "coordinate"),
         sort_extra="-@ " + str(config["bwa_mem"]["threads"]),
     log:
-            log="aligment/bwa_mem/{sample}_{unit}.bam.log",
+        "aligment/bwa_mem/{sample}_{unit}.bam.log",
     benchmark:
         "alignment/bwa_mem/{sample}_{unit}.bam.benchmark.tsv"
     threads: config["bwa_mem"]["threads"]
