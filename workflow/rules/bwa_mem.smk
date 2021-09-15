@@ -1,4 +1,3 @@
-
 __author__ = "Jonas Almlöf"
 __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@scilifelab.uu.se"

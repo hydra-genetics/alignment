@@ -1,4 +1,3 @@
-
 __author__ = "Jonas Almlöf"
 __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@scilifelab.uu.se"
@@ -48,7 +47,14 @@ def get_sample_fastq(wildcards):
 
 def compile_output_list(wildcards):
     output_list = []
-    for sample in samples.index:
-        output_list.append("alignment/bwa_mem/%s_%s.bam" % sample, units[sample].unit)
-        output_list.append("alignment/bwa_mem/%s_%s.bam.bai" % sample, units[sample].unit)
+    sample_dict = {}
+    for unit in units["unit"]:
+        if unit.index not in sample_dict:
+            sample_dict[unit.index] = {}
+        if unit not in sample_dict[unit.index]:
+            sample_dict[unit.index][unit] = ""
+    for sample in sample_dict:
+        for unit in sample_dict[sample]:
+            output_list.append("alignment/bwa_mem/%s_%s.bam" % sample, unit)
+            output_list.append("alignment/bwa_mem/%s_%s.bam.bai" % sample, unit)
     return output_list
