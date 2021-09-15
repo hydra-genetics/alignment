@@ -1,9 +1,7 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
 
-__author__ = "Patrik Smeds"
-__copyright__ = "Copyright 2021, Patrik Smeds"
-__email__ = "patrik.smeds@scilifelab.uu.se"
+__author__ = "Jonas Almlöf"
+__copyright__ = "Copyright 2021, Jonas Almlöf"
+__email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 import pandas as pd
@@ -50,6 +48,7 @@ def get_sample_fastq(wildcards):
 
 def compile_output_list(wildcards):
     output_list = []
-    output_list += expand("alignment/bwa_mem/{sample}_{unit}.bam", sample=samples.index, unit=units.unit)
-    output_list += expand("alignment/bwa_mem/{sample}_{unit}.bam.bai", sample=samples.index, unit=units.unit)
+    for sample in samples.index:
+        output_list.append("alignment/bwa_mem/%s_%s.bam" % sample, units[sample].unit)
+        output_list.append("alignment/bwa_mem/%s_%s.bam.bai" % sample, units[sample].unit)
     return output_list
