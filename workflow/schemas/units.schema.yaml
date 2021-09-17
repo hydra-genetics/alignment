@@ -24,7 +24,7 @@ properties:
     description: one or more sequence, separated by ","
 required:
   - sample
-  - unit
+  - type
   - run
   - lane
   - fastq1
