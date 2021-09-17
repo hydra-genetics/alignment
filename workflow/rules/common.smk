@@ -28,9 +28,7 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 
-units = pd.read_table(config["units"], dtype=str).set_index(
-    ["sample", "type", "run", "lane"], drop=False
-)
+units = pd.read_table(config["units"], dtype=str).set_index(["sample", "type", "run", "lane"], drop=False)
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -38,6 +36,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 wildcard_constraints:
     sample="|".join(samples.index),
+
 
 def get_fastq(wildcards):
     fastqs = units.loc[(wildcards.sample, wildcards.type, wildcards.run, wildcards.lane), ["fastq1", "fastq2"]].dropna()
