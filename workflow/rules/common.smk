@@ -40,15 +40,14 @@ wildcard_constraints:
     sample="|".join(samples.index),
 
 def get_fastq(wildcards):
-    fastqs = units.loc[
-        (wildcards.sample, wildcards.unit, wildcards.run, wildcards.lane), ["fastq1", "fastq2"]
-    ].dropna()
+    fastqs = units.loc[(wildcards.sample, wildcards.type, wildcards.run, wildcards.lane), ["fastq1", "fastq2"]].dropna()
     return {"fwd": fastqs.fastq1, "rev": fastqs.fastq2}
 
 
 def get_sample_fastq(wildcards):
-    fastqs = units.loc[(wildcards.sample, wildcards.unit), ["fastq1", "fastq2"]].dropna()
+    fastqs = units.loc[(wildcards.sample, wildcards.type), ["fastq1", "fastq2"]].dropna()
     return {"fwd": fastqs["fastq1"].tolist(), "rev": fastqs["fastq2"].tolist()}
+
 
 def compile_output_list(wildcards):
     return ["dummy.txt"]
