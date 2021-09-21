@@ -45,16 +45,25 @@ def get_sample_fastq(wildcards):
     return {"fwd": fastqs["fastq1"].tolist(), "rev": fastqs["fastq2"].tolist()}
 
 
-def compile_output_list(wildcards):
-    output_list = []
-    sample_dict = {}
-    for unit in units["unit"]:
-        if unit.index not in sample_dict:
-            sample_dict[unit.index] = {}
-        if unit not in sample_dict[unit.index]:
-            sample_dict[unit.index][unit] = ""
-    for sample in sample_dict:
-        for unit in sample_dict[sample]:
-            output_list.append("alignment/bwa_mem/%s_%s.bam" % sample, unit)
-            output_list.append("alignment/bwa_mem/%s_%s.bam.bai" % sample, unit)
-    return output_list
+def get_unit_types(units: pd.DataFrame, sample: str) -> set[str]:
+    """
+    function used to extract all types of units found for a sample in units.tsv (N,T,R)
+    Args:
+        units: DataFrame generate by importing a file following schema defintion
+               found in pre-alignment/workflow/schemas/units.schema.tsv
+        wildcards: wildcards object with at least the following wildcard names
+               sample.
+    Returns:
+        list of unit types ex set("N","T")
+    Raises:
+        raises and exception if no unit(s) can be extracted from the Dataframe
+    """
+    return set([u.unit for u in units.loc[(sample,)].dropna().itertuples()])
+
+
+def compile_output_list(wildcards: snakemake.io.Wildcards):
+    return [
+        "alignment/bwa_mem/%s_%s.bam" % (sample.Index, unit_type)
+        for sample in samples.itertuples()
+        for unit_type in get_unit_types(units, sample.Index)
+    ]

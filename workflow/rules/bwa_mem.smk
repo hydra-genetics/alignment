@@ -19,10 +19,17 @@ rule bwa_mem:
         "aligment/bwa_mem/{sample}_{unit}.bam.log",
     benchmark:
         "alignment/bwa_mem/{sample}_{unit}.bam.benchmark.tsv"
+    benchmark:
+        repeat(
+            "aligment/bwa_mem/{sample}_{unit}.output.bam.benchmark.tsv",
+            config.get("rule_name", {}).get("benchmark_repeats", 1),
+        )
     threads: config["bwa_mem"]["threads"]
     container:
-        config["bwa_mem"]["container"]
+        config.get("bwa_mem", "default_container").get("container", "default_container")
+    conda:
+        "../envs/rule_name.yaml"
     message:
-        "{rule}: Align {wildcards.sample}_{wildcards.unit} with bwa and sort"
+        "{rule}: Align alignemnt/bwa_mem/{wildcards.sample}_{wildcards.unit} with bwa and sort"
     wrapper:
         "0.70.0/bio/bwa/mem"
