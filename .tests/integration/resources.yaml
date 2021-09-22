@@ -1,0 +1,7 @@
+bwa_mem:
+  cores: 20
+  time: "24:00:00"
+
+default:
+  cores: 1
+  time: "12:00:00"

@@ -1,0 +1,24 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake configuration file
+type: object
+properties:
+  bwa_mem:
+    type: object
+    properties:
+      cores:
+        type: integer
+        description: number of threads that will be used by the 'bwa_mem' rule
+      time:
+        type: string
+        description: max execution time for the 'bwa_mem' rule
+  default:
+    type: object
+    properties:
+      cores:
+        type: integer
+        description: default number of threads that will be used by a rule
+      time:
+        type: string
+        description: default max execution time for a rule
+  required:
+    - default

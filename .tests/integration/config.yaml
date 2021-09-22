@@ -1,5 +1,6 @@
 samples: "samples.tsv"
 units: "units.tsv"
+resources: "resources.yaml"
 
 default_container: "docker://marrip/common:1.1.0"
 
@@ -8,6 +9,5 @@ reference:
 
 bwa_mem:
   container: "docker://gmsuppsala/somatic:develop"
-  threads: 2
   params:
     extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
