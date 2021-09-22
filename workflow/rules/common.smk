@@ -5,6 +5,7 @@ __license__ = "GPL-3"
 
 
 import pandas as pandas
+import yaml
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
@@ -18,6 +19,9 @@ min_version("6.8.0")
 
 
 configfile: "config.yaml"
+
+with open(config["resources"]) as yml:
+    config.update(yaml.load(yml))
 
 
 validate(config, schema="../schemas/config.schema.yaml")
