@@ -1,10 +1,12 @@
----
-
 samples: "samples.tsv"
 units: "units.tsv"
 
-tools:
-  common: "docker://hydra/common:1.1.0"
+default_container: "docker://marrip/common:1.1.0"
+
+reference:
+  fasta: "reference/WASH7P.fna"
 
 bwa_mem:
   container: "docker://gmsuppsala/somatic:develop"
+  params:
+    extra: r"-R '@RG\tID:{sample}\tSM:{sample}\tPL:illumina\tPU:{sample} -v 1 '"
