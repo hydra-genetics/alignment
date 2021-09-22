@@ -14,7 +14,7 @@ rule bwa_mem:
         extra=config["bwa_mem"]["params"]["extra"],
         sorting=config["bwa_mem"]["params"].get("sort", "samtools"),
         sort_order=config["bwa_mem"]["params"].get("sort_order", "coordinate"),
-        sort_extra="-@ %s" % str(config["bwa_mem"]["threads"]),
+        sort_extra="-@ %s" % str(config["bwa_mem"]["cores"]),
     log:
         "alignment/{rule}/{sample}_{type}.bam.log",
     benchmark:

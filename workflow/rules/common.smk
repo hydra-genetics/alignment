@@ -6,6 +6,8 @@ __license__ = "GPL-3"
 
 import pandas as pandas
 import yaml
+import collections
+from copy import deepcopy
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
@@ -20,8 +22,18 @@ min_version("6.8.0")
 
 configfile: "config.yaml"
 
+def merge(dict1, dict2):
+    ''' Return a new dictionary by merging two dictionaries recursively. '''
+    result = deepcopy(dict1)
+    for key, value in dict2.items():
+        if isinstance(value, collections.Mapping):
+            result[key] = merge(result.get(key, {}), value)
+        else:
+            result[key] = deepcopy(dict2[key])
+    return result
+
 with open(config["resources"]) as yml:
-    config.update(yaml.load(yml))
+    config = merge(config, yaml.load(yml))
 
 
 validate(config, schema="../schemas/config.schema.yaml")
