@@ -10,4 +10,4 @@ bwa_mem:
   container: "docker://gmsuppsala/somatic:develop"
   threads: 2
   params:
-    extra: r"-R '@RG\tID:{sample}\tSM:{sample}\tPL:illumina\tPU:{sample} -v 1 '"
+    extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
