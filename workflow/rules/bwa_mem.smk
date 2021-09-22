@@ -22,8 +22,7 @@ rule bwa_mem:
             "alignment/{rule}/{sample}_{type}.bam.benchmark.tsv",
             config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
-    threads:
-        config.get("bwa_mem",config['default'])["cores"]
+    threads: config.get("bwa_mem", config["default"])["cores"]
     container:
         config.get("bwa_mem", {}).get("container", "default_container")
     conda:

@@ -22,8 +22,9 @@ min_version("6.8.0")
 
 configfile: "config.yaml"
 
+
 def merge(dict1, dict2):
-    ''' Return a new dictionary by merging two dictionaries recursively. '''
+    """Return a new dictionary by merging two dictionaries recursively."""
     result = deepcopy(dict1)
     for key, value in dict2.items():
         if isinstance(value, collections.Mapping):
@@ -31,6 +32,7 @@ def merge(dict1, dict2):
         else:
             result[key] = deepcopy(dict2[key])
     return result
+
 
 with open(config["resources"]) as yml:
     config = merge(config, yaml.load(yml))
