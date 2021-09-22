@@ -20,7 +20,7 @@ rule bwa_mem:
     benchmark:
         repeat(
             "alignment/{rule}/{sample}_{type}.bam.benchmark.tsv",
-            config.get("{rule}", {}).get("benchmark_repeats", 1),
+            config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
     threads: config["bwa_mem"]["threads"]
     container:
