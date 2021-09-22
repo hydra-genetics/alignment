@@ -6,9 +6,9 @@ __license__ = "GPL-3"
 
 rule bwa_mem:
     input:
-        reads=["prealignment/merged/{sample}_{unit}_fastq1.fq.gz", "prealignment/merged/{sample}_{unit}_fastq2.fq.gz"],
+        reads=["prealignment/merged/{sample}_{type}_fastq1.fq.gz", "prealignment/merged/{sample}_{type}_fastq2.fq.gz"],
     output:
-        bam="alignment/bwa_mem/{sample}_{unit}.bam",
+        bam="alignment/{rule}/{sample}_{type}.bam",
     params:
         index=config["reference"]["fasta"],
         extra=config["bwa_mem"]["params"]["extra"],
@@ -16,20 +16,18 @@ rule bwa_mem:
         sort_order=config["bwa_mem"]["params"].get("sort_order", "coordinate"),
         sort_extra="-@ %s" % str(config["bwa_mem"]["threads"]),
     log:
-        "aligment/bwa_mem/{sample}_{unit}.bam.log",
-    benchmark:
-        "alignment/bwa_mem/{sample}_{unit}.bam.benchmark.tsv"
+        "aligment/{rule}/{sample}_{type}.bam.log",
     benchmark:
         repeat(
-            "aligment/bwa_mem/{sample}_{unit}.output.bam.benchmark.tsv",
-            config.get("rule_name", {}).get("benchmark_repeats", 1),
+            "aligment/{rule}/{sample}_{type}.bam.benchmark.tsv",
+            config.get("{rule}", {}).get("benchmark_repeats", 1),
         )
     threads: config["bwa_mem"]["threads"]
     container:
-        config.get("bwa_mem", "default_container").get("container", "default_container")
+        config.get("bwa_mem", {}).get("container", "default_container")
     conda:
-        "../envs/rule_name.yaml"
+        "../envs/{rule}.yaml"
     message:
-        "{rule}: Align alignemnt/bwa_mem/{wildcards.sample}_{wildcards.unit} with bwa and sort"
+        "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.type} with bwa and sort"
     wrapper:
         "0.70.0/bio/bwa/mem"
