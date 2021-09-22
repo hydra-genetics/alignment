@@ -6,14 +6,38 @@ properties:
     type: string
   units:
     type: string
-  containers:
+  default_container:
+    type: string
+  reference:
+    fasta: string
+    required:
+      - fasta
+  bwa_mem:
     type: object
     properties:
-      common:
+      benchmark_repeats:
         type: string
+        description: set number of times benchmark should be repeated for bwa_mem
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to bwa_mem
+      sort:
+        type: string
+        description: program hangling the bam sorting (default: samtools)
+      sort_order:
+        type: string
+        description: how the bam file should be sorted (default: coordinate)
+      sort_extra:
+        type: string
+        description: parameters that should be forwarded to sorting (ie, number of threads)
     required:
-      - common
+      - extra
   required:
     - samples
     - units
-    - containers
+    - default_container
+    - bwa_mem
+    - reference
