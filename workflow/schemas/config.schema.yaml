@@ -16,25 +16,32 @@ properties:
     type: object
     properties:
       benchmark_repeats:
-        type: string
+        type: integer
         description: set number of times benchmark should be repeated for bwa_mem
       container:
         type: string
         description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded to bwa_mem
-      sort:
-        type: string
-        description: program hangling the bam sorting (default: samtools)
-      sort_order:
-        type: string
-        description: how the bam file should be sorted (default: coordinate)
-      sort_extra:
-        type: string
-        description: parameters that should be forwarded to sorting (ie, number of threads)
+      threads:
+        type: integer
+      params:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: parameters that should be forwarded to bwa_mem
+          sort:
+            type: string
+            description: program hangling the bam sorting (default: samtools)
+          sort_order:
+            type: string
+            description: how the bam file should be sorted (default: coordinate)
+          sort_extra:
+            type: string
+            description: parameters that should be forwarded to sorting (ie, number of threads)
+        required:
+          - extra
     required:
-      - extra
+      - params
   required:
     - samples
     - units
