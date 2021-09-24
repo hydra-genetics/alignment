@@ -1,1 +1,0 @@
-git+git://github.com/hydra-genetics/tools.git@develop
