@@ -4,7 +4,7 @@ __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-import pandas as pandas
+import pandas
 import yaml
 import collections
 from copy import deepcopy
@@ -13,6 +13,7 @@ from snakemake.utils import min_version
 
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
+from hydra_genetics.utils.misc import *
 
 min_version("6.8.0")
 
@@ -21,17 +22,6 @@ min_version("6.8.0")
 
 
 configfile: "config.yaml"
-
-
-def merge(dict1, dict2):
-    """Return a new dictionary by merging two dictionaries recursively."""
-    result = deepcopy(dict1)
-    for key, value in dict2.items():
-        if isinstance(value, collections.Mapping):
-            result[key] = merge(result.get(key, {}), value)
-        else:
-            result[key] = deepcopy(dict2[key])
-    return result
 
 
 with open(config["resources"]) as yml:
