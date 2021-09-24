@@ -54,4 +54,4 @@ def compile_output_list(wildcards: snakemake.io.Wildcards):
         "alignment/bwa_mem/%s_%s.bam" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
-        ]
+    ]
