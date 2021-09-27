@@ -26,7 +26,7 @@ rule bwa_mem:
     container:
         config.get("bwa_mem", {}).get("container", "default_container")
     conda:
-        "../envs/{rule}.yaml"
+        "../envs/bwa_mem.yaml"
     message:
         "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.type} with bwa and sort"
     wrapper:
