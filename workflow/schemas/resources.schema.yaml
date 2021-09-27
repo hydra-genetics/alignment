@@ -11,7 +11,8 @@ properties:
       time:
         type: string
         description: max execution time for the 'bwa_mem' rule
-  default:
+
+  default_resources:
     type: object
     properties:
       cores:
@@ -20,5 +21,6 @@ properties:
       time:
         type: string
         description: default max execution time for a rule
+
   required:
-    - default
+    - default_resources
