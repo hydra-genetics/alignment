@@ -6,8 +6,6 @@ __license__ = "GPL-3"
 
 import pandas
 import yaml
-import collections
-from copy import deepcopy
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
@@ -29,6 +27,7 @@ with open(config["resources"]) as yml:
 
 
 validate(config, schema="../schemas/config.schema.yaml")
+validate(config, schema="../schemas/resources.schema.yaml")
 
 
 ### Read and validate samples file
@@ -46,7 +45,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 wildcard_constraints:
     sample="|".join(get_samples(samples)),
-    unit="N|T|R",
+    type="N|T|R",
 
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
