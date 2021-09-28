@@ -14,7 +14,7 @@ rule bwa_mem:
         extra=config["bwa_mem"]["params"]["extra"],
         sorting=config["bwa_mem"]["params"].get("sort", "samtools"),
         sort_order=config["bwa_mem"]["params"].get("sort_order", "coordinate"),
-        sort_extra="-@ %s" % str(config["bwa_mem"]["cores"]),
+        sort_extra="-@ %s" % str(config["bwa_mem"]["threads"]),
     log:
         "alignment/{rule}/{sample}_{type}.bam.log",
     benchmark:
@@ -22,7 +22,7 @@ rule bwa_mem:
             "alignment/{rule}/{sample}_{type}.bam.benchmark.tsv",
             config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("bwa_mem", config["default_resources"])["cores"]
+    threads: config.get("bwa_mem", config["default_resources"])["threads"]
     container:
         config.get("bwa_mem", {}).get("container", "default_container")
     conda:

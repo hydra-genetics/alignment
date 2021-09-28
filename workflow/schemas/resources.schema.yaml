@@ -5,7 +5,7 @@ properties:
   bwa_mem:
     type: object
     properties:
-      cores:
+      threads:
         type: integer
         description: number of threads that will be used by the 'bwa_mem' rule
       time:
@@ -15,7 +15,7 @@ properties:
   default_resources:
     type: object
     properties:
-      cores:
+      threads:
         type: integer
         description: default number of threads that will be used by a rule
       time:
