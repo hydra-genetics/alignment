@@ -9,9 +9,9 @@ import yaml
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
-from hydra_genetics.utils.misc import *
 
 min_version("6.8.0")
 
@@ -22,11 +22,8 @@ min_version("6.8.0")
 configfile: "config.yaml"
 
 
-with open(config["resources"]) as yml:
-    config = merge(config, yaml.load(yml))
-
-
 validate(config, schema="../schemas/config.schema.yaml")
+config = load_resources(config, config["resources"])
 validate(config, schema="../schemas/resources.schema.yaml")
 
 
