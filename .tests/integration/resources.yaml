@@ -1,7 +1,7 @@
 bwa_mem:
-  cores: 2
+  threads: 2
   time: "24:00:00"
 
 default_resources:
-  cores: 1
+  threads: 1
   time: "12:00:00"
