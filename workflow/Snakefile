@@ -6,6 +6,7 @@ __license__ = "GPL-3"
 
 include: "rules/common.smk"
 include: "rules/bwa_mem.smk"
+include: "rules/align_dedup_GPU.smk"
 
 
 report: "report/workflow.rst"
