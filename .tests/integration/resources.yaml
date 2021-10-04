@@ -2,6 +2,11 @@ bwa_mem:
   threads: 2
   time: "24:00:00"
 
+align_dedup_GPU:
+  threads: 10
+  time: "12:00:00"
+  GPU: "--gres=gpu:1"
+
 default_resources:
   threads: 1
   time: "12:00:00"
