@@ -2,6 +2,10 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
+software:
+  align: "bwa_mem"
+  dedup: "mark_duplicates"
+
 default_container: "docker://marrip/common:1.1.0"
 
 reference:
