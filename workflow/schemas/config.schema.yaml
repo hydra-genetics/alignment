@@ -16,6 +16,7 @@ properties:
         description: fasta reference file
     required:
       - fasta
+
   bwa_mem:
     type: object
     properties:
@@ -44,9 +45,28 @@ properties:
           - extra
     required:
       - params
+
+  align_dedup_GPU:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      params:
+        type: object
+        properties:
+          SM:
+            type: string
+            description: Read group info
+          PL:
+            type: string
+            description: Read group info
+          ID:
+            type: string
+            description: Read group info
+
   required:
     - samples
     - units
     - default_container
-    - bwa_mem
     - reference

@@ -23,10 +23,10 @@ rule align_dedup_GPU:
             config.get("align_dedup_GPU", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("align_dedup_GPU", config["default_resources"])["threads"]
-    container:
-        config.get("align_dedup_GPU", {}).get("container", "default_container")
-    conda:
-        "../envs/align_dedup_GPU.yaml"
+    # container:
+    #     config.get("align_dedup_GPU", {}).get("container", "default_container")
+    # conda:
+    #     "../envs/align_dedup_GPU.yaml"
     message:
         "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.type} and then sort and mark duplicates on the GPU"
     shell:
@@ -36,7 +36,7 @@ rule align_dedup_GPU:
         "--read-group-sm {params.SM} "
         "--read-group-pl {params.PL} "
         "--read-group-id-prefix {params.ID} "
-        "--num-gpus 1 " #Needed?
+        "--num-gpus 1 " # Needed?
         "--out-bam {output.bam} "
         "--tmp-dir GPU_run_{sample} "
         ") &> {log}"
