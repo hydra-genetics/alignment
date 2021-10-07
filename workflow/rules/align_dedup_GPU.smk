@@ -12,9 +12,9 @@ rule align_dedup_GPU:
     output:
         bam="alignment/{rule}/{sample}_{type}.dedup.bam",
     params:
-        SM=config.get("align_dedup_GPU", "{sample}").get(["SM"], "{sample}"),
-        PL=config.get("align_dedup_GPU", "illumina").get(["PL"], "illumina"),
-        ID=config.get("align_dedup_GPU", "{sample}").get(["ID"], "{sample}"),
+        SM=config.get("align_dedup_GPU", "{sample}").get("SM", "{sample}"),
+        PL=config.get("align_dedup_GPU", "illumina").get("PL", "illumina"),
+        ID=config.get("align_dedup_GPU", "{sample}").get("ID", "{sample}"),
     log:
         "alignment/{rule}/{sample}_{type}.dedup.bam.log",
     benchmark:
