@@ -12,5 +12,5 @@ bwa_mem:
   params:
     extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
 
-bqsr_GPU:
+bqsr_gpu:
   known_indels: "reference/known_indels.vcf.gz"

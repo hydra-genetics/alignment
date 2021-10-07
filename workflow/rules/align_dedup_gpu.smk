@@ -4,7 +4,7 @@ __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule align_dedup_GPU:
+rule align_dedup_gpu:
     input:
         fastq1="prealignment/merged/{sample}_{type}_fastq1.fq.gz",
         fastq2="prealignment/merged/{sample}_{type}_fastq2.fq.gz",
@@ -20,13 +20,13 @@ rule align_dedup_GPU:
     benchmark:
         repeat(
             "alignment/{rule}/{sample}_{type}.dedup.bam.benchmark.tsv",
-            config.get("align_dedup_GPU", {}).get("benchmark_repeats", 1),
+            config.get("align_dedup_gpu", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("align_dedup_GPU", config["default_resources"])["threads"]
+    threads: config.get("align_dedup_gpu", config["default_resources"])["threads"]
     # container:
     #     config.get("align_dedup_GPU", {}).get("container", "default_container")
     conda:
-        "../envs/align_dedup_GPU.yaml"
+        "../envs/align_dedup_gpu.yaml"
     message:
         "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.type} and then sort and mark duplicates on the GPU"
     shell:

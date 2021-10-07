@@ -2,17 +2,17 @@ bwa_mem:
   threads: 2
   time: "24:00:00"
 
-align_dedup_GPU:
+align_dedup_gpu:
   threads: 10
   time: "12:00:00"
   GPU: "--gres=gpu:1"
 
-bqsr_GPU:
+bqsr_gpu:
   threads: 10
   time: "12:00:00"
   GPU: "--gres=gpu:1"
 
-apply_bqsr_GPU:
+apply_bqsr_gpu:
   threads: 10
   time: "12:00:00"
   GPU: "--gres=gpu:1"

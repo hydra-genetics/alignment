@@ -46,7 +46,7 @@ properties:
     required:
       - params
 
-  align_dedup_GPU:
+  align_dedup_gpu:
     type: object
     properties:
       benchmark_repeats:
@@ -65,14 +65,14 @@ properties:
             type: string
             description: Read group info
 
-  bqsr_GPU:
+  bqsr_gpu:
     type: object
     properties:
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated
 
-  apply_bqsr_GPU:
+  apply_bqsr_gpu:
     type: object
     properties:
       benchmark_repeats:

@@ -4,11 +4,11 @@ __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule bqsr_GPU:
+rule bqsr_gpu:
     input:
         bam="alignment/align_dedup_GPU/{sample}_{type}.dedup.bam",
         ref=config["reference"]["fasta"],
-        indels=config["bqsr_GPU"]["known_indels"],
+        indels=config["bqsr_gpu"]["known_indels"],
     output:
         recal=temp("alignment/{rule}/{sample}_{type}.recal.txt"),
     log:
@@ -16,13 +16,13 @@ rule bqsr_GPU:
     benchmark:
         repeat(
             "alignment/{rule}/{sample}_{type}.recal.txt.benchmark.tsv",
-            config.get("bqsr_GPU", {}).get("benchmark_repeats", 1),
+            config.get("bqsr_gpu", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("bqsr_GPU", config["default_resources"])["threads"]
+    threads: config.get("bqsr_gpu", config["default_resources"])["threads"]
     # container:
     #     config.get("align_dedup_GPU", {}).get("container", "default_container")
     conda:
-        "../envs/bqsr_GPU.yaml"
+        "../envs/bqsr_gpu.yaml"
     message:
         "{rule}: Calculate bqsr on alignment/{rule}/{wildcards.sample}_{wildcards.type} on the GPU"
     shell:

@@ -4,9 +4,9 @@ __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule apply_bqsr_GPU:
+rule apply_bqsr_gpu:
     input:
-        bam="alignment/align_dedup_GPU/{sample}_{type}.dedup.bam",
+        bam="alignment/apply_bqsr_gpu/{sample}_{type}.dedup.bam",
         ref=config["reference"]["fasta"],
         recal="alignment/{rule}/{sample}_{type}.recal.txt",
     output:
@@ -16,13 +16,13 @@ rule apply_bqsr_GPU:
     benchmark:
         repeat(
             "alignment/{rule}/{sample}_{type}.bqsr.dedup.benchmark.tsv",
-            config.get("apply_bqsr_GPU", {}).get("benchmark_repeats", 1),
+            config.get("apply_bqsr_gpu", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("apply_bqsr_GPU", config["default_resources"])["threads"]
+    threads: config.get("apply_bqsr_gpu", config["default_resources"])["threads"]
     # container:
     #     config.get("align_dedup_GPU", {}).get("container", "default_container")
     conda:
-        "../envs/apply_bqsr_GPU.yaml"
+        "../envs/apply_bqsr_gpu.yaml"
     message:
         "{rule}: Apply bqsr on alignment/{rule}/{wildcards.sample}_{wildcards.type} and write new bam file on the GPU"
     shell:
