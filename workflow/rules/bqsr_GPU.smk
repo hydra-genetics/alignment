@@ -10,7 +10,7 @@ rule bqsr_GPU:
         ref=config["reference"]["fasta"],
         indel=config["bqsr"]["known_indels"],
     output:
-        recal="alignment/{rule}/{sample}_{type}.recal.txt",
+        recal=temp("alignment/{rule}/{sample}_{type}.recal.txt"),
     log:
         "alignment/{rule}/{sample}_{type}.recal.txt.log",
     benchmark:
