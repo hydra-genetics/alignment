@@ -8,7 +8,7 @@ rule bqsr_GPU:
     input:
         bam="alignment/align_dedup_GPU/{sample}_{type}.dedup.bam",
         ref=config["reference"]["fasta"],
-        indel=config[""]["indels"],
+        indel=config["bqsr"]["known_indels"],
     output:
         recal="alignment/{rule}/{sample}_{type}.recal.txt",
     log:
