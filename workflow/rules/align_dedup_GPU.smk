@@ -39,5 +39,5 @@ rule align_dedup_GPU:
         "--read-group-id-prefix {params.ID} "
         "--num-gpus 1 "
         "--out-bam {output.bam} "
-        "--tmp-dir GPU_run_{sample} "
+        "--tmp-dir GPU_run_{wildcards.sample} "
         ") &> {log}"
