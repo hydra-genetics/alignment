@@ -8,6 +8,7 @@ include: "rules/common.smk"
 include: "rules/bwa_mem.smk"
 include: "rules/align_dedup_GPU.smk"
 include: "rules/bqsr_GPU.smk"
+include: "rules/apply_bqsr_GPU.smk"
 
 
 report: "report/workflow.rst"

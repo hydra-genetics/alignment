@@ -72,6 +72,13 @@ properties:
         type: integer
         description: set number of times benchmark should be repeated
 
+  apply_bqsr_GPU:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+
   required:
     - samples
     - units
