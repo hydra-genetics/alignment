@@ -37,8 +37,15 @@ jobs:
       - name: Install requirements.test.txt
         run: |
           pip install -r requirements.test.txt
-      - name: snakemake dry run
+      - name: Integration softwares
         working-directory: .tests/integration
         run: |
           mamba install -c conda-forge -c bioconda snakemake singularity
-          snakemake -n -s ../../workflow/Snakefile
+      - name: snakemake dry run of CPU alignment
+        working-directory: .tests/integration
+        run: |
+          snakemake -n -s ../../workflow/Snakefile alignment/bwa_mem/NA12878_N.bam
+      - name: snakemake dry run of GPU alignment
+        working-directory: .tests/integration
+        run: |
+          snakemake -n -s ../../workflow/Snakefile alignment/apply_bqsr_GPU/NA12878_N.bqsr.dedup.bam
