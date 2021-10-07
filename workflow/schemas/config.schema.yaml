@@ -65,6 +65,13 @@ properties:
             type: string
             description: Read group info
 
+  bqsr_GPU:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+
   required:
     - samples
     - units
