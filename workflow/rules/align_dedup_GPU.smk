@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule align_dedup_GPU:
     input:
-        fastq1="alignment/merged/{sample}_{type}_fastq1.fq.gz",
-        fastq2="alignment/merged/{sample}_{type}_fastq2.fq.gz",
+        fastq1="prealignment/merged/{sample}_{type}_fastq1.fq.gz",
+        fastq2="prealignment/merged/{sample}_{type}_fastq2.fq.gz",
         ref=config["reference"]["fasta"],
     output:
         bam="alignment/{rule}/{sample}_{type}.dedup.bam",
