@@ -10,7 +10,7 @@ rule apply_bqsr_GPU:
         ref=config["reference"]["fasta"],
         recal="alignment/{rule}/{sample}_{type}.recal.txt",
     output:
-        bam=temp("alignment/{rule}/{sample}_{type}.bqsr.dedup.bam",
+        bam=temp("alignment/{rule}/{sample}_{type}.bqsr.dedup.bam"),
     log:
         "alignment/{rule}/{sample}_{type}.bqsr.dedup.log",
     benchmark:

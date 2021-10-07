@@ -30,13 +30,14 @@ rule align_dedup_GPU:
     message:
         "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.type} and then sort and mark duplicates on the GPU"
     shell:
+        # --num-gpus 1 Needed?
         "(pbrun fq2bam "
         "--ref {input.ref} "
         "--in-fq {input.fastq1} {input.fastq2} "
         "--read-group-sm {params.SM} "
         "--read-group-pl {params.PL} "
         "--read-group-id-prefix {params.ID} "
-        "--num-gpus 1 " # Needed?
+        "--num-gpus 1 "
         "--out-bam {output.bam} "
         "--tmp-dir GPU_run_{sample} "
         ") &> {log}"
