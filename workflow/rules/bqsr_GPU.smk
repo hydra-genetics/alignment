@@ -21,8 +21,8 @@ rule bqsr_GPU:
     threads: config.get("bqsr_GPU", config["default_resources"])["threads"]
     # container:
     #     config.get("align_dedup_GPU", {}).get("container", "default_container")
-    # conda:
-    #     "../envs/align_dedup_GPU.yaml"
+    conda:
+        "../envs/bqsr_GPU.yaml"
     message:
         "{rule}: Calculate bqsr on alignment/{rule}/{wildcards.sample}_{wildcards.type} on the GPU"
     shell:
