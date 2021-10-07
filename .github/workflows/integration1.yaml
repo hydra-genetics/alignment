@@ -40,16 +40,16 @@ jobs:
       - name: Integration test alignment on CPU, conda
         working-directory: .tests/integration
         run: |
-          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-conda --configfile configs/config_CPU.yaml && rm -r alignment
+          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-conda alignment/bwa_mem/NA12878_N.bam && rm -r alignment
       - name: Integration test alignment on GPU, conda
         working-directory: .tests/integration
         run: |
-          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-conda --configfile configs/config_GPU.yaml && rm -r alignment
+          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-conda alignment/apply_bqsr_GPU/NA12878_N.bqsr.dedup.bam && rm -r alignment
       - name: Integration test alignment on CPU, singularity
         working-directory: .tests/integration
         run: |
-          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-singularity --configfile configs/config_CPU.yaml && rm -r alignment
+          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-singularity alignment/bwa_mem/NA12878_N.bam && rm -r alignment
       - name: Integration test alignment on GPU, singularity
         working-directory: .tests/integration
         run: |
-          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-singularity --configfile configs/config_GPU.yaml && rm -r alignment
+          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-singularity alignment/apply_bqsr_GPU/NA12878_N.bqsr.dedup.bam && rm -r alignment
