@@ -53,7 +53,7 @@ else:
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
     return [
-        "alignment/extract_reads/%s_%s_%s.bam" % (sample, type, 'chr1')
+        "alignment/extract_reads/%s_%s_%s.bam" % (sample, type, "chr1")
         for sample in get_samples(samples)
         for type in get_unit_types(units, sample)
     ]
