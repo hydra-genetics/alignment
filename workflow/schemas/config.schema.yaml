@@ -2,6 +2,8 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake configuration file
 type: object
 properties:
+  alignment_software:
+    type: string
   samples:
     type: string
   units:
