@@ -12,6 +12,16 @@ properties:
         type: string
         description: max execution time for the 'bwa_mem' rule
 
+  extract_reads:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'bwa_mem' rule
+      time:
+        type: string
+        description: max execution time for the 'bwa_mem' rule
+
   default_resources:
     type: object
     properties:

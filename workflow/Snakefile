@@ -5,6 +5,7 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/extract_reads.smk"
 include: "rules/bwa_mem.smk"
 
 
