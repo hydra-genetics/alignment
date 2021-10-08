@@ -9,22 +9,23 @@ __license__ = "GPL-3"
 
 rule extract_reads:
     input:
-        extract_reads_input
+        extract_reads_input,
     output:
-        temp("alignment/extract_reads/{sample}_{type}_{chr}.bam")
+        temp("alignment/extract_reads/{sample}_{type}_{chr}.bam"),
     params:
         extra=config.get("extract_reads", {}).get("extra", ""),
     log:
-        "alignment/extract_reads/{sample}_{type}_{chr}.output.log"
+        "alignment/extract_reads/{sample}_{type}_{chr}.output.log",
     benchmark:
-       repeat("alignment/extract/{sample}_{type}_{chr}.output.benchmark.tsv", config.get("extract", {}).get("benchmark_repeats", 1),)
-    threads: # optional
-       config.get("extract_reads", config["default_resources"])["threads"]
+        repeat(
+            "alignment/extract/{sample}_{type}_{chr}.output.benchmark.tsv", config.get("extract", {}).get("benchmark_repeats", 1)
+        )
+    threads: config.get("extract_reads", config["default_resources"])["threads"]
     container:
-       config.get("extract_reads", {}).get("container", config["default_container"])
+        config.get("extract_reads", {}).get("container", config["default_container"])
     conda:
-       "../envs/extract_reads.yaml"
+        "../envs/extract_reads.yaml"
     message:
-       "{rule}: create bam with only {wildcards.chr} reads, alignment/{rule}/{wildcards.sample}_{wildcards.type}_{wildcards.chr}.bam"
+        "{rule}: create bam with only {wildcards.chr} reads, alignment/{rule}/{wildcards.sample}_{wildcards.type}_{wildcards.chr}.bam"
     shell:
         "(samtools view -@ {threads} {params.extra} -b {input} {wildcards.chr} > {output}) &> {log}"
