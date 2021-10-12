@@ -21,8 +21,6 @@ rule apply_bqsr_gpu:
     threads: config.get("apply_bqsr_gpu", config["default_resources"])["threads"]
     # container:
     #     config.get("align_dedup_GPU", {}).get("container", "default_container")
-    conda:
-        "../envs/apply_bqsr_gpu.yaml"
     message:
         "{rule}: Apply bqsr on alignment/{rule}/{wildcards.sample}_{wildcards.type} and write new bam file on the GPU"
     shell:
