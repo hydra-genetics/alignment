@@ -25,8 +25,6 @@ rule align_dedup_gpu:
     threads: config.get("align_dedup_gpu", config["default_resources"])["threads"]
     # container:
     #     config.get("align_dedup_GPU", {}).get("container", "default_container")
-    conda:
-        "../envs/align_dedup_gpu.yaml"
     message:
         "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.type} and then sort and mark duplicates on the GPU"
     shell:
