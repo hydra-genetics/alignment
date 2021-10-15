@@ -1,4 +1,4 @@
-hydra-genetics==0.0.3
+hydra-genetics==0.0.4
 pandas==1.3.1
 snakemake==6.8.0
 singularity==3.0.0
