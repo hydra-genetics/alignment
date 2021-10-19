@@ -24,7 +24,7 @@ rule bwa_mem:
         )
     threads: config.get("bwa_mem", config["default_resources"])["threads"]
     container:
-        config.get("bwa_mem", {}).get("container", "default_container")
+        config.get("bwa_mem", {}).get("container", config["default_container"])
     conda:
         "../envs/bwa_mem.yaml"
     message:
