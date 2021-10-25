@@ -18,7 +18,7 @@ rule extract_reads:
         "alignment/extract_reads/{sample}_{type}_{chr}.output.log",
     benchmark:
         repeat(
-            "alignment/extract/{sample}_{type}_{chr}.output.benchmark.tsv", config.get("extract", {}).get("benchmark_repeats", 1)
+            "alignment/extract_reads/{sample}_{type}_{chr}.output.benchmark.tsv", config.get("extract", {}).get("benchmark_repeats", 1)
         )
     threads: config.get("extract_reads", config["default_resources"])["threads"]
     container:
