@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule bqsr_gpu:
     input:
-        bam="alignment/align_dedup_GPU/{sample}_{type}.dedup.bam",
+        bam="alignment/align_dedup_gpu/{sample}_{type}.dedup.bam",
         ref=config["reference"]["fasta"],
         indels=config["bqsr_gpu"]["known_indels"],
     output:
