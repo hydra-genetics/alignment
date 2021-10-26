@@ -6,6 +6,14 @@ default_container: "docker://marrip/common:1.1.0"
 
 reference:
   fasta: "reference/WASH7P.fna"
+  dict: "reference/WASH7P.dict"
+  fna: "reference/WASH7P.fna"
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt"
+  fai: "reference/WASH7P.fna.fai"
+  pac: "reference/WASH7P.fna.pac"
+  sa: "reference/WASH7P.fna.sa"
 
 bwa_mem:
   container: "docker://gmsuppsala/somatic:develop"
