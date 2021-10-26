@@ -47,13 +47,15 @@ wildcard_constraints:
 
 if config.get("alignment_software", None) == "gpu":
     extract_reads_input = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"
+    extract_reads_input_bai = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam.bai"
 else:
     extract_reads_input = "alignment/bwa_mem/{sample}_{type}.bam"
+    extract_reads_input_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
 
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
     return [
-        "alignment/extract_reads/%s_%s_%s.bam" % (sample, type, "chr1")
+        "alignment/mark_duplicates/%s_%s_%s.dedup.bam" % (sample, type, "chr1")
         for sample in get_samples(samples)
         for type in get_unit_types(units, sample)
     ]
