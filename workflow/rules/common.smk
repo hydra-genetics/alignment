@@ -10,6 +10,7 @@ from snakemake.utils import validate
 from snakemake.utils import min_version
 
 from hydra_genetics.utils.resources import load_resources
+from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
 
@@ -55,7 +56,7 @@ else:
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
     return [
-        "alignment/mark_duplicates/%s_%s_%s.dedup.bam" % (sample, type, "chr1")
+        "alignment/merge_bam/%s_%s.bam" % (sample, type)
         for sample in get_samples(samples)
         for type in get_unit_types(units, sample)
     ]

@@ -16,3 +16,6 @@ mark_duplicates:
 
 samtools_index:
   container: "docker://gmsuppsala/somatic:develop"
+
+merge_bam:
+  container: "docker://gmsuppsala/somatic:develop"

@@ -16,6 +16,11 @@ properties:
       fasta:
         type: string
         description: fasta reference file
+      skip_chrs:
+        type: array
+        items:
+            type: string
+        description: list of chromosomes that should be skipped
     required:
       - fasta
 
@@ -69,6 +74,16 @@ properties:
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated for samtools_index
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  merge_bam:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for merge_bam
       container:
         type: string
         description: name or path to docker/singularity container
