@@ -12,7 +12,7 @@ rule extract_reads:
         extract_reads_input,
         extract_reads_input_bai,
     output:
-        "alignment/extract_reads/{sample}_{type}_{chr}.bam",
+        temp("alignment/extract_reads/{sample}_{type}_{chr}.bam"),
     params:
         extra=config.get("extract_reads", {}).get("extra", ""),
     log:
