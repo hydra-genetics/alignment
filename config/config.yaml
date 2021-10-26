@@ -9,5 +9,4 @@ reference:
 
 bwa_mem:
   container: "docker://gmsuppsala/somatic:develop"
-  params:
-    extra: r"-R '@RG\tID:{sample}\tSM:{sample}\tPL:illumina\tPU:{sample} -v 1 '"
+  extra: r"-R '@RG\tID:{sample}\tSM:{sample}\tPL:illumina\tPU:{sample} -v 1 '"

@@ -18,6 +18,7 @@ properties:
         description: fasta reference file
     required:
       - fasta
+
   bwa_mem:
     type: object
     properties:
@@ -27,25 +28,51 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-      params:
-        type: object
-        properties:
-          extra:
-            type: string
-            description: parameters that should be forwarded to bwa_mem
-          sorting:
-            type: string
-            description: program hangling the bam sorting (default samtools)
-          sort_order:
-            type: string
-            description: how the bam file should be sorted (default coordinate)
-          sort_extra:
-            type: string
-            description: parameters that should be forwarded to sorting (ie, number of threads)
-        required:
-          - extra
+      extra:
+        type: string
+        description: parameters that should be forwarded to bwa_mem
+      sorting:
+        type: string
+        description: program hangling the bam sorting (default samtools)
+      sort_order:
+        type: string
+        description: how the bam file should be sorted (default coordinate)
+      sort_extra:
+        type: string
+        description: parameters that should be forwarded to sorting (ie, number of threads)
     required:
-      - params
+      - extra
+
+  extract_reads:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for extract_reads
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  mark_duplicates:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for mark_duplicates
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  samtools_index:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for samtools_index
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   required:
     - samples
     - units
