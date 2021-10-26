@@ -8,7 +8,7 @@ rule bwa_mem:
     input:
         reads=["prealignment/merged/{sample}_{type}_fastq1.fq.gz", "prealignment/merged/{sample}_{type}_fastq2.fq.gz"],
     output:
-        bam="alignment/bwa_mem/{sample}_{type}.bam",
+        bam=temp("alignment/bwa_mem/{sample}_{type}.bam"),
     params:
         index=config["reference"]["fasta"],
         extra=config["bwa_mem"]["extra"],

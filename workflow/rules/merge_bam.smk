@@ -32,6 +32,6 @@ rule merge_bam:
     conda:
         "../envs/merge_bam.yaml"
     message:
-        "{rule}: Mergi bam into alignment/{rule}/{wildcards.sample}_{wildcards.type}.bam"
+        "{rule}: Merge bam into alignment/{rule}/{wildcards.sample}_{wildcards.type}.bam"
     shell:
         "(samtools merge -c -p {output} {input}) &> {log}"

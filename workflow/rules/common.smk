@@ -47,9 +47,11 @@ wildcard_constraints:
 
 
 if config.get("alignment_software", None) == "gpu":
+    # extract_reads_input = {"bam": "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam", "bai": "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"}
     extract_reads_input = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"
     extract_reads_input_bai = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam.bai"
 else:
+    # extract_reads_input = {"bam": "alignment/bwa_mem/{sample}_{type}.bam", "bai": "alignment/bwa_mem/{sample}_{type}.bam.bai"}
     extract_reads_input = "alignment/bwa_mem/{sample}_{type}.bam"
     extract_reads_input_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
 
