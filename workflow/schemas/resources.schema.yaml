@@ -17,10 +17,40 @@ properties:
     properties:
       threads:
         type: integer
-        description: number of threads that will be used by the 'bwa_mem' rule
+        description: number of threads that will be used by the 'extract_reads' rule
       time:
         type: string
-        description: max execution time for the 'bwa_mem' rule
+        description: max execution time for the 'extract_reads' rule
+
+  mark_duplicates:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'mark_duplicates' rule
+      time:
+        type: string
+        description: max execution time for the 'mark_duplicates' rule
+
+  samtools_index:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'samtools_index' rule
+      time:
+        type: string
+        description: max execution time for the 'samtools_index' rule
+
+  merge_bam:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'merge_bam' rule
+      time:
+        type: string
+        description: max execution time for the 'merge_bam' rule
 
   default_resources:
     type: object

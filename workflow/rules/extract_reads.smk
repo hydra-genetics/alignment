@@ -10,18 +10,19 @@ __license__ = "GPL-3"
 rule extract_reads:
     input:
         extract_reads_input,
+        extract_reads_input_bai,
     output:
         temp("alignment/extract_reads/{sample}_{type}_{chr}.bam"),
     params:
         extra=config.get("extract_reads", {}).get("extra", ""),
     log:
-        "alignment/extract_reads/{sample}_{type}_{chr}.output.log",
+        "alignment/extract_reads/{sample}_{type}_{chr}.log",
     benchmark:
         repeat(
-            "alignment/extract_reads/{sample}_{type}_{chr}.output.benchmark.tsv",
-            config.get("extract", {}).get("benchmark_repeats", 1),
+            "alignment/extract_reads/{sample}_{type}_{chr}.benchmark.tsv",
+            config.get("extract_reads", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("extract_reads", config["default_resources"])["threads"]
+    threads: config.get("extract_reads", config["default_resources"]).get("threads", config["default_resources"]["threads"])
     container:
         config.get("extract_reads", {}).get("container", config["default_container"])
     conda:

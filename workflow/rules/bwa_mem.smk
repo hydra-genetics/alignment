@@ -8,21 +8,21 @@ rule bwa_mem:
     input:
         reads=["prealignment/merged/{sample}_{type}_fastq1.fq.gz", "prealignment/merged/{sample}_{type}_fastq2.fq.gz"],
     output:
-        bam="alignment/{rule}/{sample}_{type}.bam",
+        bam=temp("alignment/bwa_mem/{sample}_{type}.bam"),
     params:
         index=config["reference"]["fasta"],
-        extra=config["bwa_mem"]["params"]["extra"],
-        sorting=config["bwa_mem"]["params"].get("sort", "samtools"),
-        sort_order=config["bwa_mem"]["params"].get("sort_order", "coordinate"),
+        extra=config["bwa_mem"]["extra"],
+        sorting=config["bwa_mem"].get("sort", "samtools"),
+        sort_order=config["bwa_mem"].get("sort_order", "coordinate"),
         sort_extra="-@ %s" % str(config["bwa_mem"]["threads"]),
     log:
-        "alignment/{rule}/{sample}_{type}.bam.log",
+        "alignment/bwa_mem/{sample}_{type}.bam.log",
     benchmark:
         repeat(
-            "alignment/{rule}/{sample}_{type}.bam.benchmark.tsv",
+            "alignment/bwa_mem/{sample}_{type}.bam.benchmark.tsv",
             config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("bwa_mem", config["default_resources"])["threads"]
+    threads: config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])
     container:
         config.get("bwa_mem", {}).get("container", config["default_container"])
     conda:

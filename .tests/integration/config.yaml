@@ -6,8 +6,24 @@ default_container: "docker://marrip/common:1.1.0"
 
 reference:
   fasta: "reference/WASH7P.fna"
+  dict: "reference/WASH7P.dict"
+  fna: "reference/WASH7P.fna"
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt"
+  fai: "reference/WASH7P.fna.fai"
+  pac: "reference/WASH7P.fna.pac"
+  sa: "reference/WASH7P.fna.sa"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  params:
-    extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
+  extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
+
+mark_duplicates:
+  container: "docker://gmsuppsala/somatic:develop"
+
+samtools_index:
+  container: "docker://gmsuppsala/somatic:develop"
+
+merge_bam:
+  container: "docker://gmsuppsala/somatic:develop"

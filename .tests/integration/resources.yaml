@@ -1,7 +1,7 @@
-bwa_mem:
-  threads: 2
-  time: "24:00:00"
-
 default_resources:
   threads: 1
   time: "12:00:00"
+
+bwa_mem:
+  threads: 2
+  time: "24:00:00"
