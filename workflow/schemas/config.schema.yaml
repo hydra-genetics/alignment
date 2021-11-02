@@ -125,5 +125,4 @@ properties:
     - samples
     - units
     - default_container
-    - bwa_mem
     - reference
