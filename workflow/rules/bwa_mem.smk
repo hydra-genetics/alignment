@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule bwa_mem:
     input:
-        reads=["prealignment/merged/{sample}_{type}_fastq1.fq.gz", "prealignment/merged/{sample}_{type}_fastq2.fq.gz"],
+        reads=["prealignment/merged/{sample}_{type}_fastq1.fastq.gz", "prealignment/merged/{sample}_{type}_fastq2.fastq.gz"],
     output:
         bam=temp("alignment/bwa_mem/{sample}_{type}.bam"),
     params:
