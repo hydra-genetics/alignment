@@ -20,7 +20,7 @@ rule bwa_mem:
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
         sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),
-        sort_extra="-@ %s" 
+        sort_extra="-@ %s"
         % str(config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
     log:
         "alignment/bwa_mem/{sample}_{type}.bam.log",
