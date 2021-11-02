@@ -68,6 +68,9 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded to bwa_mem
+      read_group:
+        type: string
+        description: RG string will be added to bam file
       sorting:
         type: string
         description: program hangling the bam sorting (default samtools)
@@ -77,8 +80,6 @@ properties:
       sort_extra:
         type: string
         description: parameters that should be forwarded to sorting (ie, number of threads)
-    required:
-      - extra
 
   extract_reads:
     type: object
@@ -124,5 +125,4 @@ properties:
     - samples
     - units
     - default_container
-    - bwa_mem
     - reference

@@ -11,10 +11,17 @@ rule bwa_mem:
         bam=temp("alignment/bwa_mem/{sample}_{type}.bam"),
     params:
         index=config["reference"]["fasta"],
-        extra=config["bwa_mem"]["extra"],
-        sorting=config["bwa_mem"].get("sort", "samtools"),
-        sort_order=config["bwa_mem"].get("sort_order", "coordinate"),
-        sort_extra="-@ %s" % str(config["bwa_mem"]["threads"]),
+        extra="%s %s"
+        % (
+            config.get("bwa_mem", {}).get("extra", ""),
+            config.get("bwa_mem", {}).get(
+                "read_group", "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
+            ),
+        ),
+        sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
+        sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),
+        sort_extra="-@ %s"
+        % str(config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
     log:
         "alignment/bwa_mem/{sample}_{type}.bam.log",
     benchmark:
