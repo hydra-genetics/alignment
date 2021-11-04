@@ -23,6 +23,9 @@ rule extract_reads:
             config.get("extract_reads", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("extract_reads", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("extract_reads", {}).get('threads', config["default_resources"]["threads"]),
+        time=config.get("extract_reads", {}).get('time', config["default_resources"]["time"]),
     container:
         config.get("extract_reads", {}).get("container", config["default_container"])
     conda:
