@@ -28,8 +28,8 @@ rule merge_bam:
         )
     threads: config.get("merge_bam", config["default_resources"]).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("merge_bam", config["default_resources"])["threads"],
-        time=config.get("merge_bam", config["default_resources"])["time"],
+        threads=config.get("merge_bam", {}).get('threads', config["default_resources"]["threads"]),
+        time=config.get("merge_bam", {}).get('time', config["default_resources"]["time"]),
     container:
         config.get("merge_bam", {}).get("container", config["default_container"])
     conda:
