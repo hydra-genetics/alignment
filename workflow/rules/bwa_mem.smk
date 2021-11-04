@@ -30,6 +30,9 @@ rule bwa_mem:
             config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("bwa_mem", config["default_resources"])["threads"],
+        time=config.get("bwa_mem", config["default_resources"])["time"],
     container:
         config.get("bwa_mem", {}).get("container", config["default_container"])
     conda:
