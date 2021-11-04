@@ -26,7 +26,7 @@ rule merge_bam:
             "alignment/merge_bam/{sample}_{type}.benchmark.tsv",
             config.get("merge_bam", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("merge_bam", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("merge_bam", {}).get("threads", config["default_resources"]["threads"])
     resources:
         threads=config.get("merge_bam", {}).get('threads', config["default_resources"]["threads"]),
         time=config.get("merge_bam", {}).get('time', config["default_resources"]["time"]),
