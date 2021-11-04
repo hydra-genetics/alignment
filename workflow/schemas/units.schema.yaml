@@ -7,6 +7,9 @@ properties:
   type:
     type: string
     description: type of sample data Tumor, Normal, RNA (N|T|R)
+  platform:
+    type: string
+    description: sequence platform that have been used to generate data, ex NextSeq
   run:
     type: string
     description: sequencing run id
