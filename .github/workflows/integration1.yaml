@@ -12,8 +12,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  integration-small:
-    name: integration small data set
+  integration-small-conda:
+    name: integration small data set conda
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -37,15 +37,32 @@ jobs:
         working-directory: .tests/integration
         run: |
           mamba install -c conda-forge -c bioconda snakemake singularity
-      - name: Integration test alignment on CPU, conda
-        working-directory: .tests/integration
-        run: |
-          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-conda alignment/bwa_mem/NA12878_N.bam && rm -r alignment
-      - name: Integration test alignment on CPU, singularity
-        working-directory: .tests/integration
-        run: |
-          snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-singularity alignment/bwa_mem/NA12878_N.bam && rm -r alignment
-      - name: Integration test alignment on GPU, singularity
-        working-directory: .tests/integration
-        run: |
           snakemake --cores 2 -s ../../workflow/Snakefile -j 2 --use-singularity alignment/apply_bqsr_GPU/NA12878_N.bqsr.dedup.bam && rm -r alignment
+  integration-small-singularity:
+    name: integration small data set singularity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Add conda to system path
+        run: |
+          echo $CONDA/bin >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          conda install -c conda-forge mamba
+      - name: Install requirements.txt
+        run: |
+          pip install -r requirements.txt
+      - name: Install requirements.test.txt
+        run: |
+          pip install -r requirements.test.txt
+      - name: Install singularity
+        run: |
+          mamba install -c conda-forge -c bioconda singularity
+      - name: Integration test - small dataset
+        working-directory: .tests/integration
+        run: |
+          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --use-singularity --singularity-args  " --cleanenv --bind /home/runner "

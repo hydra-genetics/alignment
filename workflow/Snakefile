@@ -5,10 +5,14 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/extract_reads.smk"
 include: "rules/bwa_mem.smk"
 include: "rules/align_dedup_gpu.smk"
 include: "rules/bqsr_gpu.smk"
 include: "rules/apply_bqsr_gpu.smk"
+include: "rules/mark_duplicates.smk"
+include: "rules/samtools_index.smk"
+include: "rules/merge_bam.smk"
 
 
 report: "report/workflow.rst"

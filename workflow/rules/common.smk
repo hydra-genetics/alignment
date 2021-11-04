@@ -10,6 +10,7 @@ from snakemake.utils import validate
 from snakemake.utils import min_version
 
 from hydra_genetics.utils.resources import load_resources
+from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
 
@@ -45,9 +46,19 @@ wildcard_constraints:
     type="N|T|R",
 
 
+if config.get("alignment_software", None) == "gpu":
+    # extract_reads_input = {"bam": "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam", "bai": "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"}
+    extract_reads_input = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"
+    extract_reads_input_bai = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam.bai"
+else:
+    # extract_reads_input = {"bam": "alignment/bwa_mem/{sample}_{type}.bam", "bai": "alignment/bwa_mem/{sample}_{type}.bam.bai"}
+    extract_reads_input = "alignment/bwa_mem/{sample}_{type}.bam"
+    extract_reads_input_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
+
+
 def compile_output_list(wildcards: snakemake.io.Wildcards):
     return [
-        "alignment/bwa_mem/%s_%s.bam" % (sample, unit_type)
+        "alignment/merge_bam/%s_%s.bam" % (sample, type)
         for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
+        for type in get_unit_types(units, sample)
     ]

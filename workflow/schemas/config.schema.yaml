@@ -2,6 +2,8 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake configuration file
 type: object
 properties:
+  alignment_software:
+    type: string
   samples:
     type: string
   units:
@@ -14,8 +16,45 @@ properties:
       fasta:
         type: string
         description: fasta reference file
+      dict:
+        type: string
+        description: fasta reference dict file
+      fna:
+        type: string
+        description: fasta reference fna file
+      amb:
+        type: string
+        description: fasta reference amb file
+      ann:
+        type: string
+        description: fasta reference ann file
+      bwt:
+        type: string
+        description: fasta reference bwt file
+      fai:
+        type: string
+        description: fasta reference fai file
+      pac:
+        type: string
+        description: fasta reference pac file
+      sa:
+        type: string
+        description: fasta reference sa file
+      skip_chrs:
+        type: array
+        items:
+            type: string
+        description: list of chromosomes that should be skipped
     required:
       - fasta
+      - dict
+      - fna
+      - amb
+      - ann
+      - bwt
+      - fai
+      - pac
+      - sa
 
   bwa_mem:
     type: object
@@ -26,27 +65,40 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-      params:
-        type: object
-        properties:
-          extra:
-            type: string
-            description: parameters that should be forwarded to bwa_mem
-          sorting:
-            type: string
-            description: program hangling the bam sorting (default samtools)
-          sort_order:
-            type: string
-            description: how the bam file should be sorted (default coordinate)
-          sort_extra:
-            type: string
-            description: parameters that should be forwarded to sorting (ie, number of threads)
-        required:
-          - extra
-    required:
-      - params
-
+      extra:
+        type: string
+        description: parameters that should be forwarded to bwa_mem
+      read_group:
+        type: string
+        description: RG string will be added to bam file
+      sorting:
+        type: string
+        description: program hangling the bam sorting (default samtools)
+      sort_order:
+        type: string
+        description: how the bam file should be sorted (default coordinate)
+      sort_extra:
+        type: string
+        description: parameters that should be forwarded to sorting (ie, number of threads)
+      
   align_dedup_gpu:
+      extra:
+        type: string
+        description: parameters that should be forwarded to bwa_mem
+      read_group:
+        type: string
+        description: RG string will be added to bam file
+      sorting:
+        type: string
+        description: program hangling the bam sorting (default samtools)
+      sort_order:
+        type: string
+        description: how the bam file should be sorted (default coordinate)
+      sort_extra:
+        type: string
+        description: parameters that should be forwarded to sorting (ie, number of threads)
+
+  extract_reads:
     type: object
     properties:
       benchmark_repeats:
@@ -78,6 +130,36 @@ properties:
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated
+        
+  mark_duplicates:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for mark_duplicates
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  samtools_index:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for samtools_index
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  merge_bam:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for merge_bam
+      container:
+        type: string
+        description: name or path to docker/singularity container
 
   required:
     - samples
