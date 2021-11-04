@@ -82,23 +82,6 @@ properties:
         description: parameters that should be forwarded to sorting (ie, number of threads)
       
   align_dedup_gpu:
-      extra:
-        type: string
-        description: parameters that should be forwarded to bwa_mem
-      read_group:
-        type: string
-        description: RG string will be added to bam file
-      sorting:
-        type: string
-        description: program hangling the bam sorting (default samtools)
-      sort_order:
-        type: string
-        description: how the bam file should be sorted (default coordinate)
-      sort_extra:
-        type: string
-        description: parameters that should be forwarded to sorting (ie, number of threads)
-
-  extract_reads:
     type: object
     properties:
       benchmark_repeats:
@@ -116,6 +99,16 @@ properties:
           ID:
             type: string
             description: Read group info
+
+  extract_reads:
+     type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for extract_reads
+      container:
+        type: string
+        description: name or path to docker/singularity container
 
   bqsr_gpu:
     type: object
