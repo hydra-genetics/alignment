@@ -21,9 +21,9 @@ rule samtools_index:
         )
     container:
         config.get("samtools_index", {}).get("container", "default_container")
-    threads: config.get("samtools_index", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("samtools_index" , {}).get('threads', config["default_resources"]["threads"]),
+        threads=config.get("samtools_index", {}).get('threads', config["default_resources"]["threads"]),
         time=config.get("samtools_index", {}).get('time', config["default_resources"]["time"]),
     conda:
         "../envs/samtools_index.yaml"

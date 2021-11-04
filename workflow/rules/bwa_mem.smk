@@ -29,7 +29,7 @@ rule bwa_mem:
             "alignment/bwa_mem/{sample}_{type}.bam.benchmark.tsv",
             config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("bwa_mem", {}).get("threads", config["default_resources"]["threads"])
     resources:
         threads=config.get("bwa_mem", {}).get('threads', config["default_resources"]["threads"]),
         time=config.get("bwa_mem", {}).get('time', config["default_resources"]["time"]),
