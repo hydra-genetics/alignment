@@ -33,7 +33,7 @@ jobs:
       - name: Install requirements.test.txt
         run: |
           pip install -r requirements.test.txt
-       - name: Integration softwares
+      - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
           mamba install -c conda-forge -c bioconda snakemake singularity
