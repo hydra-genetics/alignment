@@ -22,7 +22,7 @@ rule mark_duplicates:
             "alignment/mark_duplicates/{sample}_{type}_{chr}.benchmark.tsv",
             config.get("mark_duplicates", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("mark_duplicates", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("mark_duplicates", {}).get("threads", config["default_resources"]["threads"])
     resources:
         threads=config.get("mark_duplicates", {}).get('threads', config["default_resources"]["threads"]),
         time=config.get("mark_duplicates", {}).get('time', config["default_resources"]["time"]),
