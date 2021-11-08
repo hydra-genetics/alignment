@@ -20,7 +20,7 @@ rule samtools_index:
             config.get("samtools_index", {}).get("benchmark_repeats", 1),
         )
     container:
-        config.get("samtools_index", {}).get("container", "default_container")
+        config.get("samtools_index", {}).get("container", config["default_container"])
     threads: config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"])
     resources:
         threads=config.get("samtools_index", {}).get('threads', config["default_resources"]["threads"]),
