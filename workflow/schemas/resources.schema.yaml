@@ -11,6 +11,15 @@ properties:
       time:
         type: string
         description: max execution time for the 'bwa_mem' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'bwa_mem'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'bwa_mem'
 
   extract_reads:
     type: object
@@ -21,6 +30,15 @@ properties:
       time:
         type: string
         description: max execution time for the 'extract_reads' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'extract_reads'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'extract_reads'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'extract_reads'
 
   mark_duplicates:
     type: object
@@ -31,6 +49,15 @@ properties:
       time:
         type: string
         description: max execution time for the 'mark_duplicates' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'mark_duplicates'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'mark_duplicates'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'mark_duplicates'
 
   samtools_index:
     type: object
@@ -41,6 +68,15 @@ properties:
       time:
         type: string
         description: max execution time for the 'samtools_index' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'samtools_index'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'samtools_index'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'samtools_index'
 
   merge_bam:
     type: object
@@ -51,6 +87,15 @@ properties:
       time:
         type: string
         description: max execution time for the 'merge_bam' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'merge_bam'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'merge_bam'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'merge_bam'
 
   default_resources:
     type: object
@@ -61,6 +106,21 @@ properties:
       time:
         type: string
         description: default max execution time for a rule
+      mem_mb:
+        type: integer
+        description: default memory used for a rule
+      mem_per_cpu:
+        type: integer
+        description: default memory used per cpu for a rule
+      partition:
+        type: string
+        description: default partition to use on the cluser for a rule
+    required:
+      - threads
+      - time
+      - mem_mb
+      - mem_per_cpu
+      - partition
 
   required:
     - default_resources
