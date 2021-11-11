@@ -25,6 +25,9 @@ rule samtools_index:
     resources:
         threads=config.get("samtools_index", {}).get('threads', config["default_resources"]["threads"]),
         time=config.get("samtools_index", {}).get('time', config["default_resources"]["time"]),
+        mem_mb=config.get("samtools_index", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("samtools_index", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("samtools_index", {}).get("partition", config["default_resources"]["partition"]),
     conda:
         "../envs/samtools_index.yaml"
     message:
