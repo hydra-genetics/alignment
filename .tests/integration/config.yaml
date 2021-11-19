@@ -2,7 +2,7 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
-default_container: "docker://marrip/common:1.1.0"
+default_container: "docker://hydragenetics/common:0.0.1"
 
 reference:
   fasta: "reference/WASH7P.fna"
@@ -20,10 +20,10 @@ bwa_mem:
   extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
 
 mark_duplicates:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/picard:2.25.0"
 
 samtools_index:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 merge_bam:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
