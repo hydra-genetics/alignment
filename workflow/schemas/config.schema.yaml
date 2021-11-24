@@ -19,9 +19,6 @@ properties:
       dict:
         type: string
         description: fasta reference dict file
-      fna:
-        type: string
-        description: fasta reference fna file
       amb:
         type: string
         description: fasta reference amb file
@@ -48,7 +45,6 @@ properties:
     required:
       - fasta
       - dict
-      - fna
       - amb
       - ann
       - bwt
