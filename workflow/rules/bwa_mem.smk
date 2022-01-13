@@ -15,7 +15,7 @@ rule bwa_mem:
         % (
             config.get("bwa_mem", {}).get("extra", ""),
             config.get("bwa_mem", {}).get(
-                "read_group", "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
+                "read_group", "-R '@RG\\tID:{sample}\\tSM:{sample}_{type}\\tPL:illumina\\tPU:{sample}' -v 1 "
             ),
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
