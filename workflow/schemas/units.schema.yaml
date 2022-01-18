@@ -10,9 +10,15 @@ properties:
   platform:
     type: string
     description: sequence platform that have been used to generate data, ex NextSeq
+  machine:
+    type: string
+    description: machine id
   run:
     type: string
-    description: sequencing run id
+    description: sequencing run id (flowcell id)
+  barcode:
+    type: string
+    description: flowcell barcode
   lane:
     type: string
     description: lane number
@@ -28,8 +34,11 @@ properties:
 required:
   - sample
   - type
+  - platform
+  - machine
   - run
   - lane
+  - barcode
   - fastq1
   - fastq2
   - adapter

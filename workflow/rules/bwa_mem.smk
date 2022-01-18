@@ -6,9 +6,9 @@ __license__ = "GPL-3"
 
 rule bwa_mem:
     input:
-        reads=["prealignment/merged/{sample}_{type}_fastq1.fastq.gz", "prealignment/merged/{sample}_{type}_fastq2.fastq.gz"],
+        reads=["prealignment/fastp/{sample}_{run}_{lane}_{type}_fastq1.fastq.gz", "prealignment/fastp/{sample}_{run}_{lane}_{type}_fastq2.fastq.gz"],
     output:
-        bam=temp("alignment/bwa_mem/{sample}_{type}.bam"),
+        bam=temp("alignment/bwa_mem/{sample}_{run}_{lane}_{type}.bam"),
     params:
         index=config["reference"]["fasta"],
         extra="%s %s"
@@ -23,10 +23,10 @@ rule bwa_mem:
         sort_extra="-@ %s"
         % str(config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
     log:
-        "alignment/bwa_mem/{sample}_{type}.bam.log",
+        "alignment/bwa_mem/{sample}_{run}_{lane}_{type}.bam.log",
     benchmark:
         repeat(
-            "alignment/bwa_mem/{sample}_{type}.bam.benchmark.tsv",
+            "alignment/bwa_mem/{sample}_{run}_{lane}_{type}.bam.benchmark.tsv",
             config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("bwa_mem", {}).get("threads", config["default_resources"]["threads"])
@@ -41,6 +41,65 @@ rule bwa_mem:
     conda:
         "../envs/bwa_mem.yaml"
     message:
-        "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.type} with bwa and sort"
+        "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.run}_{wildcards.lane}_{wildcards.type} with bwa and sort"
+    wrapper:
+        "0.78.0/bio/bwa/mem"
+
+rule bwa_mem_merge:
+    input:
+        lambda wildcards: ["alignment/bwa_mem/{sample}_%s_%s_{type}.bam" % (u.run, u.lane)
+                           for u in get_units(units, wildcards)],
+    output:
+        temp("alignment/bwa_mem/{sample}_{type}.unsorted.bam"),
+    params:
+        extra=config.get("bwa_mem_merge", {}).get("extra", ""),
+    log:
+        "alignment/bwa_mem/{sample}_{type}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem_merge/{sample}_{type}.bam_merge.benchmark.tsv",
+            config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("bwa_mem_merge", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("bwa_mem_merge", {}).get('threads', config["default_resources"]["threads"]),
+        time=config.get("bwa_mem_merge", {}).get('time', config["default_resources"]["time"]),
+        mem_mb=config.get("bwa_mem_merge", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("bwa_mem_merge", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("bwa_mem_merge", {}).get("partition", config["default_resources"]["partition"]),
+    container:
+        config.get("bwa_mem_merge", {}).get("container", config["default_container"])
+    conda:
+        "../envs/bwa_mem_merge.yaml"
+    message:
+        "{rule}: Merge alignment/{rule}/{wildcards.sample}_{wildcards.type} with samtools"
+    wrapper:
+        "(samtools merge {extra} -p {output} {input}) &> {log}"
+
+rule bwa_mem_sort:
+    input:
+        "alignment/bwa_mem/{sample}_{type}.unsorted.bam",
+    output:
+        temp("alignment/bwa_mem/{sample}_{type}.bam"),
+    log:
+        "alignment/bwa_mem/{sample}_{type}.bam_sort.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem/{sample}_{type}.bam_sort.benchmark.tsv",
+            config.get("bwa_mem_sort", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("bwa_mem_sort", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("bwa_mem_sort", {}).get('threads', config["default_resources"]["threads"]),
+        time=config.get("bwa_mem_sort", {}).get('time', config["default_resources"]["time"]),
+        mem_mb=config.get("bwa_mem_sort", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("bwa_mem_sort", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("bwa_mem_sort", {}).get("partition", config["default_resources"]["partition"]),
+    container:
+        config.get("bwa_mem_sort", {}).get("container", config["default_container"])
+    conda:
+        "../envs/bw_mem_sort.yaml"
+    message:
+        "{rule}: Sort align alignment/{rule}/{wildcards.sample}_{wildcards.type} with samtools"
     wrapper:
         "0.78.0/bio/bwa/mem"
