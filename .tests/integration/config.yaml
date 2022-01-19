@@ -16,7 +16,6 @@ reference:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
 
 mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
