@@ -3,6 +3,14 @@ __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
+def generate_read_group(wildcards):
+    return "-R '@RG\\tID:%s\\tSM:%s\\tPL:%s\\tPU:%s' -v 1 ".format(
+    "%s.%s".format(wildcards.sample, wildcards.lane),
+    "%s.%s".format(wildcards.sample, wildcards.type),
+    get_unit_platform(units, wildcards),
+    "%s.%s.%s".format(get_unit_run(units, wildcards),
+                      wildcards.lane,
+                      get_unit_barcode(units, wildcards)))
 
 rule bwa_mem:
     input:
@@ -11,12 +19,10 @@ rule bwa_mem:
         bam=temp("alignment/bwa_mem/{sample}_{run}_{lane}_{type}.bam"),
     params:
         index=config["reference"]["fasta"],
-        extra="%s %s"
+        extra=lambda wildcards: "%s %s"
         % (
             config.get("bwa_mem", {}).get("extra", ""),
-            config.get("bwa_mem", {}).get(
-                "read_group", "-R '@RG\\tID:{sample}\\tSM:{sample}_{type}\\tPL:illumina\\tPU:{sample}' -v 1 "
-            ),
+            config.get("bwa_mem", {}).get("read_group", generate_read_group(wildcards)),
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
         sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),
