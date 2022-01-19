@@ -14,6 +14,15 @@ from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
 
+def generate_read_group(wildcards):
+    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}' -v 1 ".format(
+    "{}.{}".format(wildcards.sample, wildcards.lane),
+    "{}_{}".format(wildcards.sample, wildcards.type),
+    get_unit_platform(units, wildcards),
+    "{}.{}.{}".format(get_unit_run(units, wildcards),
+                      wildcards.lane,
+                      get_unit_barcode(units, wildcards)))
+
 min_version("6.8.0")
 
 

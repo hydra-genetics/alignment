@@ -2,7 +2,7 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
-default_container: "docker://marrip/common:1.1.0"
+default_container: "docker://hydragenetics/common:0.0.1"
 
 reference:
   fasta: "reference/WASH7P.fna"
@@ -16,5 +16,4 @@ reference:
   sa: "reference/WASH7P.fna.sa"
 
 bwa_mem:
-  container: "docker://gmsuppsala/somatic:develop"
-  extra: r"-R '@RG\tID:{sample}\tSM:{sample}\tPL:illumina\tPU:{sample} -v 1 '"
+  container: "docker://hydragenetics/bwa_mem:0.7.17"

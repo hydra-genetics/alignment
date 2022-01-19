@@ -3,14 +3,6 @@ __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
-def generate_read_group(wildcards):
-    return "-R '@RG\\tID:%s\\tSM:%s\\tPL:%s\\tPU:%s' -v 1 ".format(
-    "%s.%s".format(wildcards.sample, wildcards.lane),
-    "%s.%s".format(wildcards.sample, wildcards.type),
-    get_unit_platform(units, wildcards),
-    "%s.%s.%s".format(get_unit_run(units, wildcards),
-                      wildcards.lane,
-                      get_unit_barcode(units, wildcards)))
 
 rule bwa_mem:
     input:
@@ -58,12 +50,12 @@ rule bwa_mem_merge:
     output:
         temp("alignment/bwa_mem/{sample}_{type}.unsorted.bam"),
     params:
-        extra=config.get("bwa_mem_merge", {}).get("extra", ""),
+        config.get("bwa_mem_merge", {}).get("extra", ""),
     log:
         "alignment/bwa_mem/{sample}_{type}.bam.log",
     benchmark:
         repeat(
-            "alignment/bwa_mem_merge/{sample}_{type}.bam_merge.benchmark.tsv",
+            "alignment/bwa_mem/{sample}_{type}.bam_merge.benchmark.tsv",
             config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("bwa_mem_merge", {}).get("threads", config["default_resources"]["threads"])
@@ -80,13 +72,13 @@ rule bwa_mem_merge:
     message:
         "{rule}: Merge alignment/{rule}/{wildcards.sample}_{wildcards.type} with samtools"
     wrapper:
-        "(samtools merge {extra} -p {output} {input}) &> {log}"
+        "v0.86.0/bio/samtools/merge"
 
 rule bwa_mem_sort:
     input:
         "alignment/bwa_mem/{sample}_{type}.unsorted.bam",
     output:
-        temp("alignment/bwa_mem/{sample}_{type}.bam"),
+        "alignment/bwa_mem/{sample}_{type}.bam",
     log:
         "alignment/bwa_mem/{sample}_{type}.bam_sort.log",
     benchmark:
@@ -108,4 +100,4 @@ rule bwa_mem_sort:
     message:
         "{rule}: Sort align alignment/{rule}/{wildcards.sample}_{wildcards.type} with samtools"
     wrapper:
-        "0.78.0/bio/bwa/mem"
+        "v0.86.0/bio/samtools/sort"
