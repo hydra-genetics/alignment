@@ -24,8 +24,8 @@ rule extract_reads:
         )
     threads: config.get("extract_reads", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("extract_reads", {}).get('threads', config["default_resources"]["threads"]),
-        time=config.get("extract_reads", {}).get('time', config["default_resources"]["time"]),
+        threads=config.get("extract_reads", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("extract_reads", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("extract_reads", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("extract_reads", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("extract_reads", {}).get("partition", config["default_resources"]["partition"]),
