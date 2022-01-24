@@ -90,18 +90,18 @@ properties:
         type: string
         description: parameters that should be forwarded to bwa_mem_merge
 
-  bwa_mem_sort:
+  samtools_sort:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for bwa_mem_sort
+        description: set number of times benchmark should be repeated for samtools_sort
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to bwa_mem_sort
+        description: parameters that should be forwarded to samtools_sort
 
   extract_reads:
     type: object

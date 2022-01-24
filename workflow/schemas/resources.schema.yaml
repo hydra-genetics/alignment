@@ -78,6 +78,25 @@ properties:
         type: string
         description: partition to use on the cluster for 'samtools_index'
 
+  samtools_sort:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by the 'samtools_sort' rule
+      time:
+        type: string
+        description: max execution time for the 'samtools_sort' rule
+      mem_mb:
+        type: integer
+        description: memory used for 'samtools_sort'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'samtools_sort'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'samtools_sort'
+
   merge_bam:
     type: object
     properties:
