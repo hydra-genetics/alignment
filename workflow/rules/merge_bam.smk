@@ -16,7 +16,7 @@ rule merge_bam:
             ),
         ),
     output:
-        bam=temp("alignment/merge_bam/{sample}_{type}.bam"),
+        bam=temp("alignment/merge_bam/{sample}_{type}.bam_unsorted"),
     params:
         extra=config.get("merge_bam", {}).get("extra", ""),
     log:
