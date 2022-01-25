@@ -11,7 +11,7 @@ rule samtools_sort:
     input:
         "{path_file}.bam_unsorted",
     output:
-        "{path_file}.bam",
+        temp("{path_file}.bam"),
     log:
         "{path_file}.samtools_sort.log",
     benchmark:
