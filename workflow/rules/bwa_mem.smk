@@ -76,4 +76,3 @@ rule bwa_mem_merge:
         "{rule}: Merge alignment/{rule}/{wildcards.sample}_{wildcards.type} with samtools"
     wrapper:
         "v0.86.0/bio/samtools/merge"
-

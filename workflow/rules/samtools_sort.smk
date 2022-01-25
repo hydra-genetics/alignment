@@ -34,4 +34,3 @@ rule samtools_sort:
         "{rule}: Sort align {wildcards.path_file} with samtools"
     wrapper:
         "v0.86.0/bio/samtools/sort"
-

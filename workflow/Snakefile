@@ -6,6 +6,7 @@ __license__ = "GPL-3"
 
 include: "rules/common.smk"
 include: "rules/extract_reads.smk"
+include: "rules/samtools_sort.smk"
 include: "rules/bwa_mem.smk"
 include: "rules/mark_duplicates.smk"
 include: "rules/samtools_index.smk"
