@@ -18,7 +18,7 @@ bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
 
 mark_duplicates:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/picard:2.25.0"
 
 samtools_index:
   container: "docker://hydragenetics/common:0.0.1"
