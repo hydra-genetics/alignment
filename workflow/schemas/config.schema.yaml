@@ -19,9 +19,6 @@ properties:
       dict:
         type: string
         description: fasta reference dict file
-      fna:
-        type: string
-        description: fasta reference fna file
       amb:
         type: string
         description: fasta reference amb file
@@ -48,7 +45,6 @@ properties:
     required:
       - fasta
       - dict
-      - fna
       - amb
       - ann
       - bwt
@@ -80,6 +76,32 @@ properties:
       sort_extra:
         type: string
         description: parameters that should be forwarded to sorting (ie, number of threads)
+
+  bwa_mem_merge:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for bwa_mem_merge
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to bwa_mem_merge
+
+  samtools_sort:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for samtools_sort
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to samtools_sort
 
   extract_reads:
     type: object

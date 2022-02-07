@@ -7,7 +7,6 @@ default_container: "docker://hydragenetics/common:0.0.1"
 reference:
   fasta: "reference/WASH7P.fna"
   dict: "reference/WASH7P.dict"
-  fna: "reference/WASH7P.fna"
   amb: "reference/WASH7P.fna.amb"
   ann: "reference/WASH7P.fna.ann"
   bwt: "reference/WASH7P.fna.bwt"
@@ -17,7 +16,6 @@ reference:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  extra: "-R '@RG\\tID:{sample}\\tSM:{sample}\\tPL:illumina\\tPU:{sample}' -v 1 "
 
 mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
@@ -26,4 +24,10 @@ samtools_index:
   container: "docker://hydragenetics/common:0.0.1"
 
 merge_bam:
+  container: "docker://hydragenetics/common:0.0.1"
+
+bwa_mem_merge:
+  container: "docker://hydragenetics/common:0.0.1"
+
+bwa_mem_sort:
   container: "docker://hydragenetics/common:0.0.1"

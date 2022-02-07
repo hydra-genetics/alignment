@@ -16,7 +16,7 @@ rule merge_bam:
             ),
         ),
     output:
-        bam=temp("alignment/merge_bam/{sample}_{type}.bam"),
+        bam=temp("alignment/merge_bam/{sample}_{type}.bam_unsorted"),
     params:
         extra=config.get("merge_bam", {}).get("extra", ""),
     log:
@@ -28,8 +28,8 @@ rule merge_bam:
         )
     threads: config.get("merge_bam", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("merge_bam", {}).get('threads', config["default_resources"]["threads"]),
-        time=config.get("merge_bam", {}).get('time', config["default_resources"]["time"]),
+        threads=config.get("merge_bam", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("merge_bam", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("merge_bam", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("merge_bam", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("merge_bam", {}).get("partition", config["default_resources"]["partition"]),
