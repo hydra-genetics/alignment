@@ -29,7 +29,7 @@ rule samtools_sort:
     container:
         config.get("samtools_sort", {}).get("container", config["default_container"])
     conda:
-        "../envs/samtools_sort.yaml"
+        "../envs/samtools.yaml"
     message:
         "{rule}: Sort align {wildcards.path_file} with samtools"
     wrapper:
