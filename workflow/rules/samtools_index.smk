@@ -29,7 +29,7 @@ rule samtools_index:
         mem_per_cpu=config.get("samtools_index", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("samtools_index", {}).get("partition", config["default_resources"]["partition"]),
     conda:
-        "../envs/samtools_index.yaml"
+        "../envs/samtools.yaml"
     message:
         "{rule}: Index {wildcards.file} bam file"
     wrapper:
