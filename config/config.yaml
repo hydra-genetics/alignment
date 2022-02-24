@@ -17,3 +17,5 @@ reference:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
+
+trimmer_software: "fastp_pe"
