@@ -42,3 +42,8 @@ jobs:
         run: |
           mamba install -c conda-forge -c bioconda snakemake singularity
           snakemake -n -s ../../workflow/Snakefile
+      - name: snakemake dry run fastp_pe config
+        working-directory: .tests/integration
+        run: |
+          mamba install -c conda-forge -c bioconda snakemake singularity
+          snakemake -n -s ../../workflow/Snakefile --configfile config_fastp_pe.yaml

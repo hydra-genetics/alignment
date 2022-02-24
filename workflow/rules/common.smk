@@ -56,6 +56,17 @@ wildcard_constraints:
     type="N|T|R",
 
 
+if config["trimmer_software"] == "fastp_pe":
+    alignment_input = lambda wilcards: [
+                                            "prealignment/fastp_pe/{sample}_{run}_{lane}_{type}_fastq1.fastq.gz",
+                                            "prealignment/fastp_pe/{sample}_{run}_{lane}_{type}_fastq2.fastq.gz",
+                                       ]
+elif config["trimmer_software"] == "None":
+    alignment_input = lambda wildcards: [
+                                        get_fastq_file(units, wildcards, "fastq1"),
+                                        get_fastq_file(units, wildcards, "fastq2"),
+                                      ]
+
 if config.get("alignment_software", None) == "gpu":
     # extract_reads_input = {"bam": "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam", "bai": "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"}
     extract_reads_input = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"
