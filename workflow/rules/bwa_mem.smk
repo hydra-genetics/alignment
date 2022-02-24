@@ -6,10 +6,7 @@ __license__ = "GPL-3"
 
 rule bwa_mem:
     input:
-        reads=[
-            "prealignment/fastp_pe/{sample}_{run}_{lane}_{type}_fastq1.fastq.gz",
-            "prealignment/fastp_pe/{sample}_{run}_{lane}_{type}_fastq2.fastq.gz",
-        ],
+        reads=lambda wildcards: alignment_input(wildcards),
     output:
         bam=temp("alignment/bwa_mem/{sample}_{run}_{lane}_{type}.bam"),
     params:

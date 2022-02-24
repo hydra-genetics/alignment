@@ -6,6 +6,10 @@ properties:
     type: string
   samples:
     type: string
+  trimmer_software:
+    type: string
+    description: Set input files for alignment software, if "None" is set the files in units.tsv will be used.
+    pattern: "^(fastp_pe|None)$"
   units:
     type: string
   default_container:
@@ -143,8 +147,9 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
-  required:
-    - samples
-    - units
-    - default_container
-    - reference
+required:
+  - samples
+  - units
+  - default_container
+  - reference
+  - trimmer_software
