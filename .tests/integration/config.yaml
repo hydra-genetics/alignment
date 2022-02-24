@@ -23,6 +23,8 @@ mark_duplicates:
 samtools_index:
   container: "docker://hydragenetics/common:0.0.1"
 
+trimmer_software: "None"
+
 merge_bam:
   container: "docker://hydragenetics/common:0.0.1"
 

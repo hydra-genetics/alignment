@@ -141,5 +141,5 @@ properties:
       - mem_per_cpu
       - partition
 
-  required:
-    - default_resources
+required:
+  - default_resources
