@@ -2,7 +2,7 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
-default_container: "docker://hydragenetics/common:0.0.1"
+default_container: "docker://hydragenetics/common:0.1.0"
 
 reference:
   fasta: "reference/WASH7P.fna"
@@ -21,9 +21,15 @@ mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
 samtools_index:
-  container: "docker://hydragenetics/common:0.0.1"
+  container: "docker://hydragenetics/common:0.1.0"
 
 trimmer_software: "None"
 
 merge_bam:
-  container: "docker://hydragenetics/common:0.0.1"
+  container: "docker://hydragenetics/common:0.1.0"
+
+bwa_mem_merge:
+  container: "docker://hydragenetics/common:0.1.0"
+
+bwa_mem_sort:
+  container: "docker://hydragenetics/common:0.1.0"

@@ -14,9 +14,9 @@ properties:
   machine:
     type: string
     description: machine id
-  run:
+  flowcell:
     type: string
-    description: sequencing run id (flowcell id)
+    description: flowcell id
   barcode:
     type: string
     description: flowcell barcode
@@ -37,7 +37,7 @@ required:
   - type
   - platform
   - machine
-  - run
+  - flowcell
   - lane
   - barcode
   - fastq1
