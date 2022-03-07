@@ -8,7 +8,7 @@ rule bwa_mem:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
     output:
-        bam=temp("alignment/bwa_mem/{sample}_{run}_{lane}_{type}.bam"),
+        bam=temp("alignment/bwa_mem/{sample}_{flowcell}_{lane}_{type}.bam"),
     params:
         index=config["reference"]["fasta"],
         extra=lambda wildcards: "%s %s"
@@ -21,10 +21,10 @@ rule bwa_mem:
         sort_extra="-@ %s"
         % str(config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
     log:
-        "alignment/bwa_mem/{sample}_{run}_{lane}_{type}.bam.log",
+        "alignment/bwa_mem/{sample}_{flowcell}_{lane}_{type}.bam.log",
     benchmark:
         repeat(
-            "alignment/bwa_mem/{sample}_{run}_{lane}_{type}.bam.benchmark.tsv",
+            "alignment/bwa_mem/{sample}_{flowcell}_{lane}_{type}.bam.benchmark.tsv",
             config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("bwa_mem", {}).get("threads", config["default_resources"]["threads"])
@@ -39,14 +39,16 @@ rule bwa_mem:
     conda:
         "../envs/bwa_mem.yaml"
     message:
-        "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.run}_{wildcards.lane}_{wildcards.type} with bwa and sort"
+        "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.flowcell}_{wildcards.lane}_{wildcards.type} with bwa and sort"
     wrapper:
         "0.78.0/bio/bwa/mem"
 
 
 rule bwa_mem_merge:
     input:
-        lambda wildcards: ["alignment/bwa_mem/{sample}_%s_%s_{type}.bam" % (u.run, u.lane) for u in get_units(units, wildcards)],
+        lambda wildcards: [
+            "alignment/bwa_mem/{sample}_%s_%s_{type}.bam" % (u.flowcell, u.lane) for u in get_units(units, wildcards)
+        ],
     output:
         temp("alignment/bwa_mem/{sample}_{type}.bam_unsorted"),
     params:
