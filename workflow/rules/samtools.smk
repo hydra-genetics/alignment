@@ -101,7 +101,7 @@ rule samtools_merge_bam:
     conda:
         "../envs/samtools.yaml"
     message:
-        "{rule}: Merge chr bam files, creating {output}"
+        "{rule}: merge chr bam files, creating {output}"
     shell:
         "(samtools merge -c -p {params.extra} {output} {input}) &> {log}"
 
@@ -132,6 +132,6 @@ rule samtools_sort:
     conda:
         "../envs/samtools.yaml"
     message:
-        "{rule}: Sort bam file {input} using samtools"
+        "{rule}: sort bam file {input} using samtools"
     wrapper:
         "v0.86.0/bio/samtools/sort"
