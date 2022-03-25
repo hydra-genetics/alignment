@@ -24,7 +24,7 @@ def generate_read_group(wildcards):
     )
 
 
-min_version("6.8.0")
+min_version("6.10")
 
 
 ### Set and validate config file
@@ -56,30 +56,28 @@ wildcard_constraints:
     type="N|T|R",
 
 
-if config["trimmer_software"] == "fastp_pe":
+if config.get("trimmer_software", "None") == "fastp_pe":
     alignment_input = lambda wilcards: [
         "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz",
         "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq2.fastq.gz",
     ]
-elif config["trimmer_software"] == "None":
+elif config.get("trimmer_software", "None") == "None":
     alignment_input = lambda wildcards: [
         get_fastq_file(units, wildcards, "fastq1"),
         get_fastq_file(units, wildcards, "fastq2"),
     ]
 
-if config.get("alignment_software", None) == "gpu":
-    # extract_reads_input = {"bam": "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam", "bai": "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"}
-    extract_reads_input = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"
-    extract_reads_input_bai = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam.bai"
-else:
-    # extract_reads_input = {"bam": "alignment/bwa_mem/{sample}_{type}.bam", "bai": "alignment/bwa_mem/{sample}_{type}.bam.bai"}
-    extract_reads_input = "alignment/bwa_mem/{sample}_{type}.bam"
-    extract_reads_input_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
+if config.get("alignment_software", "None") == "gpu":
+    samtools_extract_reads_input = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"
+    samtools_extract_reads_input_bai = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam.bai"
+elif config.get("alignment_software", "None") in ["None", "bwa"]:
+    samtools_extract_reads_input = "alignment/bwa_mem/{sample}_{type}.bam"
+    samtools_extract_reads_input_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
 
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
     return [
-        "alignment/merge_bam/%s_%s.bam" % (sample, type)
+        "alignment/samtools_merge_bam/%s_%s.bam" % (sample, type)
         for sample in get_samples(samples)
         for type in get_unit_types(units, sample)
     ]

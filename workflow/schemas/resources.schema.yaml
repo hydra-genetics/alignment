@@ -2,138 +2,25 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake configuration file
 type: object
 properties:
-  bwa_mem:
+  default_resources:
     type: object
+    description: default resource definitions
     properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'bwa_mem' rule
-      time:
-        type: string
-        description: max execution time for the 'bwa_mem' rule
       mem_mb:
         type: integer
-        description: memory used for 'bwa_mem'
+        description: memory in MB used per cpu
       mem_per_cpu:
         type: integer
         description: memory used per cpu for 'bwa_mem'
       partition:
         type: string
-        description: partition to use on the cluster for 'bwa_mem'
-
-  extract_reads:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'extract_reads' rule
+        description: partition to use on cluster
       time:
         type: string
-        description: max execution time for the 'extract_reads' rule
-      mem_mb:
-        type: integer
-        description: memory used for 'extract_reads'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'extract_reads'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'extract_reads'
-
-  mark_duplicates:
-    type: object
-    properties:
+        description: max execution time
       threads:
         type: integer
-        description: number of threads that will be used by the 'mark_duplicates' rule
-      time:
-        type: string
-        description: max execution time for the 'mark_duplicates' rule
-      mem_mb:
-        type: integer
-        description: memory used for 'mark_duplicates'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'mark_duplicates'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'mark_duplicates'
-
-  samtools_index:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'samtools_index' rule
-      time:
-        type: string
-        description: max execution time for the 'samtools_index' rule
-      mem_mb:
-        type: integer
-        description: memory used for 'samtools_index'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'samtools_index'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'samtools_index'
-
-  samtools_sort:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'samtools_sort' rule
-      time:
-        type: string
-        description: max execution time for the 'samtools_sort' rule
-      mem_mb:
-        type: integer
-        description: memory used for 'samtools_sort'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'samtools_sort'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'samtools_sort'
-
-  merge_bam:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by the 'merge_bam' rule
-      time:
-        type: string
-        description: max execution time for the 'merge_bam' rule
-      mem_mb:
-        type: integer
-        description: memory used for 'merge_bam'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'merge_bam'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'merge_bam'
-
-  default_resources:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by a rule
-      time:
-        type: string
-        description: default max execution time for a rule
-      mem_mb:
-        type: integer
-        description: default memory used for a rule
-      mem_per_cpu:
-        type: integer
-        description: default memory used per cpu for a rule
-      partition:
-        type: string
-        description: default partition to use on the cluser for a rule
+        description:  number of threads to be available
     required:
       - threads
       - time
@@ -141,5 +28,144 @@ properties:
       - mem_per_cpu
       - partition
 
+  bwa_mem:
+    type: object
+    description: resource definitions for bwa
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  bwa_merge_bam:
+    type: object
+    description: resource definitions for merging bwa bam files
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  picard_mark_duplicates:
+    type: object
+    description: resource definitions for picard mark duplicates
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  samtools_extract_reads:
+    type: object
+    description: resource definitions for samtools during read extraction
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  samtools_merge_bam:
+    type: object
+    description: resource definitions for samtools during mergin of bam files
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  samtools_index:
+    type: object
+    description: resource definitions for samtools index
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  samtools_sort:
+    type: object
+    description: resource definitions for samtools sort
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'bwa_mem'
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
 required:
   - default_resources

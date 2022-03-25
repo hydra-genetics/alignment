@@ -2,20 +2,84 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake configuration file
 type: object
 properties:
-  alignment_software:
+  resources:
     type: string
+    description: path to resources.yaml file
+
   samples:
     type: string
-  trimmer_software:
-    type: string
-    description: Set input files for alignment software, if "None" is set the files in units.tsv will be used.
-    pattern: "^(fastp_pe|None)$"
+    description: path to samples.tsv file
+
   units:
     type: string
+    description: path to units.tsv file
+
   default_container:
     type: string
+    description: name or path to a default docker/singularity container
+
+  alignment_software:
+    type: string
+    description: alignment software that will be used. Default is bwa
+    pattern: "^(gpu|bwa|None)$"
+
+  bwa_mem:
+    type: object
+    description: parameters for bwa mem
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      read_group:
+        type: string
+        description: RG string will be added to bam file
+      sorting:
+        type: string
+        description: program hangling the bam sorting (default samtools)
+      sort_order:
+        type: string
+        description: how the bam file should be sorted (default coordinate)
+      sort_extra:
+        type: string
+        description: parameters that should be forwarded to sorting (ie, number of threads)
+
+  bwa_mem_merge:
+    type: object
+    description: parameters for merging of bam files, directly after alignment step
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  picard_mark_duplicates:
+    type: object
+    description: mark duplicates settings
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   reference:
     type: object
+    description: reference used by alignment
     properties:
       fasta:
         type: string
@@ -45,7 +109,7 @@ properties:
         type: array
         items:
             type: string
-        description: list of chromosomes that should be skipped
+        description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
     required:
       - fasta
       - dict
@@ -56,100 +120,69 @@ properties:
       - pac
       - sa
 
-  bwa_mem:
+  samtools_extract_reads:
     type: object
+    description: parameters used when extracting reads
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for bwa_mem
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to bwa_mem
-      read_group:
-        type: string
-        description: RG string will be added to bam file
-      sorting:
-        type: string
-        description: program hangling the bam sorting (default samtools)
-      sort_order:
-        type: string
-        description: how the bam file should be sorted (default coordinate)
-      sort_extra:
-        type: string
-        description: parameters that should be forwarded to sorting (ie, number of threads)
-
-  bwa_mem_merge:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for bwa_mem_merge
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded to bwa_mem_merge
-
-  samtools_sort:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for samtools_sort
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded to samtools_sort
-
-  extract_reads:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for extract_reads
-      container:
-        type: string
-        description: name or path to docker/singularity container
-
-  mark_duplicates:
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for mark_duplicates
-      container:
-        type: string
-        description: name or path to docker/singularity container
+        description: parameters that should be forwarded
 
   samtools_index:
     type: object
+    description: parameters for indexing a bam file
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for samtools_index
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
-  merge_bam:
+  samtools_merge_bam:
     type: object
+    description: parameters for merging  bam files
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for merge_bam
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  samtools_sort:
+    type: object
+    description: parameters for sorting bam files
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  trimmer_software:
+    type: string
+    description: Set input files for alignment software, if "None" is set the files in units.tsv will be used. Default is None.
+    pattern: "^(fastp_pe|merged|None)$"
 
 required:
   - samples
   - units
   - default_container
   - reference
-  - trimmer_software
