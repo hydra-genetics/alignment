@@ -1,9 +1,9 @@
+name: release-please
+
 on:
   push:
     branches:
       - master
-
-name: release-please
 
 jobs:
   release-please:
