@@ -37,9 +37,9 @@ rule bwa_mem:
     container:
         config.get("bwa_mem", {}).get("container", config["default_container"])
     conda:
-        "../envs/bwa_mem.yaml"
+        "../envs/bwa.yaml"
     message:
-        "{rule}: Align alignment/{rule}/{wildcards.sample}_{wildcards.flowcell}_{wildcards.lane}_{wildcards.type} with bwa and sort"
+        "{rule}: Align fastq files {input.reads} using bwa mem against {params.index}"
     wrapper:
         "0.78.0/bio/bwa/mem"
 
@@ -54,10 +54,10 @@ rule bwa_mem_merge:
     params:
         config.get("bwa_mem_merge", {}).get("extra", ""),
     log:
-        "alignment/bwa_mem/{sample}_{type}.bam.log",
+        "alignment/bwa_mem/{sample}_{type}.bam_unsorted.log",
     benchmark:
         repeat(
-            "alignment/bwa_mem/{sample}_{type}.bam_merge.benchmark.tsv",
+            "alignment/bwa_mem/{sample}_{type}.bam_unsorted.benchmark.tsv",
             config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("bwa_mem_merge", {}).get("threads", config["default_resources"]["threads"])
@@ -70,8 +70,8 @@ rule bwa_mem_merge:
     container:
         config.get("bwa_mem_merge", {}).get("container", config["default_container"])
     conda:
-        "../envs/bwa_mem_merge.yaml"
+        "../envs/bwa.yaml"
     message:
-        "{rule}: Merge alignment/{rule}/{wildcards.sample}_{wildcards.type} with samtools"
+        "{rule}: Merge bam file {input} using samtools"
     wrapper:
         "v0.86.0/bio/samtools/merge"
