@@ -15,15 +15,6 @@ from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
 
 
-def generate_read_group(wildcards):
-    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}' -v 1 ".format(
-        "{}.{}".format(wildcards.sample, wildcards.lane),
-        "{}_{}".format(wildcards.sample, wildcards.type),
-        get_unit_platform(units, wildcards),
-        "{}.{}.{}".format(get_unit_flowcell(units, wildcards), wildcards.lane, get_unit_barcode(units, wildcards)),
-    )
-
-
 min_version("6.10")
 
 
@@ -74,6 +65,13 @@ elif config.get("alignment_software", "None") in ["None", "bwa"]:
     samtools_extract_reads_input = "alignment/bwa_mem/{sample}_{type}.bam"
     samtools_extract_reads_input_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
 
+def generate_read_group(wildcards):
+    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}' -v 1 ".format(
+        "{}.{}".format(wildcards.sample, wildcards.lane),
+        "{}_{}".format(wildcards.sample, wildcards.type),
+        get_unit_platform(units, wildcards),
+        "{}.{}.{}".format(get_unit_flowcell(units, wildcards), wildcards.lane, get_unit_barcode(units, wildcards)),
+    )
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
     return [
