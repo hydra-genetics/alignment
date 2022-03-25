@@ -92,18 +92,12 @@ use rule * from alignment as alignment_*
 
 ### Input files
 
-### hydra-genetics/prealignment data
-
 | File | Description |
 |---|---|
+| ***`hydra-genetics/prealignment data`*** |
 | `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | Merged and possibly trimmed foward reads |
 | `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | Merged and possibly trimmed reverse reads |
-
-
-### original fastq files
-
-| File | Description |
-|---|---|
+| ***`original fastq files`*** |
 | `PATH/fastq1.fastq.gz` | forward reads retrieved from units.tsv |
 | `PATH/fastq2.fastq.gz` | reverse reads retrieved from units.tsv |
 
