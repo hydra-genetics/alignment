@@ -36,7 +36,6 @@ The following information need to be added to these files:
 | --- | --- |
 | **`samples.tsv`** |
 | sample | unique sample/patient id, one per row |
-| tumor_content | ratio of tumor cells to total cells |
 | **`units.tsv`** |
 | sample | same sample/patient id as in `samples.tsv` |
 | type | data type identifier (one letter), can be one of **T**umor, **N**ormal, **R**NA |
@@ -68,6 +67,7 @@ The workflow repository contains a small test dataset `.tests/integration` which
 ```bash
 $ cd .tests/integration
 $ snakemake -s ../../Snakefile -j1 --use-singularity
+```
 
 ## :rocket: Usage
 
@@ -96,8 +96,8 @@ use rule * from alignment as alignment_*
 
 | File | Description |
 |---|---|
-| `realignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | Merged and possibly trimmed foward reads |
-| `realignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | Merged and possibly trimmed reverse reads |
+| `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | Merged and possibly trimmed foward reads |
+| `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | Merged and possibly trimmed reverse reads |
 
 
 ### original fastq files
