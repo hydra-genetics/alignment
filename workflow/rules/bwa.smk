@@ -39,7 +39,7 @@ rule bwa_mem:
     conda:
         "../envs/bwa.yaml"
     message:
-        "{rule}: Align fastq files {input.reads} using bwa mem against {params.index}"
+        "{rule}: align fastq files {input.reads} using bwa mem against {params.index}"
     wrapper:
         "0.78.0/bio/bwa/mem"
 
@@ -72,6 +72,6 @@ rule bwa_mem_merge:
     conda:
         "../envs/bwa.yaml"
     message:
-        "{rule}: Merge bam file {input} using samtools"
+        "{rule}: merge bam file {input} using samtools"
     wrapper:
         "v0.86.0/bio/samtools/merge"
