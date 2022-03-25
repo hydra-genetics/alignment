@@ -24,11 +24,11 @@ rule samotools_extract_reads:
         )
     threads: config.get("samtools_extract_reads", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("samtools_extract_reads", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("samtools_extract_reads", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("samtools_extract_reads", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("samtools_extract_reads", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("samtools_extract_reads", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_extract_reads", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_extract_reads", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("samtools_extract_reads", {}).get("container", config["default_container"])
     conda:
@@ -57,17 +57,17 @@ rule samtools_index:
         config.get("samtools_index", {}).get("container", config["default_container"])
     threads: config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("samtools_index", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("samtools_index", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("samtools_index", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("samtools_index", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_index", {}).get("time", config["default_resources"]["time"]),
     conda:
         "../envs/samtools.yaml"
     message:
         "{rule}: create index for {wildcards.file}"
     wrapper:
-        "0.78.0/bio/samtools/index"
+        "v1.3.1/bio/samtools/index"
 
 
 rule samtools_merge_bam:
@@ -91,19 +91,19 @@ rule samtools_merge_bam:
         )
     threads: config.get("samtools_merge_bam", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("samtools_merge_bam", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("samtools_merge_bam", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("samtools_merge_bam", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("samtools_merge_bam", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("samtools_merge_bam", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_merge_bam", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_merge_bam", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("samtools", {}).get("container", config["default_container"])
     conda:
         "../envs/samtools.yaml"
     message:
         "{rule}: merge chr bam files, creating {output}"
-    shell:
-        "(samtools merge -c -p {params.extra} {output} {input}) &> {log}"
+    wrapper:
+        "v1.3.1/bio/samtools/merge"
 
 
 rule samtools_sort:
@@ -122,11 +122,11 @@ rule samtools_sort:
         )
     threads: config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("samtools_sort", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("samtools_sort", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("samtools_sort", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("samtools_sort", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_sort", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("samtools_sort", {}).get("container", config["default_container"])
     conda:
@@ -134,4 +134,4 @@ rule samtools_sort:
     message:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
-        "v0.86.0/bio/samtools/sort"
+        "v1.3.1/bio/samtools/sort"
