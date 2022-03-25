@@ -58,12 +58,14 @@ elif config.get("trimmer_software", "None") == "None":
         get_fastq_file(units, wildcards, "fastq2"),
     ]
 
+
 if config.get("alignment_software", "None") == "gpu":
     samtools_extract_reads_input = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"
     samtools_extract_reads_input_bai = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam.bai"
 elif config.get("alignment_software", "None") in ["None", "bwa"]:
     samtools_extract_reads_input = "alignment/bwa_mem/{sample}_{type}.bam"
     samtools_extract_reads_input_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
+
 
 def generate_read_group(wildcards):
     return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}' -v 1 ".format(
@@ -72,6 +74,7 @@ def generate_read_group(wildcards):
         get_unit_platform(units, wildcards),
         "{}.{}.{}".format(get_unit_flowcell(units, wildcards), wildcards.lane, get_unit_barcode(units, wildcards)),
     )
+
 
 def compile_output_list(wildcards: snakemake.io.Wildcards):
     return [
