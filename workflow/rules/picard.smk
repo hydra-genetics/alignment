@@ -31,6 +31,6 @@ rule picard_mark_duplicates:
     conda:
         "../envs/picard.yaml"
     message:
-        "{rule}: Mark duplicates in {input} using picard"
+        "{rule}: mark duplicates in {input} using picard"
     wrapper:
         "0.79.0/bio/picard/markduplicates"
