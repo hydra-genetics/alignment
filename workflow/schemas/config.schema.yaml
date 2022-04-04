@@ -18,11 +18,6 @@ properties:
     type: string
     description: name or path to a default docker/singularity container
 
-  alignment_software:
-    type: string
-    description: alignment software that will be used. Default is bwa
-    pattern: "^(gpu|bwa|None)$"
-
   bwa_mem:
     type: object
     description: parameters for bwa mem
