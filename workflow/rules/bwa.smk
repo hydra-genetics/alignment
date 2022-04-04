@@ -45,7 +45,7 @@ rule bwa_mem:
     conda:
         "../envs/bwa.yaml"
     message:
-        "{rule}: align fastq files {input.reads} using bwa mem against {input.idx}"
+        "{rule}: align fastq files {input.reads} using bwa mem against {input.idx[2]}"
     wrapper:
         "v1.3.1/bio/bwa/mem"
 
