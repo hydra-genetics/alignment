@@ -59,14 +59,6 @@ elif config.get("trimmer_software", "None") == "None":
     ]
 
 
-if config.get("alignment_software", "None") == "gpu":
-    samtools_extract_reads_input = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam"
-    samtools_extract_reads_input_bai = "alignment/apply_bqsr_gpu/{sample}_{type}.bqsr.dedup.bam.bai"
-elif config.get("alignment_software", "None") in ["None", "bwa"]:
-    samtools_extract_reads_input = "alignment/bwa_mem/{sample}_{type}.bam"
-    samtools_extract_reads_input_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
-
-
 def generate_read_group(wildcards):
     return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}' -v 1 ".format(
         "{}.{}".format(wildcards.sample, wildcards.lane),
