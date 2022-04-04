@@ -7,10 +7,16 @@ __license__ = "GPL-3"
 rule bwa_mem:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
+        idx=[
+            config["reference"]['amb'],
+            config["reference"]['ann'],
+            config["reference"]['bwt'],
+            config["reference"]['pac'],
+            config["reference"]['sa'],
+        ],
     output:
         bam=temp("alignment/bwa_mem/{sample}_{flowcell}_{lane}_{type}.bam"),
     params:
-        index=config["reference"]["fasta"],
         extra=lambda wildcards: "%s %s"
         % (
             config.get("bwa_mem", {}).get("extra", ""),
@@ -39,7 +45,7 @@ rule bwa_mem:
     conda:
         "../envs/bwa.yaml"
     message:
-        "{rule}: align fastq files {input.reads} using bwa mem against {params.index}"
+        "{rule}: align fastq files {input.reads} using bwa mem against {input.idx[2]}"
     wrapper:
         "v1.3.1/bio/bwa/mem"
 
@@ -74,4 +80,4 @@ rule bwa_mem_merge:
     message:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
-        "v1.3.1/bio/samtools/merge"
+        "v1.1.0/bio/samtools/merge"
