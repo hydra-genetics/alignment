@@ -110,7 +110,6 @@ The following output files should be targeted via another rule:
 
 | File | Description |
 |---|---|
-| `alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam` | aligned data separated by chromosome |
 | `alignment/samtools_merge_bam/{sample}_{type}.bam` | aligned data which have been duplicate marked |
 
 ## :judge: Rule Graph
