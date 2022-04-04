@@ -103,7 +103,7 @@ rule samtools_merge_bam:
     message:
         "{rule}: merge chr bam files, creating {output}"
     wrapper:
-        "v1.3.1/bio/samtools/merge"
+        "v1.1.0/bio/samtools/merge"
 
 
 rule samtools_sort:
