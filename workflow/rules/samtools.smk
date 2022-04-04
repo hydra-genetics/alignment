@@ -7,7 +7,7 @@ __email__ = "jonas.almlof@scilifelab.uu.se, patrik.smeds@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule samotools_extract_reads:
+rule samtools_extract_reads:
     input:
         "alignment/bwa_mem/{sample}_{type}.bam",
         "alignment/bwa_mem/{sample}_{type}.bam.bai",
