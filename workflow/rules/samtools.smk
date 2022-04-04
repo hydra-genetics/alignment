@@ -9,8 +9,8 @@ __license__ = "GPL-3"
 
 rule samotools_extract_reads:
     input:
-        samtools_extract_reads_input,
-        samtools_extract_reads_input_bai,
+        "alignment/bwa_mem/{sample}_{type}.bam",
+        "alignment/bwa_mem/{sample}_{type}.bam.bai",
     output:
         temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"),
     params:
