@@ -97,7 +97,7 @@ use rule * from alignment as alignment_*
 | File | Description |
 |---|---|
 | ***`hydra-genetics/prealignment data`*** |
-| `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | trimmed foward reads |
+| `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | trimmed forward reads |
 | `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | trimmed reverse reads |
 | ***`original fastq files`*** |
 | `PATH/fastq1.fastq.gz` | forward reads retrieved from units.tsv |
