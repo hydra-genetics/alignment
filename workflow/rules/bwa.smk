@@ -8,14 +8,14 @@ rule bwa_mem:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
         idx=[
-            config["reference"]['amb'],
-            config["reference"]['ann'],
-            config["reference"]['bwt'],
-            config["reference"]['pac'],
-            config["reference"]['sa'],
+            config["reference"]["amb"],
+            config["reference"]["ann"],
+            config["reference"]["bwt"],
+            config["reference"]["pac"],
+            config["reference"]["sa"],
         ],
     output:
-        bam=temp("alignment/bwa_mem/{sample}_{flowcell}_{lane}_{type}.bam"),
+        bam=temp("alignment/bwa_mem/{sample}_{flowcell}_{lane}_{barcode}_{type}.bam"),
     params:
         extra=lambda wildcards: "%s %s"
         % (
@@ -27,10 +27,10 @@ rule bwa_mem:
         sort_extra="-@ %s"
         % str(config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
     log:
-        "alignment/bwa_mem/{sample}_{flowcell}_{lane}_{type}.bam.log",
+        "alignment/bwa_mem/{sample}_{flowcell}_{lane}_{barcode}_{type}.bam.log",
     benchmark:
         repeat(
-            "alignment/bwa_mem/{sample}_{flowcell}_{lane}_{type}.bam.benchmark.tsv",
+            "alignment/bwa_mem/{sample}_{flowcell}_{lane}_{barcode}_{type}.bam.benchmark.tsv",
             config.get("bwa_mem", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("bwa_mem", {}).get("threads", config["default_resources"]["threads"])
@@ -53,7 +53,8 @@ rule bwa_mem:
 rule bwa_mem_merge:
     input:
         lambda wildcards: [
-            "alignment/bwa_mem/{sample}_%s_%s_{type}.bam" % (u.flowcell, u.lane) for u in get_units(units, wildcards)
+            "alignment/bwa_mem/{sample}_%s_%s_%s_{type}.bam" % (u.flowcell, u.lane, u.barcode)
+            for u in get_units(units, wildcards)
         ],
     output:
         temp("alignment/bwa_mem/{sample}_{type}.bam_unsorted"),
