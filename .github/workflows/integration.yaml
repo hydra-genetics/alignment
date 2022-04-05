@@ -43,7 +43,6 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: 3.8
-      - run: sudo apt-get update && sudo apt-get install -y zlib1g
       - name: Add conda to system path
         run: |
           echo $CONDA/bin >> $GITHUB_PATH
@@ -58,7 +57,7 @@ jobs:
           pip install -r requirements.test.txt
       - name: Install singularity
         run: |
-          mamba install -c conda-forge -c bioconda singularity
+          mamba install -c conda-forge -c bioconda singularity=3.8.6
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
