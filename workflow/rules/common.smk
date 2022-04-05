@@ -64,11 +64,12 @@ elif config.get("trimmer_software", "None") == "None":
 
 
 def generate_read_group(wildcards):
-    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}' -v 1 ".format(
-        "{}.{}".format(wildcards.sample, wildcards.lane),
+    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
+        "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
         "{}_{}".format(wildcards.sample, wildcards.type),
         get_unit_platform(units, wildcards),
-        "{}.{}.{}".format(get_unit_flowcell(units, wildcards), wildcards.lane, get_unit_barcodes(units, wildcards)),
+        "{}.{}.{}".format(wildcards.flowcell, wildcards.lane, wildcards.barcode),
+        "{}_{}".format(wildcards.sample, wildcards.type),
     )
 
 
