@@ -1,3 +1,5 @@
 .eggs
 __pycache__
 .snakemake
+alignment
+venv

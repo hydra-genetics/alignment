@@ -1,0 +1,64 @@
+name: small integration test
+
+on:
+  push:
+    branches:
+     - develop
+     - master
+  workflow_dispatch:
+
+jobs:
+  integration-small-conda:
+    name: integration small data set conda
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+      - name: Add conda to system path
+        run: |
+          echo $CONDA/bin >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          conda install -c conda-forge mamba
+      - name: Install requirements.txt
+        run: |
+          pip install -r requirements.txt
+      - name: Install requirements.test.txt
+        run: |
+          pip install -r requirements.test.txt
+      - name: Integration test - small dataset
+        working-directory: .tests/integration
+        run: |
+          mamba install -c conda-forge -c bioconda snakemake
+          snakemake -s ../../workflow/Snakefile -j 1 --use-conda
+  integration-small-singularity:
+    name: integration small data set singularity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+      - name: Add conda to system path
+        run: |
+          echo $CONDA/bin >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          conda install -c conda-forge mamba
+      - name: Install requirements.txt
+        run: |
+          pip install -r requirements.txt
+      - name: Install requirements.test.txt
+        run: |
+          pip install -r requirements.test.txt
+      - name: Install singularity
+        run: |
+          mamba install -c conda-forge -c bioconda singularity=3.8.6
+      - name: Integration test - small dataset
+        working-directory: .tests/integration
+        run: |
+          snakemake -s ../../workflow/Snakefile -j 1 --configfile config_fastp_pe.yaml --show-failed-logs --use-singularity --singularity-args  " --cleanenv --bind /home/runner "

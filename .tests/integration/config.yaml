@@ -1,5 +1,21 @@
 samples: "samples.tsv"
 units: "units.tsv"
+resources: "resources.yaml"
 
-tools:
-  common: "docker://marrip/common:1.1.0"
+default_container: "docker://hydragenetics/common:0.1.1"
+
+reference:
+  fasta: "reference/WASH7P.fna"
+  dict: "reference/WASH7P.dict"
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt"
+  fai: "reference/WASH7P.fna.fai"
+  pac: "reference/WASH7P.fna.pac"
+  sa: "reference/WASH7P.fna.sa"
+
+bwa_mem:
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
+
+picard_mark_duplicates:
+  container: "docker://hydragenetics/picard:2.25.0"

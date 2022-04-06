@@ -2,18 +2,182 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake configuration file
 type: object
 properties:
+  resources:
+    type: string
+    description: path to resources.yaml file
+
   samples:
     type: string
+    description: path to samples.tsv file
+
   units:
     type: string
-  containers:
+    description: path to units.tsv file
+
+  default_container:
+    type: string
+    description: name or path to a default docker/singularity container
+
+  bwa_mem:
     type: object
+    description: parameters for bwa mem
     properties:
-      common:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
         type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      read_group:
+        type: string
+        description: RG string will be added to bam file
+      sorting:
+        type: string
+        description: program hangling the bam sorting (default samtools)
+      sort_order:
+        type: string
+        description: how the bam file should be sorted (default coordinate)
+      sort_extra:
+        type: string
+        description: parameters that should be forwarded to sorting (ie, number of threads)
+
+  bwa_mem_merge:
+    type: object
+    description: parameters for merging of bam files, directly after alignment step
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  picard_mark_duplicates:
+    type: object
+    description: mark duplicates settings
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  reference:
+    type: object
+    description: reference used by alignment
+    properties:
+      fasta:
+        type: string
+        description: fasta reference file
+      dict:
+        type: string
+        description: fasta reference dict file
+      amb:
+        type: string
+        description: fasta reference amb file
+      ann:
+        type: string
+        description: fasta reference ann file
+      bwt:
+        type: string
+        description: fasta reference bwt file
+      fai:
+        type: string
+        description: fasta reference fai file
+      pac:
+        type: string
+        description: fasta reference pac file
+      sa:
+        type: string
+        description: fasta reference sa file
+      skip_chrs:
+        type: array
+        items:
+            type: string
+        description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
     required:
-      - common
-  required:
-    - samples
-    - units
-    - containers
+      - fasta
+      - dict
+      - amb
+      - ann
+      - bwt
+      - fai
+      - pac
+      - sa
+
+  samtools_extract_reads:
+    type: object
+    description: parameters used when extracting reads
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  samtools_index:
+    type: object
+    description: parameters for indexing a bam file
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  samtools_merge_bam:
+    type: object
+    description: parameters for merging  bam files
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  samtools_sort:
+    type: object
+    description: parameters for sorting bam files
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  trimmer_software:
+    type: string
+    description: Set input files for alignment software, if "None" is set the files in units.tsv will be used. Default is None.
+    pattern: "^(fastp_pe|merged|None)$"
+
+required:
+  - samples
+  - units
+  - default_container
+  - reference
