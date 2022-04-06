@@ -36,7 +36,11 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 
-units = pandas.read_table(config["units"], dtype=str).set_index(["sample", "type", "flowcell", "lane"], drop=False).sort_index()
+units = (
+    pandas.read_table(config["units"], dtype=str)
+    .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
+    .sort_index()
+)
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -49,8 +53,8 @@ wildcard_constraints:
 
 if config.get("trimmer_software", "None") == "fastp_pe":
     alignment_input = lambda wilcards: [
-        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz",
-        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq2.fastq.gz",
+        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq1.fastq.gz",
+        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq2.fastq.gz",
     ]
 elif config.get("trimmer_software", "None") == "None":
     alignment_input = lambda wildcards: [
@@ -60,11 +64,12 @@ elif config.get("trimmer_software", "None") == "None":
 
 
 def generate_read_group(wildcards):
-    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}' -v 1 ".format(
-        "{}.{}".format(wildcards.sample, wildcards.lane),
+    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
+        "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
         "{}_{}".format(wildcards.sample, wildcards.type),
         get_unit_platform(units, wildcards),
-        "{}.{}.{}".format(get_unit_flowcell(units, wildcards), wildcards.lane, get_unit_barcode(units, wildcards)),
+        "{}.{}.{}".format(wildcards.flowcell, wildcards.lane, wildcards.barcode),
+        "{}_{}".format(wildcards.sample, wildcards.type),
     )
 
 
