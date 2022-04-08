@@ -11,9 +11,10 @@ Removed: for now removed features.
 Fixed: for any bug fixes.
 Security: in case of vulnerabilities.
 
-### Review and tests: 
+### Review and tests:
 - [ ] Tests pass
 - [ ] If you've fixed a bug or added code that should be tested, add tests!
 - [ ] Code review
 - [ ] `CHANGELOG.md` is updated
 - [ ] New code is executed and covered by tests, and test approve
+- [ ] Module compatibility section in `README.md` is up to date
