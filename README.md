@@ -94,6 +94,9 @@ use rule * from alignment as alignment_*
 
 ### Compatibility
 
+Latest:
+ - prealignment:v0.2.0
+
  See [COMPATIBLITY.md](../master/COMPATIBLITY.md) file for a complete list of module compatibility.
 
 ### Input files
