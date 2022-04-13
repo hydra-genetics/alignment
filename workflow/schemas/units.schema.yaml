@@ -23,6 +23,7 @@ properties:
   lane:
     type: string
     description: lane number
+    pattern: "^L[0-9]+$"
   fastq1:
     type: string
     description: absolute path to R1 fastq file

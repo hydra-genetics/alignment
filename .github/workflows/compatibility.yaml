@@ -1,4 +1,4 @@
-name: Snakemake dry run
+name: Compatibility test
 
 on:
   push:
@@ -16,6 +16,9 @@ jobs:
     name: Run snakemake dry run
     runs-on: ubuntu-latest
     steps:
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v5.2
       - uses: actions/checkout@v3
       - name: Set up Python 3.8
         uses: actions/setup-python@v3
@@ -34,10 +37,10 @@ jobs:
         run: |
           pip install -r requirements.test.txt
       - name: snakemake dry run
-        working-directory: .tests/integration
+        working-directory: .tests/compatibility
         run: |
-          snakemake -n -s ../../workflow/Snakefile
+          snakemake -n -s Snakefile -c
       - name: snakemake dry run fastp_pe config
-        working-directory: .tests/integration
+        working-directory: .tests/compatibility
         run: |
-          snakemake -n -s ../../workflow/Snakefile --configfile config_fastp_pe.yaml
+          snakemake -n -s Snakefile --configfile config_fastp_pe.yaml

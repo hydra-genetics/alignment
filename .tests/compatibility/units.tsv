@@ -1,0 +1,2 @@
+sample	type	machine	platform	flowcell	lane	barcode	fastq1	fastq2	adapter
+NA12878	N	NDX550407_RUO	NextSeq	HKTG2BGXG	L001	ACGGAACA+ACGAGAAC	../integration/prealignment/fastp_pe/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_N_fastq1.fastq.gz	../integration/prealignment/fastp_pe/NA12878_HKTG2BGXG_L001_ACGGAACA+ACGAGAAC_N_fastq2.fastq.gz	ACGT,ACGT
