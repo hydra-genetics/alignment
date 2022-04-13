@@ -56,7 +56,7 @@ jobs:
           pip install -r requirements.test.txt
       - name: Install singularity
         run: |
-          mamba install -c conda-forge -c bioconda singularity=3.8.6
+          mamba install -c conda-forge -c bioconda mamba=0.15.3 singularity=3.8.6
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
