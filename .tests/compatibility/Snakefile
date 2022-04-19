@@ -1,0 +1,47 @@
+from hydra_genetics.utils.resources import load_resources
+
+import re
+
+
+rule all:
+    input:
+        "alignment/samtools_merge_bam/NA12878_N.bam",
+
+
+configfile: "config.yaml"
+
+
+config = load_resources(config, config["resources"])
+
+
+def extract_module_version_from_readme(modulename):
+    search_string = modulename + ":(.+)\n$"
+    with open("../../README.md", "r") as reader:
+        for line in reader:
+            result = re.search(search_string, line)
+            if result:
+                return result[1]
+
+
+module prealignment:
+    snakefile:
+        github(
+            "hydra-genetics/prealignment",
+            path="workflow/Snakefile",
+            tag=extract_module_version_from_readme("prealignment"),
+        )
+    config:
+        config
+
+
+use rule * from prealignment as prealignment_*
+
+
+module alignment:
+    snakefile:
+        "../../workflow/Snakefile"
+    config:
+        config
+
+
+use rule * from alignment as alignment_*
