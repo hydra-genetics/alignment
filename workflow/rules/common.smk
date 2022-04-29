@@ -61,10 +61,10 @@ if config.get("trimmer_software", "None") == "fastp_pe":
         "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq2.fastq.gz",
     ]
     alignment_input_fq1 = lambda wilcards: [
-        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq1.fastq.gz",
+        alignment_input[0],
     ]
     alignment_input_fq2 = lambda wilcards: [
-        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq2.fastq.gz",
+        alignment_input[1],
     ]
 elif config.get("trimmer_software", "None") == "None":
     alignment_input = lambda wildcards: [
@@ -72,10 +72,10 @@ elif config.get("trimmer_software", "None") == "None":
         get_fastq_file(units, wildcards, "fastq2"),
     ]
     alignment_input_fq1 = lambda wilcards: [
-        get_fastq_file(units, wildcards, "fastq1"),
+        alignment_input[0],
     ]
     alignment_input_fq2 = lambda wilcards: [
-        get_fastq_file(units, wildcards, "fastq2"),
+        alignment_input[1],
     ]
 print(lambda wildcards: alignment_input_fq1(wildcards))
 print(lambda wildcards: alignment_input_fq2(wildcards))
