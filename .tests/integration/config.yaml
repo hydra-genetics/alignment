@@ -2,7 +2,7 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
-default_container: "docker://hydragenetics/common:0.1.1"
+default_container: "docker://hydragenetics/common:0.1.2"
 
 reference:
   fasta: "reference/WASH7P.fna"
@@ -13,9 +13,13 @@ reference:
   fai: "reference/WASH7P.fna.fai"
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
+  star_index: "reference/star_idx"
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
+
+star:
+  container: "docker://hydragenetics/star:2.7.10a"

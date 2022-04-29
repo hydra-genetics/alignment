@@ -60,11 +60,25 @@ if config.get("trimmer_software", "None") == "fastp_pe":
         "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq1.fastq.gz",
         "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq2.fastq.gz",
     ]
+    alignment_input_fq1 = lambda wilcards: [
+        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq1.fastq.gz",
+    ]
+    alignment_input_fq2 = lambda wilcards: [
+        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq2.fastq.gz",
+    ]
 elif config.get("trimmer_software", "None") == "None":
     alignment_input = lambda wildcards: [
         get_fastq_file(units, wildcards, "fastq1"),
         get_fastq_file(units, wildcards, "fastq2"),
     ]
+    alignment_input_fq1 = lambda wilcards: [
+        get_fastq_file(units, wildcards, "fastq1"),
+    ]
+    alignment_input_fq2 = lambda wilcards: [
+        get_fastq_file(units, wildcards, "fastq2"),
+    ]
+print(lambda wildcards: alignment_input_fq1(wildcards))
+print(lambda wildcards: alignment_input_fq2(wildcards))
 
 
 def generate_read_group(wildcards):
@@ -77,9 +91,16 @@ def generate_read_group(wildcards):
     )
 
 
-def compile_output_list(wildcards: snakemake.io.Wildcards):
-    return [
-        "alignment/samtools_merge_bam/%s_%s.bam" % (sample, type)
+def compile_output_list(wildcards):
+    files = {
+        "alignment/samtools_merge_bam": [".bam"],
+        "alignment/star": [".bam", "_SJ.out.tab"],
+    }
+    output_files = [
+        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
         for sample in get_samples(samples)
-        for type in get_unit_types(units, sample)
+        for unit_type in get_unit_types(units, sample)
+        for suffix in files[prefix]
     ]
+    return output_files

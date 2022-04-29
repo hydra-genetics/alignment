@@ -105,15 +105,9 @@ properties:
         items:
             type: string
         description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
-    required:
-      - fasta
-      - dict
-      - amb
-      - ann
-      - bwt
-      - fai
-      - pac
-      - sa
+      star_index:
+        type: string
+        description: path to star reference index
 
   samtools_extract_reads:
     type: object
@@ -160,6 +154,20 @@ properties:
   samtools_sort:
     type: object
     description: parameters for sorting bam files
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  star:
+    type: object
+    description: parameters for alignment with star
     properties:
       benchmark_repeats:
         type: integer
