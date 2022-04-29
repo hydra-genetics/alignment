@@ -6,16 +6,19 @@ __license__ = "GPL-3"
 
 rule star:
     input:
-        fq1=lambda wildcards: alignment_input_fq1(wildcards),
-        fq2=lambda wildcards: alignment_input_fq2(wildcards),
+        fq1="prealignment/merged/{sample}_{type}_fastq1.fastq.gz",
+        fq2="prealignment/merged/{sample}_{type}_fastq2.fastq.gz",
+        idx=config.get("reference", {}).get("star_index", ""),
     output:
-        bam=temp("alignment/star/{sample}_{type}.bam"),
+        #bam=temp("alignment/star/{sample}_{type}.bam"),
+        #sj=temp("alignment/star/{sample}_{type}_SJ.out.tab"),
+        bam="alignment/star/{sample}_{type}.bam",
         sj="alignment/star/{sample}_{type}_SJ.out.tab",
     params:
         idx=config.get("reference", {}).get("star_index", ""),
         extra=config.get("star", {}).get("extra", ""),
     log:
-        "alignment/star/{sample}_{type}.bam",
+        "alignment/star/{sample}_{type}.bam.log",
     benchmark:
         repeat("alignment/star/{sample}_{type}.bam.benchmark.tsv", config.get("star", {}).get("benchmark_repeats", 1))
     threads: config.get("star", {}).get("threads", config["default_resources"]["threads"])
