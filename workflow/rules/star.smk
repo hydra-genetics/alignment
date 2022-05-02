@@ -11,10 +11,10 @@ rule star:
         idx=config.get("reference", {}).get("star_index", ""),
     output:
         bam=temp("alignment/star/{sample}_{type}.bam"),
-        sj=temp("alignment/star/{sample}_{type}_SJ.out.tab"),
+        sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
     params:
         idx=config.get("reference", {}).get("star_index", ""),
-        extra=config.get("star", {}).get("extra", ""),
+        extra=config.get("star", {}).get("extra", "--outSAMtype BAM SortedByCoordinate"),
     log:
         "alignment/star/{sample}_{type}.bam.log",
     benchmark:
@@ -33,4 +33,15 @@ rule star:
     message:
         "{rule}: align with star, creating {output}"
     wrapper:
-        "v1.3.2/bio/star/align"
+       "v1.3.2/bio/star/align"
+    # shell:
+    #     "STAR "
+    #     " --runThreadN {threads}"
+    #     " --genomeDir {input.idx}"
+    #     " --readFilesIn {input.fq1}"
+    #     " --readFilesCommand zcat"
+    #     " {params.extra}"
+    #     #" --outTmpDir {wildcards.sample}_{wildcards.type}"
+    #     " --outFileNamePrefix {wildcards.sample}_{wildcards.type}/"
+    #     " --outStd Log "
+    #     " {log}"

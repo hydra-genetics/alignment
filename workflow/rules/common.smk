@@ -80,13 +80,22 @@ def generate_read_group(wildcards):
 def compile_output_list(wildcards):
     files = {
         "alignment/samtools_merge_bam": [".bam"],
-        "alignment/star": [".bam", "_SJ.out.tab"],
     }
     output_files = [
-        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+        "%s/%s_%s%s" % (prefix, sample, "N", suffix)
         for prefix in files.keys()
         for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
+        if "N" in get_unit_types(units, sample)
         for suffix in files[prefix]
     ]
+    files = {
+        "alignment/star": [".bam", ".SJ.out.tab"],
+    }
+    output_files.append([
+        "%s/%s_%s%s" % (prefix, sample, "R", suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        if "R" in get_unit_types(units, sample)
+        for suffix in files[prefix]
+    ])
     return output_files
