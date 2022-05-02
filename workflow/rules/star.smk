@@ -33,15 +33,4 @@ rule star:
     message:
         "{rule}: align with star, creating {output}"
     wrapper:
-       "v1.3.2/bio/star/align"
-    # shell:
-    #     "STAR "
-    #     " --runThreadN {threads}"
-    #     " --genomeDir {input.idx}"
-    #     " --readFilesIn {input.fq1}"
-    #     " --readFilesCommand zcat"
-    #     " {params.extra}"
-    #     #" --outTmpDir {wildcards.sample}_{wildcards.type}"
-    #     " --outFileNamePrefix {wildcards.sample}_{wildcards.type}/"
-    #     " --outStd Log "
-    #     " {log}"
+        "v1.3.2/bio/star/align"

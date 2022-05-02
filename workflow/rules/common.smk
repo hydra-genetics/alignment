@@ -91,11 +91,13 @@ def compile_output_list(wildcards):
     files = {
         "alignment/star": [".bam", ".SJ.out.tab"],
     }
-    output_files.append([
-        "%s/%s_%s%s" % (prefix, sample, "R", suffix)
-        for prefix in files.keys()
-        for sample in get_samples(samples)
-        if "R" in get_unit_types(units, sample)
-        for suffix in files[prefix]
-    ])
+    output_files.append(
+        [
+            "%s/%s_%s%s" % (prefix, sample, "R", suffix)
+            for prefix in files.keys()
+            for sample in get_samples(samples)
+            if "R" in get_unit_types(units, sample)
+            for suffix in files[prefix]
+        ]
+    )
     return output_files
