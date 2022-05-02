@@ -1,0 +1,49 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake configuration file for dna references
+type: object
+properties:
+  reference:
+    type: object
+    description: reference used by alignment
+    properties:
+      fasta:
+        type: string
+        description: fasta reference file
+      dict:
+        type: string
+        description: fasta reference dict file
+      amb:
+        type: string
+        description: fasta reference amb file
+      ann:
+        type: string
+        description: fasta reference ann file
+      bwt:
+        type: string
+        description: fasta reference bwt file
+      fai:
+        type: string
+        description: fasta reference fai file
+      pac:
+        type: string
+        description: fasta reference pac file
+      sa:
+        type: string
+        description: fasta reference sa file
+      skip_chrs:
+        type: array
+        items:
+            type: string
+        description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
+    required:
+      - fasta
+      - dict
+      - amb
+      - ann
+      - bwt
+      - fai
+      - pac
+      - sa
+
+required:
+  - reference

@@ -72,43 +72,6 @@ properties:
         type: string
         description: parameters that should be forwarded
 
-  reference:
-    type: object
-    description: reference used by alignment
-    properties:
-      fasta:
-        type: string
-        description: fasta reference file
-      dict:
-        type: string
-        description: fasta reference dict file
-      amb:
-        type: string
-        description: fasta reference amb file
-      ann:
-        type: string
-        description: fasta reference ann file
-      bwt:
-        type: string
-        description: fasta reference bwt file
-      fai:
-        type: string
-        description: fasta reference fai file
-      pac:
-        type: string
-        description: fasta reference pac file
-      sa:
-        type: string
-        description: fasta reference sa file
-      skip_chrs:
-        type: array
-        items:
-            type: string
-        description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
-      star_index:
-        type: string
-        description: path to star reference index
-
   samtools_extract_reads:
     type: object
     description: parameters used when extracting reads
@@ -188,4 +151,3 @@ required:
   - samples
   - units
   - default_container
-  - reference
