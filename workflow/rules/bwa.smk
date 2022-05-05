@@ -8,11 +8,11 @@ rule bwa_mem:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
         idx=[
-            config.get("reference", {}).get("amb", ""),
-            config.get("reference", {}).get("ann", ""),
-            config.get("reference", {}).get("bwt", ""),
-            config.get("reference", {}).get("pac", ""),
-            config.get("reference", {}).get("sa", ""),
+            config.get("bwa_mem", {}).get("amb", ""),
+            config.get("bwa_mem", {}).get("ann", ""),
+            config.get("bwa_mem", {}).get("bwt", ""),
+            config.get("bwa_mem", {}).get("pac", ""),
+            config.get("bwa_mem", {}).get("sa", ""),
         ],
     output:
         bam=temp("alignment/bwa_mem/{sample}_{flowcell}_{lane}_{barcode}_{type}.bam"),

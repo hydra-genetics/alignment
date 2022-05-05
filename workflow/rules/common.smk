@@ -45,14 +45,6 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 ### Validate reference schemas
 
-sample_types = set().union(*[get_unit_types(units, sample) for sample in get_samples(samples)])
-if not sample_types.isdisjoint(set(["N", "T"])):
-    validate(config, schema="../schemas/config.dna_reference.schema.yaml")
-if not sample_types.isdisjoint(set(["R"])):
-    validate(config, schema="../schemas/config.rna_reference.schema.yaml")
-
-### Set wildcard constraints
-
 
 wildcard_constraints:
     barcode="[A-Z+]+",
@@ -97,7 +89,7 @@ def compile_output_list(wildcards):
         for suffix in files[prefix]
     ]
     files = {
-        "alignment/star": [".bam", ".SJ.out.tab"],
+        "alignment/star": [".bam"],
     }
     output_files.append(
         [
