@@ -22,4 +22,4 @@ picard_mark_duplicates:
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
-  star_index: "reference/star_id"
+  genome_index: "reference/star_idx/"

@@ -8,7 +8,7 @@ rule star:
     input:
         fq1="prealignment/merged/{sample}_{type}_fastq1.fastq.gz",
         fq2="prealignment/merged/{sample}_{type}_fastq2.fastq.gz",
-        idx=config.get("star", {}).get("star_index", ""),
+        idx=config.get("star", {}).get("genome_index", ""),
     output:
         bam=temp("alignment/star/{sample}_{type}.bam"),
         sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
@@ -31,6 +31,6 @@ rule star:
     conda:
         "../envs/star.yaml"
     message:
-        "{rule}: align with star, creating {output}"
+        "{rule}: align with star, creating {output.bam}"
     wrapper:
         "v1.3.2/bio/star/align"

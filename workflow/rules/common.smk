@@ -43,7 +43,7 @@ units = (
 )
 validate(units, schema="../schemas/units.schema.yaml")
 
-### Validate reference schemas
+### Set wildcard constraints
 
 
 wildcard_constraints:
