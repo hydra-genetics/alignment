@@ -162,11 +162,11 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
-      star_index:
+      genome_index:
         type: string
         description: path to star reference index
     required:
-      - star_index
+      - genome_index
 
   trimmer_software:
     type: string
