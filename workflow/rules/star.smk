@@ -13,8 +13,8 @@ rule star:
         bam=temp("alignment/star/{sample}_{type}.bam"),
         sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
     params:
-        idx="{input.idx}",
         extra=config.get("star", {}).get("extra", "--outSAMtype BAM SortedByCoordinate"),
+        idx="{input.idx}",
     log:
         "alignment/star/{sample}_{type}.bam.log",
     benchmark:
