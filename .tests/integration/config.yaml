@@ -6,7 +6,6 @@ default_container: "docker://hydragenetics/common:0.1.3"
 
 reference:
   fasta: "reference/WASH7P.fna"
-  dict: "reference/WASH7P.dict"
   fai: "reference/WASH7P.fna.fai"
 
 bwa_mem:
