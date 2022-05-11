@@ -134,4 +134,4 @@ rule samtools_sort:
     message:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
-        "v1.1.0/bio/samtools/sort"
+        "v1.3.2/bio/samtools/sort"
