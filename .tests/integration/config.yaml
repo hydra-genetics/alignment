@@ -9,10 +9,10 @@ reference:
   fai: "reference/WASH7P.fna.fai"
 
 bwa_mem:
-  container: "docker://hydragenetics/bwa_mem:0.7.17"
   amb: "reference/WASH7P.fna.amb"
   ann: "reference/WASH7P.fna.ann"
   bwt: "reference/WASH7P.fna.bwt"
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
 
