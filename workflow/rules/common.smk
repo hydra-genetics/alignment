@@ -77,9 +77,27 @@ def generate_read_group(wildcards):
     )
 
 
-def compile_output_list(wildcards: snakemake.io.Wildcards):
-    return [
-        "alignment/samtools_merge_bam/%s_%s.bam" % (sample, type)
+def compile_output_list(wildcards):
+    files = {
+        "alignment/samtools_merge_bam": [".bam"],
+    }
+    output_files = [
+        "%s/%s_N%s" % (prefix, sample, suffix)
+        for prefix in files.keys()
         for sample in get_samples(samples)
-        for type in get_unit_types(units, sample)
+        if "N" in get_unit_types(units, sample)
+        for suffix in files[prefix]
     ]
+    files = {
+        "alignment/star": [".bam"],
+    }
+    output_files.append(
+        [
+            "%s/%s_R%s" % (prefix, sample, suffix)
+            for prefix in files.keys()
+            for sample in get_samples(samples)
+            if "R" in get_unit_types(units, sample)
+            for suffix in files[prefix]
+        ]
+    )
+    return output_files

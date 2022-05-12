@@ -43,6 +43,27 @@ properties:
       sort_extra:
         type: string
         description: parameters that should be forwarded to sorting (ie, number of threads)
+      amb:
+        type: string
+        description: fasta reference amb file
+      ann:
+        type: string
+        description: fasta reference ann file
+      bwt:
+        type: string
+        description: fasta reference bwt file
+      pac:
+        type: string
+        description: fasta reference pac file
+      sa:
+        type: string
+        description: fasta reference sa file
+    required:
+      - amb
+      - ann
+      - bwt
+      - pac
+      - sa
 
   bwa_mem_merge:
     type: object
@@ -71,49 +92,6 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
-
-  reference:
-    type: object
-    description: reference used by alignment
-    properties:
-      fasta:
-        type: string
-        description: fasta reference file
-      dict:
-        type: string
-        description: fasta reference dict file
-      amb:
-        type: string
-        description: fasta reference amb file
-      ann:
-        type: string
-        description: fasta reference ann file
-      bwt:
-        type: string
-        description: fasta reference bwt file
-      fai:
-        type: string
-        description: fasta reference fai file
-      pac:
-        type: string
-        description: fasta reference pac file
-      sa:
-        type: string
-        description: fasta reference sa file
-      skip_chrs:
-        type: array
-        items:
-            type: string
-        description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
-    required:
-      - fasta
-      - dict
-      - amb
-      - ann
-      - bwt
-      - fai
-      - pac
-      - sa
 
   samtools_extract_reads:
     type: object
@@ -171,13 +149,47 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  star:
+    type: object
+    description: parameters for alignment with star
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      genome_index:
+        type: string
+        description: path to star reference index
+    required:
+      - genome_index
+
   trimmer_software:
     type: string
     description: Set input files for alignment software, if "None" is set the files in units.tsv will be used. Default is None.
     pattern: "^(fastp_pe|merged|None)$"
 
+reference:
+  type: object
+  description: reference used by alignment
+  properties:
+    fasta:
+      type: string
+      description: fasta reference file
+    fai:
+      type: string
+      description: fasta reference fai file
+    skip_chrs:
+      type: array
+      items:
+          type: string
+      description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
+
 required:
   - samples
   - units
   - default_container
-  - reference
