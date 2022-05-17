@@ -75,7 +75,8 @@ rule samtools_merge_bam:
         bams=expand(
             "alignment/picard_mark_duplicates/{{sample}}_{{type}}_{chr}.bam",
             chr=extract_chr(
-                "%s.fai" % (config["reference"]["fasta"]), filter_out=config.get("reference", {}).get("skip_chrs", [])
+                "%s.fai" % (config.get("reference", {}).get("fasta", "")),
+                filter_out=config.get("reference", {}).get("skip_chrs", []),
             ),
         ),
     output:
