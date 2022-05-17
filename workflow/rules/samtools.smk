@@ -71,40 +71,40 @@ rule samtools_index:
 
 
 rule samtools_merge_bam:
-  input:
-      bams=expand(
-          "alignment/picard_mark_duplicates/{{sample}}_{{type}}_{chr}.bam",
-          chr=extract_chr(
-              "%s.fai" % (config.get("reference", {}).get("fasta", "")),
-              filter_out=config.get("reference", {}).get("skip_chrs", []),
-          ),
-      ),
-  output:
-      bam=temp("alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted"),
-  params:
-      extra=config.get("samtools_merge_bam", {}).get("extra", ""),
-  log:
-      "alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted.log",
-  benchmark:
-      repeat(
-          "alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted.benchmark.tsv",
-          config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
-      )
-  threads: config.get("samtools_merge_bam", {}).get("threads", config["default_resources"]["threads"])
-  resources:
-      mem_mb=config.get("samtools_merge_bam", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-      mem_per_cpu=config.get("samtools_merge_bam", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-      partition=config.get("samtools_merge_bam", {}).get("partition", config["default_resources"]["partition"]),
-      threads=config.get("samtools_merge_bam", {}).get("threads", config["default_resources"]["threads"]),
-      time=config.get("samtools_merge_bam", {}).get("time", config["default_resources"]["time"]),
-  container:
-      config.get("samtools", {}).get("container", config["default_container"])
-  conda:
-      "../envs/samtools.yaml"
-  message:
-      "{rule}: merge chr bam files, creating {output}"
-  wrapper:
-      "v1.1.0/bio/samtools/merge"
+    input:
+        bams=expand(
+            "alignment/picard_mark_duplicates/{{sample}}_{{type}}_{chr}.bam",
+            chr=extract_chr(
+                "%s.fai" % (config.get("reference", {}).get("fasta", "")),
+                filter_out=config.get("reference", {}).get("skip_chrs", []),
+            ),
+        ),
+    output:
+        bam=temp("alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted"),
+    params:
+        extra=config.get("samtools_merge_bam", {}).get("extra", ""),
+    log:
+        "alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted.benchmark.tsv",
+            config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("samtools_merge_bam", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("samtools_merge_bam", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("samtools_merge_bam", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("samtools_merge_bam", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_merge_bam", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_merge_bam", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("samtools", {}).get("container", config["default_container"])
+    conda:
+        "../envs/samtools.yaml"
+    message:
+        "{rule}: merge chr bam files, creating {output}"
+    wrapper:
+        "v1.1.0/bio/samtools/merge"
 
 
 rule samtools_sort:
