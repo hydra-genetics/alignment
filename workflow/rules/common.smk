@@ -82,7 +82,7 @@ def compile_output_list(wildcards):
         "alignment/samtools_merge_bam": [".bam"],
     }
     output_files = [
-        "%s/%s_N%s" % (prefix, sample, suffix)
+        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
