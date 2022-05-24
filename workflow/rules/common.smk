@@ -85,7 +85,7 @@ def compile_output_list(wildcards):
         "%s/%s_N%s" % (prefix, sample, suffix)
         for prefix in files.keys()
         for sample in get_samples(samples)
-        if "N" in get_unit_types(units, sample)
+        for unit_type in get_unit_types(units, sample) if unit_type in ['N', 'T']
         for suffix in files[prefix]
     ]
     files = {
