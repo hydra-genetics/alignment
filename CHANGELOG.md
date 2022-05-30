@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/hydra-genetics/alignment/compare/v0.1.0...v0.2.0) (2022-05-30)
+
+
+### Features
+
+* new schemas for reference files ([03de2f5](https://www.github.com/hydra-genetics/alignment/commit/03de2f5b7a0264c9cfaccab08029d8738f38adf5))
+* run different schemas dependent on sample type ([5c44fbd](https://www.github.com/hydra-genetics/alignment/commit/5c44fbdc3c3273841881f9cc8378b30a6b073e16))
+* star alignment rule ([e40fb0d](https://www.github.com/hydra-genetics/alignment/commit/e40fb0d5a4fecd27f539f9b42058999fdf93db29))
+* update name of compatibility test ([9691276](https://www.github.com/hydra-genetics/alignment/commit/9691276d4c7f9bd1ba42ef3523ec44a4a800b278))
+
+
+### Bug Fixes
+
+* Add snakemake wrapper utils to samtools env ([6b3ed44](https://www.github.com/hydra-genetics/alignment/commit/6b3ed44c1d6915f127e3366fd2a38bd6f66056b7))
+* add temp on outfiles ([ec1d408](https://www.github.com/hydra-genetics/alignment/commit/ec1d408696d55f022e59022e96e74955febbdac5))
+* also handle unit type T ([f9aebeb](https://www.github.com/hydra-genetics/alignment/commit/f9aebeb76096db0f35a995c3aa3b20abb78f0895))
+* change to version of samtools sort that uses temp directory ([f5830a0](https://www.github.com/hydra-genetics/alignment/commit/f5830a0c1d0f7f51fc8b3b7e206e1599cc6fb621))
+* changes due to comments ([428b79f](https://www.github.com/hydra-genetics/alignment/commit/428b79f88f6e5ba340122c9d2089cc899561b60c))
+* remove hardcoded reference key ([7038c32](https://www.github.com/hydra-genetics/alignment/commit/7038c3297e7ab208cc0ea596c08adf2fc9e604f1))
+* requirements ([6a887cb](https://www.github.com/hydra-genetics/alignment/commit/6a887cbc81a1dc160c578eab79674118741e0b91))
+* suggested changes ([b6fc85e](https://www.github.com/hydra-genetics/alignment/commit/b6fc85ef5d6ec4ec808d7bca20835d2f0fbb1350))
+* suggested changes ([4563bc1](https://www.github.com/hydra-genetics/alignment/commit/4563bc126dc38588f801d4d5d254b363d781ebc8))
+* updated schema ([e3cf603](https://www.github.com/hydra-genetics/alignment/commit/e3cf603813f73760cd6ba52855e1e7b1b2e8d287))
+
 ## 0.1.0 (2022-04-19)
 
 
