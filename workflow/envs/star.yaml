@@ -3,5 +3,4 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - samtools=1.15
-  - snakemake-wrapper-utils=0.3.1
+  - star=2.7.10a

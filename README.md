@@ -95,7 +95,7 @@ use rule * from alignment as alignment_*
 ### Compatibility
 
 Latest:
- - prealignment:v0.2.0
+ - prealignment:v0.3.1
 
  See [COMPATIBLITY.md](../master/COMPATIBLITY.md) file for a complete list of module compatibility.
 

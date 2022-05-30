@@ -8,16 +8,15 @@ default_container: "docker://hydragenetics/common:0.1.1"
 
 reference:
   fasta: "../integration/reference/WASH7P.fna"
-  dict: "../integration/reference/WASH7P.dict"
+  fai: "../integration/reference/WASH7P.fna.fai"
+
+bwa_mem:
   amb: "../integration/reference/WASH7P.fna.amb"
   ann: "../integration/reference/WASH7P.fna.ann"
   bwt: "../integration/reference/WASH7P.fna.bwt"
-  fai: "../integration/reference/WASH7P.fna.fai"
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
   pac: "../integration/reference/WASH7P.fna.pac"
   sa: "../integration/reference/WASH7P.fna.sa"
-
-bwa_mem:
-  container: "docker://hydragenetics/bwa_mem:0.7.17"
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
