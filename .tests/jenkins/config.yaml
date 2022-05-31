@@ -2,7 +2,7 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
-default_container: "docker://hydragenetics/common:0.0.1"
+default_container: "docker://hydragenetics/common:0.1.3"
 
 reference:
   fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
