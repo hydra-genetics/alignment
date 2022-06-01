@@ -11,32 +11,6 @@ bwa_mem:
   threads: 8
   time: "8:00:00"
 
-fastp_pe:
-  threads: 4
 
-vep:
+picard_mark_duplicates:
   threads: 8
-
-fastqc:
-  threads: 2
-
-manta_run_workflow_t:
-  threads: 8
-
-mutect2_gvcf:
-  threads: 8
-  mem_mb: 15200
-  time: "8:00:00"
-
-mutect2:
-  threads: 8
-  mem_mb: 15200
-  time: "8:00:00"
-
-gene_fuse:
-  threads: 8
-  time: "8:00:00"
-
-vardict:
-  threads: 8
-  time: "16:00:00"
