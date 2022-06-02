@@ -17,11 +17,20 @@ from hydra_genetics.utils.samples import *
 
 min_version("6.10")
 
-
 ### Set and validate config file
 
+if os.path.isfile("config/config.yaml"):
 
-configfile: "config.yaml"
+    configfile: "config/config.yaml"
+
+
+elif os.path.isfile("config.yaml"):
+
+    configfile: "config.yaml"
+
+
+elif not workflow.overwrite_configfiles:
+    raise FileExistsError("No config file found in working directory or passed as argument!")
 
 
 validate(config, schema="../schemas/config.schema.yaml")
