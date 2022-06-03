@@ -1,0 +1,9 @@
+jobs: 100
+keep-going: True
+restart-times: 3
+rerun-incomplete: True
+use-singularity: True
+singularity-args: "-e --cleanenv -B /home/jenkins -B /projects -B /data -B /beegfs-storage"
+singularity-prefix: "/projects/wp1/nobackup/singularity_cache"
+drmaa: " -A wp1 -N 1-1 -t {resources.time} -n {resources.threads} --mem={resources.mem_mb} --mem-per-cpu={resources.mem_per_cpu} --mem-per-cpu={resources.mem_per_cpu} --partition={resources.partition} -J {rule} -e slurm_out/{rule}_%j.err -o slurm_out/{rule}_%j.out"
+drmaa-log-dir: "slurm_out"
