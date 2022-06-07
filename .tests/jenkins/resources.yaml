@@ -1,6 +1,6 @@
 default_resources:
   threads: 1
-  time: "12:00:00"
+  time: "8:00:00"
   mem_mb: 4000
   mem_per_cpu: 4000
   partition: core
