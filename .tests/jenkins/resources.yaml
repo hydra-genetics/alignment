@@ -1,13 +1,13 @@
 default_resources:
   threads: 1
   time: "12:00:00"
-  mem_mb: 1900
-  mem_per_cpu: 1900
+  mem_mb: 4000
+  mem_per_cpu: 4000
   partition: core
 
 bwa_mem:
-  mem_mb: 15200
-  mem_per_cpu: 1900
+  mem_mb: 32000
+  mem_per_cpu: 4000
   threads: 8
   time: "8:00:00"
 
