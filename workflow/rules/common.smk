@@ -15,7 +15,7 @@ from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
 
 
-min_version("6.10")
+min_version("7.8.0")
 
 ### Set and validate config file
 

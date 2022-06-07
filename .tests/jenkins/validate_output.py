@@ -93,7 +93,7 @@ def validate_result(json_file, directory):
             for rule in validation_data['final_output'][analys]:
                 log.info(f"- rule: {rule}")
                 for f_path, md5 in validation_data['final_output'][analys][rule].items():
-                    if f_path.endswith("gz"):
+                    if f_path.endswith("bam"):
                         result = process_bam_file(f_path, directory)
                         if result.returncode != 0:
                             raise ValueError(f"Could not run command: {result.args}\n"
