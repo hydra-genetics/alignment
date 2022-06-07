@@ -19,18 +19,8 @@ min_version("6.10")
 
 ### Set and validate config file
 
-if os.path.isfile("config/config.yaml"):
-
-    configfile: "config/config.yaml"
-
-
-elif os.path.isfile("config.yaml"):
-
-    configfile: "config.yaml"
-
-
-elif not workflow.overwrite_configfiles:
-    raise FileExistsError("No config file found in working directory or passed as argument!")
+if not workflow.overwrite_configfiles:
+    sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
 
 validate(config, schema="../schemas/config.schema.yaml")
@@ -95,7 +85,7 @@ def compile_output_list(wildcards):
         for prefix in files.keys()
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
-        if unit_type in ['N', 'T']
+        if unit_type in ["N", "T"]
         for suffix in files[prefix]
     ]
     files = {

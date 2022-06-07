@@ -39,8 +39,8 @@ jobs:
       - name: snakemake dry run
         working-directory: .tests/compatibility
         run: |
-          snakemake -n -s Snakefile
+          snakemake -n -s Snakefile --show-failed-logs --configfiles config.yaml
       - name: snakemake dry run fastp_pe config
         working-directory: .tests/compatibility
         run: |
-          snakemake -n -s Snakefile --configfile config_fastp_pe.yaml
+          snakemake -n -s Snakefile --show-failed-logs --configfiles config.yaml config_fastp_pe.yaml
