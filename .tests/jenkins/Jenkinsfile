@@ -29,7 +29,7 @@ pipeline {
                cp .tests/jenkins/resources.yaml resources.yaml
                module load singularity
                module load slurm-drmaa
-               snakemake -s workflow/Snakefile --use-singularity --profile .tests/jenkins/slurm --notemp --configfile .tests/jenkins/config.yaml 
+               snakemake -s workflow/Snakefile --show-failed-logs --use-singularity --profile .tests/jenkins/slurm --notemp --configfile .tests/jenkins/config.yaml
                python3 .tests/jenkins/validate_output.py validate-result -j .tests/jenkins/develop.validation.json -d ./
              '''
         }
@@ -53,7 +53,7 @@ pipeline {
                cp .tests/jenkins/resources.yaml resources.yaml
                module load singularity
                module load slurm-drmaa
-               snakemake -s workflow/Snakefile --use-singularity --profile .tests/jenkins/slurm --notemp --configfile .tests/jenkins/config.yaml
+               snakemake -s workflow/Snakefile --show-failed-logs --use-singularity --profile .tests/jenkins/slurm --notemp --configfile .tests/jenkins/config.yaml
                python3 .tests/jenkins/validate_output.py validate-result -j .tests/jenkins/master.validation.json -d ./
              '''
         }
