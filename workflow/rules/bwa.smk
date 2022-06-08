@@ -81,4 +81,4 @@ rule bwa_mem_merge:
     message:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
-        "v1.1.0/bio/samtools/merge"
+        "v1.5.0/bio/samtools/merge"
