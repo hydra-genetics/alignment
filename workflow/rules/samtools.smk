@@ -67,7 +67,7 @@ rule samtools_index:
     message:
         "{rule}: create index for {wildcards.file}"
     wrapper:
-        "v1.1.0/bio/samtools/index"
+        "v1.3.2/bio/samtools/index"
 
 
 rule samtools_merge_bam:
@@ -104,7 +104,7 @@ rule samtools_merge_bam:
     message:
         "{rule}: merge chr bam files, creating {output}"
     wrapper:
-        "v1.1.0/bio/samtools/merge"
+        "v1.3.2/bio/samtools/merge"
 
 
 rule samtools_sort:
