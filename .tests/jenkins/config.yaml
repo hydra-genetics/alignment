@@ -19,7 +19,7 @@ bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
 
 bwa_mem_merge:
-  extra: " -c "
+  extra: "-c -p"
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
@@ -31,4 +31,4 @@ star:
 trimmer_software: "fastp_pe"
 
 samtools_merge_bam:
-   extra: " -c "
+   extra: "-c -p"
