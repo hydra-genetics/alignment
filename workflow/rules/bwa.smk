@@ -20,7 +20,7 @@ rule bwa_mem:
         extra=lambda wildcards: "%s %s"
         % (
             config.get("bwa_mem", {}).get("extra", ""),
-            config.get("bwa_mem", {}).get("read_group", generate_read_group(wildcards)),
+            config.get("bwa_mem", {}).get("read_group", generate_read_group(wildcards, "bwa_mem")),
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
         sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),

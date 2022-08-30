@@ -47,7 +47,6 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 wildcard_constraints:
     barcode="[A-Z+]+",
-    chr="[^_]+",
     flowcell="[A-Z0-9]+",
     lane="L[0-9]+",
     sample="|".join(get_samples(samples)),
@@ -59,21 +58,41 @@ if config.get("trimmer_software", "None") == "fastp_pe":
         "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq1.fastq.gz",
         "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq2.fastq.gz",
     ]
+    alignment_input_read1 = lambda wilcards: [
+        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq1.fastq.gz",
+    ]
+    alignment_input_read2 = lambda wilcards: [
+        "prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{barcode}_{type}_fastq2.fastq.gz",
+    ]
 elif config.get("trimmer_software", "None") == "None":
     alignment_input = lambda wildcards: [
         get_fastq_file(units, wildcards, "fastq1"),
         get_fastq_file(units, wildcards, "fastq2"),
     ]
+    alignment_input_read1 = lambda wildcards: [get_fastq_file(units, wildcards, "fastq1")]
+    alignment_input_read2 = lambda wildcards: [get_fastq_file(units, wildcards, "fastq2")]
 
 
-def generate_read_group(wildcards):
-    return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
-        "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
-        "{}_{}".format(wildcards.sample, wildcards.type),
-        get_unit_platform(units, wildcards),
-        "{}.{}.{}".format(wildcards.flowcell, wildcards.lane, wildcards.barcode),
-        "{}_{}".format(wildcards.sample, wildcards.type),
-    )
+def generate_read_group(wildcards, caller):
+    if caller == "bwa_mem":
+        return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
+            "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
+            "{}_{}".format(wildcards.sample, wildcards.type),
+            get_unit_platform(units, wildcards),
+            "{}.{}.{}".format(wildcards.flowcell, wildcards.lane, wildcards.barcode),
+            "{}_{}".format(wildcards.sample, wildcards.type),
+        )
+    elif caller == "star":
+        return "--outSAMattrRGline ID:{} tSM:{} PL:{} PU:{} LB:{}".format(
+            "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
+            "{}_{}".format(wildcards.sample, wildcards.type),
+            get_unit_platform(units, wildcards),
+            "{}.{}.{}".format(wildcards.flowcell, wildcards.lane, wildcards.barcode),
+            "{}_{}".format(wildcards.sample, wildcards.type),
+        )
+    else:
+        sys.exit("unknown caller in generate_read_group")
+
 
 
 def compile_output_list(wildcards):

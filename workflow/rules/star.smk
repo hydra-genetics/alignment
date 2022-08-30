@@ -6,14 +6,18 @@ __license__ = "GPL-3"
 
 rule star:
     input:
-        fq1="prealignment/merged/{sample}_{type}_fastq1.fastq.gz",
-        fq2="prealignment/merged/{sample}_{type}_fastq2.fastq.gz",
+        fq1=lambda wildcards: alignment_input_read1(wildcards),
+        fq2=lambda wildcards: alignment_input_read2(wildcards),
         idx=config.get("star", {}).get("genome_index", ""),
     output:
-        bam=temp("alignment/star/{sample}_{type}.bam"),
-        sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
+        bam=temp("alignment/star/{sample}_{flowcell}_{lane}_{barcode}_{type}.bam"),
+        sj=temp("alignment/star/{sample}_{flowcell}_{lane}_{barcode}_{type}.SJ.out.tab"),
     params:
-        extra=config.get("star", {}).get("extra", "--outSAMtype BAM SortedByCoordinate"),
+        extra=lambda wildcards: "%s %s"
+        % (
+            config.get("star", {}).get("extra", ""),
+            config.get("star", {}).get("read_group", generate_read_group(wildcards, "star")),
+        ),
         idx="{input.idx}",
     log:
         "alignment/star/{sample}_{type}.bam.log",
