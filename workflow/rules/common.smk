@@ -48,7 +48,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 wildcard_constraints:
     barcode="[A-Z+]+",
     chr="[^_]+",
-    flowcell="[A-Z0-9]+",
+    flowcell="[A-Z0-9-]+",
     lane="L[0-9]+",
     sample="|".join(get_samples(samples)),
     type="N|T|R",
