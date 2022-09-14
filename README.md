@@ -1,4 +1,4 @@
-# :snake: hydra-genetics/alignment
+# <img src="https://github.com/hydra-genetics/alignment/blob/develop/images/hydragenetics.png" width=40 /> hydra-genetics/alignment
 
 Snakemake module containing processing steps that should be performed during sequence alignment.
 
