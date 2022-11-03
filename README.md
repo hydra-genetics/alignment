@@ -6,6 +6,8 @@ Snakemake module containing processing steps that should be performed during seq
 ![Snakefmt](https://github.com/hydra-genetics/alignment/actions/workflows/snakefmt.yaml/badge.svg?branch=develop)
 ![snakemake dry run](https://github.com/hydra-genetics/alignment/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=develop)
 ![integration test](https://github.com/hydra-genetics/alignment/actions/workflows/integration.yaml/badge.svg?branch=develop)
+![pycodestyle](https://github.com/hydra-genetics/alignment/actions/workflows/pycodestyl.yaml/badge.svg?branch=develop)
+![pytest](https://github.com/hydra-genetics/alignment/actions/workflows/pytest.yaml/badge.svg?branch=develop)
 
 [![License: GPL-3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/gpl-3.0.html)
 
@@ -18,11 +20,13 @@ The module consists of alignment processing steps, such as alignment of `.fastq`
 
 In order to use this module, the following dependencies are required:
 
-[![hydra-genetics](https://img.shields.io/badge/hydragenetics-v0.9.1-blue)](https://github.com/hydra-genetics/)
+[![hydra-genetics](https://img.shields.io/badge/hydragenetics-0.15.0-blue)](https://github.com/hydra-genetics/)
 [![pandas](https://img.shields.io/badge/pandas-1.3.1-blue)](https://pandas.pydata.org/)
 [![python](https://img.shields.io/badge/python-3.8-blue)](https://www.python.org/)
-[![snakemake](https://img.shields.io/badge/snakemake-6.10.0-blue)](https://snakemake.readthedocs.io/en/stable/)
+[![snakemake](https://img.shields.io/badge/snakemake-7.13.0-blue)](https://snakemake.readthedocs.io/en/stable/)
 [![singularity](https://img.shields.io/badge/singularity-3.0.0-blue)](https://sylabs.io/docs/)
+[![drmaa](https://img.shields.io/badge/drmaa-0.7.9-blue)](https://pypi.org/project/drmaa/)
+[![tabulate](https://img.shields.io/badge/tabulate-0.8.10-blue)](https://pypi.org/project/tabulate/)
 
 ## :school_satchel: Preparations
 
@@ -95,7 +99,7 @@ use rule * from alignment as alignment_*
 ### Compatibility
 
 Latest:
- - prealignment:v0.4.0
+ - prealignment:v0.5.0
 
  See [COMPATIBLITY.md](../master/COMPATIBLITY.md) file for a complete list of module compatibility.
 
