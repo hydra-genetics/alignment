@@ -28,6 +28,8 @@ In order to use this module, the following dependencies are required:
 [![drmaa](https://img.shields.io/badge/drmaa-0.7.9-blue)](https://pypi.org/project/drmaa/)
 [![tabulate](https://img.shields.io/badge/tabulate-0.8.10-blue)](https://pypi.org/project/tabulate/)
 
+**Note! Releases of prealignment <= v0.4.0 needs tabulate<0.9.0 added in requirements.txt**
+
 ## :school_satchel: Preparations
 
 ### Sample and unit data
@@ -125,7 +127,7 @@ The following output files should be targeted via another rule:
 | File | Description |
 |---|---|
 | `alignment/samtools_merge_bam/{sample}_{type}.bam` | aligned data which have been duplicate marked |
-| 'alignment/star/{sample}_{type}.bam' | aligned rna data |
+| `alignment/star/{sample}_{type}.bam` | aligned rna data |
 
 ## :judge: Rule Graph
 
