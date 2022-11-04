@@ -1,4 +1,4 @@
 jobs: 100
 drmaa: " -t {resources.time} -n {resources.threads} --mem={resources.mem_mb} --partition={resources.partition} "
 default-resources: [threads=1, time="01:00:00", partition="core", mem_mb="1024", mem_per_cpu="3074"]
-singularity-args: "-e --cleanenv -B /projects -B /data -B /beegfs-storage -B /scratch"
+singularity-args: "-e --cleanenv -B /projects -B /data -B /beegfs-storage -B /scratch -B /beegfs-storage/temp:/tmp"
