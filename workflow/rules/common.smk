@@ -15,13 +15,12 @@ from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
 
 
-min_version("6.10")
-
+min_version("7.8.0")
 
 ### Set and validate config file
 
-
-configfile: "config.yaml"
+if not workflow.overwrite_configfiles:
+    sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
 
 validate(config, schema="../schemas/config.schema.yaml")
@@ -49,7 +48,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 wildcard_constraints:
     barcode="[A-Z+]+",
     chr="[^_]+",
-    flowcell="[A-Z0-9]+",
+    flowcell="[A-Z0-9-]+",
     lane="L[0-9]+",
     sample="|".join(get_samples(samples)),
     type="N|T|R",
@@ -86,7 +85,7 @@ def compile_output_list(wildcards):
         for prefix in files.keys()
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
-        if unit_type in ['N', 'T']
+        if unit_type in ["N", "T"]
         for suffix in files[prefix]
     ]
     files = {

@@ -1,0 +1,34 @@
+samples: "samples.tsv"
+units: "units.tsv"
+resources: "resources.yaml"
+
+default_container: "docker://hydragenetics/common:0.1.3"
+
+reference:
+  fasta: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
+  dict: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.dict"
+  fna: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta"
+
+bwa_mem:
+  amb: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta.amb"
+  ann: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta.ann"
+  bwt: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta.bwt"
+  fai: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta.fai"
+  pac: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta.pac"
+  sa: "/data/ref_genomes/hg19/bwa/BWA_0.7.10_refseq/hg19.with.mt.fasta.sa"
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
+
+bwa_mem_merge:
+  extra: "-c -p"
+
+picard_mark_duplicates:
+  container: "docker://hydragenetics/picard:2.25.0"
+
+star:
+  container: "docker://hydragenetics/star:2.7.10a"
+  genome_index: "reference/star_idx"
+
+trimmer_software: "fastp_pe"
+
+samtools_merge_bam:
+   extra: "-c -p"

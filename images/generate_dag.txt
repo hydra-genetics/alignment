@@ -1,0 +1,2 @@
+# Generate a dag graph and place it here
+# snakemake --rulegraph | dot -Tsvg > dag.svg
