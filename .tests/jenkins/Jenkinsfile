@@ -27,10 +27,14 @@ pipeline {
                cp .tests/jenkins/units.tsv units.tsv
                cp .tests/jenkins/samples.develop.tsv samples.tsv
                cp .tests/jenkins/resources.yaml resources.yaml
+               cp .tests/jenkins/test_input.develop.tsv test_input.tsv
                module load singularity
                module load slurm-drmaa
                snakemake -s workflow/Snakefile --show-failed-logs --use-singularity --profile .tests/jenkins/profiles/slurm --notemp --configfile .tests/jenkins/config.yaml
-               python3 .tests/jenkins/validate_output.py validate-result -j .tests/jenkins/develop.validation.json -d ./
+
+               git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
+               module load nextflow
+               nextflow run validation_workflow/validate_result.nf
              '''
         }
       }
@@ -51,10 +55,14 @@ pipeline {
                cp .tests/jenkins/units.tsv units.tsv
                cp .tests/jenkins/samples.master.tsv samples.tsv
                cp .tests/jenkins/resources.yaml resources.yaml
+               cp .tests/jenkins/test_input.master.tsv test_input.tsv
                module load singularity
                module load slurm-drmaa
                snakemake -s workflow/Snakefile --show-failed-logs --use-singularity --profile .tests/jenkins/profiles/slurm --notemp --configfile .tests/jenkins/config.yaml
-               python3 .tests/jenkins/validate_output.py validate-result -j .tests/jenkins/master.validation.json -d ./
+
+               git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
+               module load nextflow
+               nextflow run validation_workflow/validate_result.nf
              '''
         }
       }
