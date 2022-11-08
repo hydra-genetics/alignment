@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/hydra-genetics/alignment/compare/v0.2.0...v0.3.0) (2022-11-08)
+
+
+### Features
+
+* **common:** update flowcell constraint ([6d538e9](https://www.github.com/hydra-genetics/alignment/commit/6d538e9d3e90df87dc340e2273b72e86b4ea72da))
+* make config.yaml location more flexible ([276ecfb](https://www.github.com/hydra-genetics/alignment/commit/276ecfbf386ad348153fefea734ffc31deb5ac65))
+* make configfile/confgilefiles argument mandatory ([6806ae5](https://www.github.com/hydra-genetics/alignment/commit/6806ae553d500b58f98443e66c7b3ae4294b93e5))
+* update snakemake-version ([6c1cb59](https://www.github.com/hydra-genetics/alignment/commit/6c1cb592ce4832341ff8fe7984366d4e0224b265))
+* updated requirements ([71ef02b](https://www.github.com/hydra-genetics/alignment/commit/71ef02b8d96051e91b36aecb95fe993c20188c11))
+
+
+### Bug Fixes
+
+* add missing part to file path for md5sum list ([47463f0](https://www.github.com/hydra-genetics/alignment/commit/47463f0db885e0203a9538f3228e96c2952b9d0a))
+* correct jenkins test ([0f6c631](https://www.github.com/hydra-genetics/alignment/commit/0f6c6313912cc2e92448294a17069a36b618f8d0))
+* correct md5sums ([3769781](https://www.github.com/hydra-genetics/alignment/commit/3769781f300e392beee6458ca4511bff3be72016))
+* move temp to beegfs-storage ([952d04b](https://www.github.com/hydra-genetics/alignment/commit/952d04ba3dd3f9744b8f2225bd8f371ef2f0a8ff))
+* prevent jenkins from clean on failure ([f7b5637](https://www.github.com/hydra-genetics/alignment/commit/f7b563782ca396b9fd3e386b508b5d4930d4fe8c))
+* process correct file type ([e5d3fc1](https://www.github.com/hydra-genetics/alignment/commit/e5d3fc14d2c5a10bc2a704be2799405ae61aade2))
+* **requirements:** handle tabulate/snakemake bug ([fe7392e](https://www.github.com/hydra-genetics/alignment/commit/fe7392e60bedf91e8bc0bd5aeaa93ab3bd8ac42b))
+* set correct jenkins config ([3cda9e1](https://www.github.com/hydra-genetics/alignment/commit/3cda9e13b9eaa4fc687ab9b4e8181d345f04f8a0))
+* set strict mode for conda ([a7ced7c](https://www.github.com/hydra-genetics/alignment/commit/a7ced7c0d1fc98149f4ff206a72b80ac118e4e01))
+* update json files ([bd7f483](https://www.github.com/hydra-genetics/alignment/commit/bd7f483b29db31f9828aec17243cf375f8a02325))
+* update to new validation pipeline ([32a03aa](https://www.github.com/hydra-genetics/alignment/commit/32a03aa0c5f79dca948ff076bd1a57240fb45a11))
+
+
+### Documentation
+
+* add configfile option to example ([1661c2f](https://www.github.com/hydra-genetics/alignment/commit/1661c2f5fd00672516dce8b08d4202eb68edaa12))
+* added Star aligner documentation and rule graph ([bedf204](https://www.github.com/hydra-genetics/alignment/commit/bedf204219edf93aa45d820cc71daec7926835d6))
+* **README:** change header image ([6068b2d](https://www.github.com/hydra-genetics/alignment/commit/6068b2d7702c740d9498328d4592891cfc8682ca))
+* update compatibility list ([d57d4a8](https://www.github.com/hydra-genetics/alignment/commit/d57d4a85d1121219b99d0eac0ad2b04f209745a3))
+* update README ([2bdd547](https://www.github.com/hydra-genetics/alignment/commit/2bdd54783d3fd9851450a745738c7553cd49f1f7))
+* updated release info ([ab75de7](https://www.github.com/hydra-genetics/alignment/commit/ab75de705e53c94c31f183a2de469cc998ec492e))
+
 ## [0.2.0](https://www.github.com/hydra-genetics/alignment/compare/v0.1.0...v0.2.0) (2022-05-30)
 
 
