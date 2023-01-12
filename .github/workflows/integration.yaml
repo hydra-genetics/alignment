@@ -36,13 +36,19 @@ jobs:
           snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --use-conda --configfiles config.yaml config_fastp_pe.yaml
   integration-small-singularity:
     name: integration small data set singularity
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.8
         uses: actions/setup-python@v3
         with:
           python-version: 3.8
+      - name: Install requirements.txt
+        run: |
+          pip install -r requirements.txt
+      - name: Install requirements.test.txt
+        run: |
+          pip install -r requirements.test.txt
       - name: Add conda to system path
         run: |
           echo $CONDA/bin >> $GITHUB_PATH
@@ -50,12 +56,6 @@ jobs:
         run: |
           conda config --set channel_priority strict
           conda install -c conda-forge mamba=0.15.3
-      - name: Install requirements.txt
-        run: |
-          pip install -r requirements.txt
-      - name: Install requirements.test.txt
-        run: |
-          pip install -r requirements.test.txt
       - name: Install singularity
         run: |
           mamba install -c conda-forge -c bioconda singularity=3.8.6
