@@ -43,7 +43,7 @@ rule samtools_index:
     input:
         "{file}.bam",
     output:
-        "{file}.bam.bai",
+        temp("{file}.bam.bai"),
     params:
         extra=config.get("samtools_index", {}).get("extra", ""),
     log:
