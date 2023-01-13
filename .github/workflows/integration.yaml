@@ -20,7 +20,7 @@ jobs:
         run: |
           conda config --set channel_priority strict
           conda install -c conda-forge mamba
-          mamba install -c conda-forge -c python3.8
+          mamba install -c conda-forge -c python3.9
       - name: Install requirements.txt
         run: |
           pip install -r requirements.txt
@@ -43,7 +43,7 @@ jobs:
         run: |
           conda config --set channel_priority strict
           conda install -c conda-forge mamba
-          mamba install -c conda-forge -c python3.8 bioconda singularity=3.8.6
+          mamba install -c conda-forge -c python3.9 bioconda singularity=3.8.6
       - name: Install requirements.txt
         run: |
           pip install -r requirements.txt
