@@ -13,10 +13,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.8
       - name: Add conda to system path
         run: |
           echo $CONDA/bin >> $GITHUB_PATH
@@ -24,6 +20,7 @@ jobs:
         run: |
           conda config --set channel_priority strict
           conda install -c conda-forge mamba
+          mamba install -c conda-forge -c python3.8
       - name: Install requirements.txt
         run: |
           pip install -r requirements.txt
@@ -39,16 +36,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.8
-      - name: Install requirements.txt
-        run: |
-          pip install -r requirements.txt
-      - name: Install requirements.test.txt
-        run: |
-          pip install -r requirements.test.txt
       - name: Add conda to system path
         run: |
           echo $CONDA/bin >> $GITHUB_PATH
@@ -56,9 +43,13 @@ jobs:
         run: |
           conda config --set channel_priority strict
           conda install -c conda-forge mamba
-      - name: Install singularity
+          mamba install -c conda-forge -c python3.8 bioconda singularity=3.8.6
+      - name: Install requirements.txt
         run: |
-          mamba install -c conda-forge -c bioconda singularity=3.8.6
+          pip install -r requirements.txt
+      - name: Install requirements.test.txt
+        run: |
+          pip install -r requirements.test.txt
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
