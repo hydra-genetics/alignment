@@ -22,6 +22,7 @@ jobs:
             use-mamba: true
       - name: Install dependencies
         run: |
+          conda config --set channel_priority strict
           mamba install -c conda-forge -c bioconda python=3.8
       - name: Install requirements.txt
         run: |
@@ -47,6 +48,7 @@ jobs:
             use-mamba: true
       - name: Install dependencies
         run: |
+          conda config --set channel_priority strict
           mamba install -c conda-forge -c bioconda singularity=3.8.6 python=3.8
       - name: Install requirements.txt
         run: |
