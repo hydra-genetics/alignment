@@ -56,6 +56,9 @@ jobs:
       - name: Install requirements.test.txt
         run: |
           pip install -r requirements.test.txt
+      - name: Add conda to system path
+        run: |
+          echo $CONDA/bin >> $GITHUB_PATH
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
