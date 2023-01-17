@@ -1,5 +1,18 @@
 # Changelog
 
+### [0.3.1](https://www.github.com/hydra-genetics/alignment/compare/v0.3.0...v0.3.1) (2023-01-17)
+
+
+### Bug Fixes
+
+* added temp on samtools index output file ([df4da77](https://www.github.com/hydra-genetics/alignment/commit/df4da778bc8c4eed193ccf06507e306f5017b8e1))
+* update compatibility ([9f6f8bc](https://www.github.com/hydra-genetics/alignment/commit/9f6f8bc31ca2c2869e143e05ccdd093c02c16019))
+
+
+### Documentation
+
+* update compatibility file ([ba8fb3a](https://www.github.com/hydra-genetics/alignment/commit/ba8fb3a1966a3ec56df76fee62a6224884569b30))
+
 ## [0.3.0](https://www.github.com/hydra-genetics/alignment/compare/v0.2.0...v0.3.0) (2022-11-08)
 
 
