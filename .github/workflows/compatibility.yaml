@@ -14,7 +14,7 @@ on:
 jobs:
   compatibility-test:
     name: Run compatibility test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Get branch names
         id: branch-name
