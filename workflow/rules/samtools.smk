@@ -31,8 +31,6 @@ rule samtools_extract_reads:
         time=config.get("samtools_extract_reads", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("samtools_extract_reads", {}).get("container", config["default_container"])
-    conda:
-        "../envs/samtools.yaml"
     message:
         "{rule}: create bam {output} with only reads from {wildcards.chr}"
     shell:
@@ -62,8 +60,6 @@ rule samtools_index:
         partition=config.get("samtools_index", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("samtools_index", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/samtools.yaml"
     message:
         "{rule}: create index for {wildcards.file}"
     wrapper:
@@ -99,8 +95,6 @@ rule samtools_merge_bam:
         time=config.get("samtools_merge_bam", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("samtools", {}).get("container", config["default_container"])
-    conda:
-        "../envs/samtools.yaml"
     message:
         "{rule}: merge chr bam files, creating {output}"
     wrapper:
@@ -130,8 +124,6 @@ rule samtools_sort:
         time=config.get("samtools_sort", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("samtools_sort", {}).get("container", config["default_container"])
-    conda:
-        "../envs/samtools.yaml"
     message:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
