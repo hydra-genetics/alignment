@@ -42,8 +42,6 @@ rule bwa_mem:
         time=config.get("bwa_mem", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("bwa_mem", {}).get("container", config["default_container"])
-    conda:
-        "../envs/bwa.yaml"
     message:
         "{rule}: align fastq files {input.reads} using bwa mem against {input.idx[2]}"
     wrapper:
@@ -76,8 +74,6 @@ rule bwa_mem_merge:
         time=config.get("bwa_mem_merge", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("bwa_mem_merge", {}).get("container", config["default_container"])
-    conda:
-        "../envs/bwa.yaml"
     message:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
