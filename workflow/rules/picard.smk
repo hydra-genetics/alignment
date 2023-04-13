@@ -28,8 +28,6 @@ rule picard_mark_duplicates:
         time=config.get("picard_mark_duplicates", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("picard_mark_duplicates", {}).get("container", config["default_container"])
-    conda:
-        "../envs/picard.yaml"
     message:
         "{rule}: mark duplicates in {input} using picard"
     wrapper:

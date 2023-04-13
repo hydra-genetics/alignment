@@ -28,8 +28,6 @@ rule star:
         time=config.get("star", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("star", {}).get("container", config["default_container"])
-    conda:
-        "../envs/star.yaml"
     message:
         "{rule}: align with star, creating {output.bam}"
     wrapper:

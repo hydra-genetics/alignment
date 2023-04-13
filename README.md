@@ -113,8 +113,8 @@ Latest:
 | File | Description |
 |---|---|
 | ***`hydra-genetics/prealignment data`*** |
-| `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | trimmed forward reads |
-| `prealignment/fastp_pe/{sample}_{flowcell}_{lane}_{type}_fastq1.fastq.gz` | trimmed reverse reads |
+| `prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_fastq1.fastq.gz` | trimmed forward reads |
+| `prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_fastq2.fastq.gz` | trimmed reverse reads |
 | ***`original fastq files`*** |
 | `PATH/fastq1.fastq.gz` | forward reads retrieved from units.tsv |
 | `PATH/fastq2.fastq.gz` | reverse reads retrieved from units.tsv |
