@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/hydra-genetics/alignment/compare/v0.3.1...v0.4.0) (2023-04-14)
+
+
+### Features
+
+* remove conda testing ([e34850e](https://www.github.com/hydra-genetics/alignment/commit/e34850edf620a72692abf4113b6dbb71348fcb41))
+
+
+### Documentation
+
+* update CODEOWNERS ([112ff82](https://www.github.com/hydra-genetics/alignment/commit/112ff82eef62b5043a4ea81c4c17ebd9912c344f))
+* update compatibility ([a6c347a](https://www.github.com/hydra-genetics/alignment/commit/a6c347a4004e5f202a8851c84b7a6b38c329193e))
+* update compatibility ([1738c22](https://www.github.com/hydra-genetics/alignment/commit/1738c22fda753fe9a25ea633ac20a297ea36e88b))
+* update infiles ([9e76409](https://www.github.com/hydra-genetics/alignment/commit/9e7640963d656a80aad51e7e102eabbe85bf4777))
+
 ### [0.3.1](https://www.github.com/hydra-genetics/alignment/compare/v0.3.0...v0.3.1) (2023-01-17)
 
 
