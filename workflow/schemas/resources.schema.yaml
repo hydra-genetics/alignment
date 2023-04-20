@@ -34,10 +34,14 @@ properties:
     properties:
       mem_mb:
         type: integer
-        description: memory in MB used per cpu
+        description: |
+          memory in MB used per cpu
+          NOTE: bwa mem uses a large amount of memory.
       mem_per_cpu:
         type: integer
-        description: memory used per cpu
+        description: |
+          memory used per cpu
+          NOTE: bwa mem uses a large amount of memory.
       partition:
         type: string
         description: partition to use on cluster
@@ -46,7 +50,10 @@ properties:
         description: max execution time
       threads:
         type: integer
-        description:  number of threads to be available
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: Use multiple threads for decreased run time.
+          NOTE: If multiple threads is used the memory must also be increased (mem_mb)
 
   bwa_merge_bam:
     type: object
@@ -186,7 +193,10 @@ properties:
         description: max execution time
       threads:
         type: integer
-        description:  number of threads to be available
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: Use multiple threads for decreased run time.
+          NOTE: If multiple threads is used the memory must also be increased (mem_mb)
 
 required:
   - default_resources

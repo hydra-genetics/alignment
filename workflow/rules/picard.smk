@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule picard_mark_duplicates:
     input:
-        "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam",
+        bams="alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam",
     output:
         bam=temp("alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam"),
         metrics=temp("alignment/picard_mark_duplicates/{sample}_{type}_{chr}.metrics.txt"),
@@ -31,4 +31,4 @@ rule picard_mark_duplicates:
     message:
         "{rule}: mark duplicates in {input} using picard"
     wrapper:
-        "v1.3.1/bio/picard/markduplicates"
+        "v1.25.0/bio/picard/markduplicates"
