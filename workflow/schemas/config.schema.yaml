@@ -81,7 +81,7 @@ properties:
         type: string
         description: |
           parameters that should be forwarded
-          RECOMMENDED: use -c -p to only keep one of the read groups IDs when merging files from the same sample
+          RECOMMENDATION: use -c -p to only keep one of the read groups IDs when merging files from the same sample
 
   picard_mark_duplicates:
     type: object

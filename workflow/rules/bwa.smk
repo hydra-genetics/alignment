@@ -50,12 +50,12 @@ rule bwa_mem:
 
 rule bwa_mem_merge:
     input:
-        lambda wildcards: [
+        bams=lambda wildcards: [
             "alignment/bwa_mem/{sample}_{type}_%s_%s_%s.bam" % (u.flowcell, u.lane, u.barcode)
             for u in get_units(units, wildcards)
         ],
     output:
-        temp("alignment/bwa_mem/{sample}_{type}.bam_unsorted"),
+        bam=temp("alignment/bwa_mem/{sample}_{type}.bam_unsorted"),
     params:
         config.get("bwa_mem_merge", {}).get("extra", ""),
     log:

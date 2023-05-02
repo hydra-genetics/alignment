@@ -1,6 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
-
 __author__ = "Jonas Almlöf, Patrik Smeds"
 __copyright__ = "Copyright 2021, Jonas Almlöf, Patrik Smeds"
 __email__ = "jonas.almlof@scilifelab.uu.se, patrik.smeds@scilifelab.uu.se"
@@ -103,9 +100,9 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        "{path_file}.bam_unsorted",
+        bam="{path_file}.bam_unsorted",
     output:
-        temp("{path_file}.bam"),
+        bam=temp("{path_file}.bam"),
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:

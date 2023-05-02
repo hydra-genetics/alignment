@@ -55,7 +55,7 @@ properties:
           RECOMMENDATION: Use multiple threads for decreased run time.
           NOTE: If multiple threads is used the memory must also be increased (mem_mb)
 
-  bwa_merge_bam:
+  bwa_mem_merge:
     type: object
     description: resource definitions for merging bwa bam files
     properties:
