@@ -1,6 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
-
 __author__ = "Jonas Almlöf, Patrik Smeds"
 __copyright__ = "Copyright 2021, Jonas Almlöf, Patrik Smeds"
 __email__ = "jonas.almlof@scilifelab.uu.se, patrik.smeds@scilifelab.uu.se"
@@ -9,10 +6,10 @@ __license__ = "GPL-3"
 
 rule samtools_extract_reads:
     input:
-        "alignment/bwa_mem/{sample}_{type}.bam",
-        "alignment/bwa_mem/{sample}_{type}.bam.bai",
+        bam="alignment/bwa_mem/{sample}_{type}.bam",
+        bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
     output:
-        temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"),
+        bam=temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"),
     params:
         extra=config.get("samtools_extract_reads", {}).get("extra", ""),
     log:
@@ -39,9 +36,9 @@ rule samtools_extract_reads:
 
 rule samtools_index:
     input:
-        "{file}.bam",
+        bam="{file}.bam",
     output:
-        temp("{file}.bam.bai"),
+        bai=temp("{file}.bam.bai"),
     params:
         extra=config.get("samtools_index", {}).get("extra", ""),
     log:
@@ -103,9 +100,9 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        "{path_file}.bam_unsorted",
+        bam="{path_file}.bam_unsorted",
     output:
-        temp("{path_file}.bam"),
+        bam=temp("{path_file}.bam"),
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:
