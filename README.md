@@ -92,7 +92,7 @@ module alignment:
         github(
             "hydra-genetics/alignment",
             path="workflow/Snakefile",
-            tag="v0.1.0",
+            tag="v0.4.0",
         )
     config:
         config
