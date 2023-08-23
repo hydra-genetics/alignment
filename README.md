@@ -6,8 +6,6 @@ Snakemake module containing processing steps that should be performed during seq
 ![Snakefmt](https://github.com/hydra-genetics/alignment/actions/workflows/snakefmt.yaml/badge.svg?branch=develop)
 ![snakemake dry run](https://github.com/hydra-genetics/alignment/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=develop)
 ![integration test](https://github.com/hydra-genetics/alignment/actions/workflows/integration.yaml/badge.svg?branch=develop)
-![pycodestyle](https://github.com/hydra-genetics/alignment/actions/workflows/pycodestyl.yaml/badge.svg?branch=develop)
-![pytest](https://github.com/hydra-genetics/alignment/actions/workflows/pytest.yaml/badge.svg?branch=develop)
 
 [![License: GPL-3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/gpl-3.0.html)
 
