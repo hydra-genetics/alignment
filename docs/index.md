@@ -1,5 +1,5 @@
 # [Alignment module](https://github.com/hydra-genetics/alignment)
-The alignment module consists of alignment steps, such as alignment against a reference genome and duplicate filtering. The module takes `.fastq`-files as input and outputs `.bam`-files. BWA-mem is used to align DNA data while STAR is used for RNA data. Picard is used for duplicate marking and samtools for merging, sorting, and indexing `.bam`-files.
+The alignment module consists of alignment steps, such as alignment against a reference genome and duplicate filtering. The module takes `.fastq` files as input and outputs `.bam` files. BWA-mem is used to align DNA data while STAR is used for RNA data. Picard is used for duplicate marking and samtools for merging, sorting, and indexing `.bam` files.
 
 # [Hydra-genetics](https://hydra-genetics.readthedocs.io/en/latest/)
 
