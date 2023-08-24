@@ -5,6 +5,8 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/bwa_mem.smk"
+include: "rules/fgbio.smk"
 include: "rules/bwa.smk"
 include: "rules/picard.smk"
 include: "rules/samtools.smk"

@@ -51,6 +51,69 @@ properties:
             type: string
             description: An unsorted merged bam file
 
+  bwa_mem_realign_consensus_reads:
+    type: object
+    description: input and output parameters for bwa_mem_realign_consensus_reads
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: unmapped `bam` file with consensus reads based on umi barcodes
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: realigned and sorted `bam` file based on umi consensus reads
+          bai:
+            type: string
+            description: bam index file
+
+  fgbio_call_and_filter_consensus_reads:
+    type: object
+    description: input and output parameters for fgbio_call_and_filter_consensus_reads
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input 'bam' file with umi tags
+          bai:
+            type: string
+            description: bam index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: unmapped `bam` file with consensus reads that are hard filtered
+
+  fgbio_copy_umi_from_read_name:
+    type: object
+    description: input and output parameters for fgbio_copy_umi_from_read_name
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input `bam` file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: Output `bam` file with umi tag added (default tag name RX) extracted from the read name
+
   picard_mark_duplicates:
     type: object
     description: input and output parameters for picard_mark_duplicates
@@ -183,3 +246,4 @@ properties:
           sj:
             type: string
             description: junction file with split read information useful for interpreting rna data
+

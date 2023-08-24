@@ -75,6 +75,75 @@ properties:
         type: integer
         description:  number of threads to be available
 
+  bwa_mem_realign_consensus_reads:
+    type: object
+    description: resource definitions for bwa_mem_realign_consensus_reads
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: Use multiple threads for decreased run time.
+          NOTE: If multiple threads is used the memory must also be increased (mem_mb)
+      time:
+        type: string
+        description: max execution time
+
+  fgbio_call_and_filter_consensus_reads:
+    type: object
+    description: resource definitions for fgbio_call_and_filter_consensus_reads
+    properties:
+      mem_mb:
+        type: integer
+        description: |
+          max memory in MB to be available
+          NOTE: must be at least 8 GB
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: Use multiple threads for decreased run time.
+      time:
+        type: string
+        description: max execution time
+
+  fgbio_copy_umi_from_read_name:
+    type: object
+    description: resource definitions for fgbio_copy_umi_from_read_name
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: Use multiple threads for decreased run time.
+      time:
+        type: string
+        description: max execution time
+
   picard_mark_duplicates:
     type: object
     description: resource definitions for picard mark duplicates

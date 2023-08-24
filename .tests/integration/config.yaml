@@ -16,6 +16,9 @@ bwa_mem:
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
 
+fgbio_copy_umi_from_read_name:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 

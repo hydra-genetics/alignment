@@ -183,3 +183,87 @@ Align `.fastq` files to a reference genome and generate a `.bam`-file. Star is a
 #RESOURCESSCHEMA__star#
 
 ---
+
+## [fgbio_copy_umi_from_read_name](url_to_tool)
+Introduction to fgbio_copy_umi_from_read_name
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fgbio__fgbio_copy_umi_from_read_name#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fgbio__fgbio_copy_umi_from_read_name#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fgbio_copy_umi_from_read_name#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fgbio_copy_umi_from_read_name#
+
+## [picard_umi_aware_mark_duplicates_with_mate_cigar](url_to_tool)
+Introduction to picard_umi_aware_mark_duplicates_with_mate_cigar
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__picard__picard_umi_aware_mark_duplicates_with_mate_cigar#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__picard__picard_umi_aware_mark_duplicates_with_mate_cigar#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__picard_umi_aware_mark_duplicates_with_mate_cigar#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__picard_umi_aware_mark_duplicates_with_mate_cigar#
+
+## [fgbio_call_and_filter_consensus_reads](url_to_tool)
+Introduction to fgbio_call_and_filter_consensus_reads
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fgbio__fgbio_call_and_filter_consensus_reads#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fgbio__fgbio_call_and_filter_consensus_reads#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fgbio_call_and_filter_consensus_reads#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fgbio_call_and_filter_consensus_reads#
+
+## [bwa_mem_realign_consensus_reads](url_to_tool)
+Introduction to bwa_mem_realign_consensus_reads
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__bwa_mem__bwa_mem_realign_consensus_reads#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__bwa_mem__bwa_mem_realign_consensus_reads#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__bwa_mem_realign_consensus_reads#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__bwa_mem_realign_consensus_reads#
