@@ -79,6 +79,7 @@ def generate_read_group(wildcards):
 def compile_output_list(wildcards):
     files = {
         "alignment/samtools_merge_bam": [".bam"],
+        "alignment/bwa_mem_realign_consensus_reads": [".bam"],
     }
     output_files = [
         "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)

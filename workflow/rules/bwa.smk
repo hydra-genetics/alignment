@@ -20,11 +20,12 @@ rule bwa_mem:
     output:
         bam=temp("alignment/bwa_mem/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam"),
     params:
+        # use -Y in umi config variable for UMI read collapsing using fgbio
         extra=lambda wildcards: "%s %s %s"
         % (
             config.get("bwa_mem", {}).get("extra", ""),
             config.get("bwa_mem", {}).get("read_group", generate_read_group(wildcards)),
-            config.get("bwa_mem", {}).get("umi", ""), # use -Y for UMI gread collapsing using fgbio
+            config.get("bwa_mem", {}).get("umi", ""),
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
         sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),
@@ -89,7 +90,6 @@ rule bwa_mem_realign_consensus_reads:
         bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.unmapped.bam",
     output:
         bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam"),
-        bai=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam.bai"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
         extra_sort=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_sort", ""),
@@ -100,12 +100,14 @@ rule bwa_mem_realign_consensus_reads:
     benchmark:
         repeat(
             "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam.benchmark.tsv",
-            config.get("bwa_mem_realign_consensus_reads", {}).get("benchmark_repeats", 1)
+            config.get("bwa_mem_realign_consensus_reads", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("bwa_mem_realign_consensus_reads", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("bwa_mem_realign_consensus_reads", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("bwa_mem_realign_consensus_reads", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        mem_per_cpu=config.get("bwa_mem_realign_consensus_reads", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
         partition=config.get("bwa_mem_realign_consensus_reads", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("bwa_mem_realign_consensus_reads", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("bwa_mem_realign_consensus_reads", {}).get("time", config["default_resources"]["time"]),
@@ -116,7 +118,7 @@ rule bwa_mem_realign_consensus_reads:
     shell:
         'sh -c "'
         "samtools fastq {input.bam} "
-        "| bwa mem 
+        "| bwa mem "
         "-t {threads} "
         "-p "
         "-K 150000000 "
