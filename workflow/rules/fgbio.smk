@@ -79,22 +79,18 @@ rule fgbio_call_and_filter_consensus_reads:
     shell:
         'sh -c "'
         "fgbio SortBam --input {input.bam} --output /dev/stdout --sort-order TemplateCoordinate "
-        # "fgbio -Xmx4g --compression 0 CallMolecularConsensusReads "
-        "| fgbio -Xmx4g --compression 1 CallMolecularConsensusReads "
+        " | fgbio -Xmx4g --compression 0 CallMolecularConsensusReads "
         "--input /dev/stdin "
-        # "--input {input.bam} "
-        # "--output /dev/stdout "
-        "--output {output.bam} "
+        "--output /dev/stdout "
         "--min-reads {params.min_reads_call} "
         "--min-input-base-quality {params.min_input_base_quality_call} "
         "--threads {threads} "
-        # "{params.extra_call} "
-         '{params.extra_call}" >& {log}'
-        # "| fgbio -Xmx8g --compression 1 FilterConsensusReads "
-        # "--input /dev/stdin "
-        # "--output {output.bam} "
-        # "--ref {params.reference} "
-        # "--min-reads {params.min_reads_filter} "
-        # "--min-base-quality {params.min_input_base_quality_filter} "
-        # "--max-base-error-rate {params.max_base_error_rate} "
-        # '{params.extra_filter}" >& {log}'
+        "{params.extra_call} "
+        "| fgbio -Xmx8g --compression 1 FilterConsensusReads "
+        "--input /dev/stdin "
+        "--output {output.bam} "
+        "--ref {params.reference} "
+        "--min-reads {params.min_reads_filter} "
+        "--min-base-quality {params.min_input_base_quality_filter} "
+        "--max-base-error-rate {params.max_base_error_rate} "
+        '{params.extra_filter}" >& {log}'
