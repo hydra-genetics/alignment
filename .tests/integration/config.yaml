@@ -15,6 +15,16 @@ bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
+  umi: "-Y"
+
+bwa_mem_realign_consensus_reads:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
+#samtools_sort_umi:
+#  extra: "-n"
+
+fgbio_call_and_filter_consensus_reads:
+  container: "docker://hydragenetics/fgbio:2.1.0"
 
 fgbio_copy_umi_from_read_name:
   container: "docker://hydragenetics/fgbio:2.1.0"
