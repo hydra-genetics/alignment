@@ -52,8 +52,8 @@ properties:
         type: integer
         description:  |
           number of threads to be available
-          RECOMMENDATION: Use multiple threads for decreased run time.
-          NOTE: If multiple threads is used the memory must also be increased (mem_mb)
+          RECOMMENDATION: use multiple threads for decreased run time.
+          NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
   bwa_mem_merge:
     type: object
@@ -186,7 +186,7 @@ properties:
 
   samtools_merge_bam:
     type: object
-    description: resource definitions for samtools during mergin of bam files
+    description: resource definitions for samtools during merging of bam files
     properties:
       mem_mb:
         type: integer
@@ -246,7 +246,7 @@ properties:
 
   star:
     type: object
-    description: resource definitions for star aligment
+    description: resource definitions for star alignment
     properties:
       mem_mb:
         type: integer
@@ -264,8 +264,8 @@ properties:
         type: integer
         description:  |
           number of threads to be available
-          RECOMMENDATION: Use multiple threads for decreased run time.
-          NOTE: If multiple threads is used the memory must also be increased (mem_mb)
+          RECOMMENDATION: use multiple threads for decreased run time.
+          NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
 required:
   - default_resources

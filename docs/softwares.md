@@ -1,7 +1,7 @@
 # Softwares used in the alignment module
 
 ## [bwa-mem](https://github.com/lh3/bwa)
-Align `.fastq` files to a reference genome and generate a `.bam`-file.
+Align `.fastq` files to a reference genome and generate a `.bam` file.
 
 ### :snake: Rule
 
@@ -47,7 +47,7 @@ Merge `.bam` files from the same sample using samtools merge.
 ---
 
 ## [picard mark duplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
-Align `.fastq` files to a reference genome and generate a `.bam`-file.
+Align `.fastq` files to a reference genome and generate a `.bam` file.
 
 ### :snake: Rule
 
@@ -70,7 +70,7 @@ Align `.fastq` files to a reference genome and generate a `.bam`-file.
 ---
 
 ## [samtools extract reads](http://www.htslib.org/doc/samtools-view.html)
-Extract reads from each chromosome and put into separate `.bam-files` using samtools view.
+Extract reads from each chromosome and put into separate `.bam` files using samtools view.
 
 ### :snake: Rule
 
@@ -93,7 +93,7 @@ Extract reads from each chromosome and put into separate `.bam-files` using samt
 ---
 
 ## [samtools index](http://www.htslib.org/doc/samtools-index.html)
-Index `.bam-files` using samtools index.
+Index `.bam` files using samtools index.
 
 ### :snake: Rule
 
@@ -162,7 +162,7 @@ Sort `.bam` files using samtools sort.
 ---
 
 ## [star](https://github.com/alexdobin/STAR)
-Align `.fastq` files to a reference genome and generate a `.bam`-file. Star is a split read aware aligner for RNA-data.
+Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a split read aware aligner for RNA-data.
 
 ### :snake: Rule
 

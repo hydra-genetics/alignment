@@ -4,15 +4,15 @@ type: object
 properties:
   resources:
     type: string
-    description: path to resources.yaml file
+    description: path to `resources.yaml` file
 
   samples:
     type: string
-    description: path to samples.tsv file
+    description: path to `samples.tsv` file
 
   units:
     type: string
-    description: path to units.tsv file
+    description: path to `units.tsv` file
 
   default_container:
     type: string
@@ -256,7 +256,7 @@ properties:
         description: |
           parameters that should be forwarded
           RECOMMENDATION: --outSAMtype BAM SortedByCoordinate
-          This will output coordinate sorted bam files instead of a sam file
+          this will output coordinate sorted bam files instead of a sam file
       genome_index:
         type: string
         description: path to star reference index
@@ -265,7 +265,9 @@ properties:
 
   trimmer_software:
     type: string
-    description: Set input files for alignment software, if "None" is set the files in units.tsv will be used. Default is None.
+    description: | 
+      set input files for alignment software, if "None" is set the files in `units.tsv` will be used
+      default is "None"
     pattern: "^(fastp_pe|merged|None)$"
 
 required:
