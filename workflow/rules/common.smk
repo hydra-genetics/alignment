@@ -54,8 +54,33 @@ wildcard_constraints:
     type="N|T|R",
 
 
+### Functions
+
+
+if config.get("read_duplication_handling", None) == "umi":
+    bwa_mem_output = "alignment/bwa_mem/{sample}_{type}_{flowcell}_{lane}_{barcode}.umi.bam"
+    get_extra_umi_option = "-Y "
+    bwa_merge_input = "alignment/bwa_mem/{sample}_{type}_%s_%s_%s.umi.bam"
+    bwa_merge_output = "alignment/bwa_mem/{sample}_{type}.umi.bam_unsorted"
+    samtools_sort_input = "{path_file}.umi.bam_unsorted"
+    samtools_sort_output = "{path_file}.umi.bam"
+    samtools_extract_reads_bam = "alignment/bwa_mem/{sample}_{type}.umi.bam"
+    samtools_extract_reads_bai = "alignment/bwa_mem/{sample}_{type}.umi.bam.bai"
+    samtools_extract_reads_output = "alignment/samtools_extract_reads/{sample}_{type}_{chr}.umi.bam"
+else:
+    bwa_mem_output = "alignment/bwa_mem/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam"
+    get_extra_umi_option = ""
+    bwa_merge_input = "alignment/bwa_mem/{sample}_{type}_%s_%s_%s.bam"
+    bwa_merge_output = "alignment/bwa_mem/{sample}_{type}.bam_unsorted"
+    samtools_sort_input = "{path_file}.bam_unsorted"
+    samtools_sort_output = "{path_file}.bam"
+    samtools_extract_reads_bam = "alignment/bwa_mem/{sample}_{type}.bam"
+    samtools_extract_reads_bai = "alignment/bwa_mem/{sample}_{type}.bam.bai"
+    samtools_extract_reads_output = "alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"
+
+
 if config.get("trimmer_software", "None") == "fastp_pe":
-    alignment_input = lambda wilcards: [
+    alignment_input = lambda wildcards: [
         "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.fastq.gz",
         "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.fastq.gz",
     ]
@@ -77,10 +102,11 @@ def generate_read_group(wildcards):
 
 
 def compile_output_list(wildcards):
-    files = {
-        "alignment/samtools_merge_bam": [".bam"],
-        "alignment/bwa_mem_realign_consensus_reads": [".bam"],
-    }
+    files = {}
+    if config.get("read_duplication_handling", None) == "umi":
+        files = {"alignment/samtools_merge_bam": [".umi.bam"]}
+    else:
+        files = {"alignment/samtools_merge_bam": [".bam"]}
     output_files = [
         "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()

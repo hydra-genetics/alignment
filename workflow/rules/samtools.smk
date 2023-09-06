@@ -6,10 +6,10 @@ __license__ = "GPL-3"
 
 rule samtools_extract_reads:
     input:
-        bam="alignment/bwa_mem/{sample}_{type}.bam",
-        bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
+        bam=samtools_extract_reads_bam,
+        bai=samtools_extract_reads_bai,
     output:
-        bam=temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"),
+        bam=temp(samtools_extract_reads_output),
     params:
         extra=config.get("samtools_extract_reads", {}).get("extra", ""),
     log:
@@ -100,9 +100,9 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        bam="{path_file}.bam_unsorted",
+        bam=samtools_sort_input,
     output:
-        bam=temp("{path_file}.bam"),
+        bam=temp(samtools_sort_output),
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:

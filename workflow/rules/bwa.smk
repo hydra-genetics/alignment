@@ -18,14 +18,13 @@ rule bwa_mem:
             config.get("bwa_mem", {}).get("sa", ""),
         ],
     output:
-        bam=temp("alignment/bwa_mem/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam"),
+        bam=temp(bwa_mem_output),
     params:
-        # use -Y in umi config variable for UMI read collapsing using fgbio
         extra=lambda wildcards: "%s %s %s"
         % (
             config.get("bwa_mem", {}).get("extra", ""),
             config.get("bwa_mem", {}).get("read_group", generate_read_group(wildcards)),
-            config.get("bwa_mem", {}).get("umi", ""),
+            get_extra_umi_option,
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
         sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),
@@ -55,12 +54,9 @@ rule bwa_mem:
 
 rule bwa_mem_merge:
     input:
-        bams=lambda wildcards: [
-            "alignment/bwa_mem/{sample}_{type}_%s_%s_%s.bam" % (u.flowcell, u.lane, u.barcode)
-            for u in get_units(units, wildcards)
-        ],
+        bams=lambda wildcards: [bwa_merge_input % (u.flowcell, u.lane, u.barcode) for u in get_units(units, wildcards)],
     output:
-        bam=temp("alignment/bwa_mem/{sample}_{type}.bam_unsorted"),
+        bam=temp(bwa_merge_output),
     params:
         config.get("bwa_mem_merge", {}).get("extra", ""),
     log:
@@ -87,9 +83,9 @@ rule bwa_mem_merge:
 
 rule bwa_mem_realign_consensus_reads:
     input:
-        bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.unmapped.bam",
+        bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam",
     output:
-        bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam"),
+        bam=temp("alignment/samtools_merge_bam/{sample}_{type}.umi.bam_unsorted"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
         extra_sort=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_sort", ""),
@@ -114,7 +110,7 @@ rule bwa_mem_realign_consensus_reads:
     container:
         config.get("bwa_mem_realign_consensus_reads", {}).get("container", config["default_container"])
     message:
-        "{rule}: realign and sort unmappend consensus reads found in {input.bam}"
+        "{rule}: realign unmappend consensus reads found in {input.bam}"
     shell:
         'sh -c "'
         "samtools fastq {input.bam} "
@@ -130,9 +126,5 @@ rule bwa_mem_realign_consensus_reads:
         "--ref {params.reference} "
         "--tags-to-reverse Consensus "
         "--tags-to-revcomp Consensus "
-        "{params.extra_zipper_bam} "
-        "| samtools sort "
-        "--threads {threads} "
-        "-o {output.bam} "
-        "--write-index "
-        '{params.extra_sort}" >& {log}'
+        " -o {output.bam} "
+        '{params.extra_zipper_bam} " >& {log}'

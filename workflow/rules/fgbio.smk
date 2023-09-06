@@ -6,9 +6,9 @@ __license__ = "GPL-3"
 
 rule fgbio_copy_umi_from_read_name:
     input:
-        bam="alignment/bwa_mem/{sample}_{type}.bam",
+        bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
     output:
-        bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.bam_unsorted"),
+        bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam_unsorted"),
     params:
         extra=config.get("fgbio_copy_umi_from_read_name", {}).get("extra", ""),
     log:
@@ -38,9 +38,9 @@ rule fgbio_copy_umi_from_read_name:
 
 rule fgbio_call_and_filter_consensus_reads:
     input:
-        bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.bam",
+        bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam",
     output:
-        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.unmapped.bam"),
+        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam"),
     params:
         extra_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_call", ""),
         extra_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_filter", ""),
