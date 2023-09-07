@@ -8,3 +8,13 @@ default_resources:
 bwa_mem:
   threads: 2
   time: "24:00:00"
+
+bwa_mem_umi:
+  threads: 2
+  time: "24:00:00"
+
+fgbio_call_and_filter_consensus_reads:
+  threads: 2
+
+bwa_mem_realign_consensus_reads:
+  threads: 2
