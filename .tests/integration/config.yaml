@@ -4,8 +4,6 @@ resources: "resources.yaml"
 
 default_container: "docker://hydragenetics/common:0.1.9"
 
-read_duplication_handling: "umi"
-
 reference:
   fasta: "reference/WASH7P.fna"
   fai: "reference/WASH7P.fna.fai"
@@ -17,7 +15,14 @@ bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
-  umi: "-Y"
+
+bwa_mem_umi:
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt"
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
+  pac: "reference/WASH7P.fna.pac"
+  sa: "reference/WASH7P.fna.sa"
 
 bwa_mem_realign_consensus_reads:
   container: "docker://hydragenetics/fgbio:2.1.0"

@@ -6,16 +6,16 @@ __license__ = "GPL-3"
 
 rule fgbio_copy_umi_from_read_name:
     input:
-        bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
+        bam="alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam",
     output:
-        bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam_unsorted"),
+        bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam_unsorted"),
     params:
         extra=config.get("fgbio_copy_umi_from_read_name", {}).get("extra", ""),
     log:
-        "alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.bam.log",
+        "alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.{chr}.umi.bam.log",
     benchmark:
         repeat(
-            "alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.bam.benchmark.tsv",
+            "alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam.benchmark.tsv",
             config.get("fgbio_copy_umi_from_read_name", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("fgbio_copy_umi_from_read_name", {}).get("threads", config["default_resources"]["threads"])
@@ -38,9 +38,9 @@ rule fgbio_copy_umi_from_read_name:
 
 rule fgbio_call_and_filter_consensus_reads:
     input:
-        bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam",
+        bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam",
     output:
-        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam"),
+        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}_{chr}.umi.unmapped_bam"),
     params:
         extra_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_call", ""),
         extra_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_filter", ""),
@@ -55,10 +55,10 @@ rule fgbio_call_and_filter_consensus_reads:
         ),
         reference=config.get("reference", {}).get("fasta", ""),
     log:
-        "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.unmapped.bam.log",
+        "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}_{chr}.umi.unmapped.bam.log",
     benchmark:
         repeat(
-            "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.unmapped.bam.benchmark.tsv",
+            "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}_{chr}.umi.unmapped.bam.benchmark.tsv",
             config.get("fgbio_call_and_filter_consensus_reads", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("fgbio_call_and_filter_consensus_reads", {}).get("threads", config["default_resources"]["threads"])
