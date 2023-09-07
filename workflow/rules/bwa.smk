@@ -51,7 +51,6 @@ rule bwa_mem:
         "v1.3.1/bio/bwa/mem"
 
 
-
 rule bwa_mem_umi:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
