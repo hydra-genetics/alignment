@@ -55,56 +55,9 @@ properties:
           RECOMMENDATION: use multiple threads for decreased run time.
           NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
-  bwa_mem_umi:
-    type: object
-    description: resource definitions for bwa_mem_umi
-    properties:
-      mem_mb:
-        type: integer
-        description: |
-          memory in MB used per cpu
-          NOTE: bwa mem uses a large amount of memory.
-      mem_per_cpu:
-        type: integer
-        description: |
-          memory used per cpu
-          NOTE: bwa mem uses a large amount of memory.
-      partition:
-        type: string
-        description: partition to use on cluster
-      threads:
-        type: integer
-        description:  |
-          number of threads to be available
-          RECOMMENDATION: use multiple threads for decreased run time.
-          NOTE: if multiple threads is used the memory must also be increased (mem_mb)
-      time:
-        type: string
-        description: max execution time
-
   bwa_mem_merge:
     type: object
     description: resource definitions for merging bwa bam files
-    properties:
-      mem_mb:
-        type: integer
-        description: memory in MB used per cpu
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu
-      partition:
-        type: string
-        description: partition to use on cluster
-      threads:
-        type: integer
-        description:  number of threads to be available
-      time:
-        type: string
-        description: max execution time
-
-  bwa_mem_merge_umi:
-    type: object
-    description: resource definitions for merging bwa umi bam files
     properties:
       mem_mb:
         type: integer
@@ -234,26 +187,6 @@ properties:
   samtools_extract_reads:
     type: object
     description: resource definitions for samtools_extract_reads
-    properties:
-      mem_mb:
-        type: integer
-        description: memory in MB used per cpu
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu
-      partition:
-        type: string
-        description: partition to use on cluster
-      time:
-        type: string
-        description: max execution time
-      threads:
-        type: integer
-        description:  number of threads to be available
-
-  samtools_extract_reads_umi:
-    type: object
-    description: resource definitions for samtools_extract_reads_umi
     properties:
       mem_mb:
         type: integer

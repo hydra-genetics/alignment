@@ -23,29 +23,6 @@ Align `.fastq` files to a reference genome and generate a `.bam` file.
 
 ---
 
-## [bwa_mem_umi](https://github.com/lh3/bwa)
-Align `.fastq` files to a reference genome and generate a umi `.bam` file.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__bwa__bwa_mem_umi#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__bwa__bwa_mem_umi#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__bwa_mem_umi#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__bwa_mem_umi#
-
----
-
 ## [bwa_mem_merge](http://www.htslib.org/doc/samtools-merge.html)
 Merge `.bam` files from the same sample using samtools merge.
 
@@ -69,39 +46,16 @@ Merge `.bam` files from the same sample using samtools merge.
 
 ---
 
-## [bwa_mem_merge_umi](http://www.htslib.org/doc/samtools-merge.html)
-Merge umi `.bam` files from the same sample using samtools merge.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__bwa__bwa_mem_merge_umi#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__bwa__bwa_mem_merge_umi#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__bwa_mem_merge_umi#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__bwa_mem_merge_umi#
-
----
-
 ## [bwa_mem_realign_consensus_reads](https://github.com/lh3/bwa)
 Realign after consensus read creation by fgbio_call_and_filter_consensus_reads and generate a `.bam` file.
 
 ### :snake: Rule
 
-#SNAKEMAKE_RULE_SOURCE__bwa_mem__bwa_mem_realign_consensus_reads#
+#SNAKEMAKE_RULE_SOURCE__bwa__bwa_mem_realign_consensus_reads#
 
 #### :left_right_arrow: input / output files
 
-#SNAKEMAKE_RULE_TABLE__bwa_mem__bwa_mem_realign_consensus_reads#
+#SNAKEMAKE_RULE_TABLE__bwa__bwa_mem_realign_consensus_reads#
 
 ### :wrench: Configuration
 
@@ -228,28 +182,6 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 
 #RESOURCESSCHEMA__samtools_extract_reads#
 
----
-
-## [samtools_extract_reads_umi](http://www.htslib.org/doc/samtools-view.html)
-Extract reads from each chromosome and put into separate umi `.bam` files using samtools view.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__samtools__samtools_extract_reads_umi#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__samtools__samtools_extract_reads_umi#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__samtools_extract_reads_umi#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__samtools_extract_reads_umi#
 
 ---
 

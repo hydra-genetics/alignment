@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule fgbio_copy_umi_from_read_name:
     input:
-        bam="alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam",
+        bam="alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam",
     output:
         bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam"),
     params:

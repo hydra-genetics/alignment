@@ -69,6 +69,14 @@ elif config.get("trimmer_software", "None") == "None":
     ]
 
 
+def get_deduplication_option(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return "-Y "
+    else:
+        return ""
+
+
 def generate_read_group(wildcards):
     return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
         "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
