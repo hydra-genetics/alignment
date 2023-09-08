@@ -196,7 +196,7 @@ properties:
         description: name or path to docker/singularity container
       extra_call:
         type: string
-        description: parameters that should be forwarded to CallMolecularConsensusReads
+        description: parameters that should be forwarded to CallDuplexConsensusReads
       extra_filter:
         type: string
         description: parameters that should be forwarded to FilterConsensusReads
@@ -205,13 +205,19 @@ properties:
         description: mask bases with N if the % of reads that differ from consensus in higher than max error rate in FilterConsensusReads
       min_reads_call:
         type: string
-        description: filter if under minimum number of reads with the same umi in CallMolecularConsensusReads
+        description: |
+          String of three numbers for which the reads are filtered if the number of reads are under these numbers in CallDuplexConsensusReads.
+          The first number is reads from both strands while the second and third number is for the individual strands. 
+          The first number must be greater or equal to the other numbers.
       min_reads_filter:
         type: string
-        description: filter if under minimum number of reads with the same umi in FilterConsensusReads
+        description: |
+          String of three numbers for which the reads are filtered if the number of reads are under these numbers in FilterConsensusReads.
+          The first number is reads from both strands while the second and third number is for the individual strands. 
+          The first number must be greater or equal to the other numbers.
       min_input_base_quality_call:
         type: string
-        description: only consider bases over min base quality in consensus creation in CallMolecularConsensusReads
+        description: only consider bases over min base quality in consensus creation in CallDuplexConsensusReads
       min_input_base_quality_filter:
         type: string
         description: mask bases with N if under min base quality in consensus creation in FilterConsensusReads
@@ -229,6 +235,23 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+
+  fgbio_group_reads_by_umi:
+    type: object
+    description: parameters for fgbio_group_reads_by_umi
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      umi_strategy:
+        type: string
+        description: umi strategy for how the umis should be grouped (paired for duplex umis)
 
   picard_mark_duplicates:
     type: object

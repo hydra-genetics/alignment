@@ -8,7 +8,7 @@ rule fgbio_copy_umi_from_read_name:
     input:
         bam="alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam",
     output:
-        bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam_unsorted"),
+        bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam"),
     params:
         extra=config.get("fgbio_copy_umi_from_read_name", {}).get("extra", ""),
     log:
@@ -38,15 +38,15 @@ rule fgbio_copy_umi_from_read_name:
 
 rule fgbio_call_and_filter_consensus_reads:
     input:
-        bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam",
+        bam="alignment/fgbio_group_reads_by_umi/{sample}_{type}_{chr}.umi.bam",
     output:
         bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}_{chr}.umi.unmapped_bam"),
     params:
         extra_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_call", ""),
         extra_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_filter", ""),
         max_base_error_rate=config.get("fgbio_call_and_filter_consensus_reads", {}).get("max_base_error_rate", "0.2"),
-        min_reads_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get("min_reads_call", "1"),
-        min_reads_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("min_reads_filter", "1"),
+        min_reads_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get("min_reads_call", "1 1 1"),
+        min_reads_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("min_reads_filter", "1 1 1"),
         min_input_base_quality_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get(
             "min_input_base_quality_call", "20"
         ),
@@ -78,9 +78,8 @@ rule fgbio_call_and_filter_consensus_reads:
         "{rule}: call and filter consensus reads in {input.bam} into an unmapped bam file"
     shell:
         'sh -c "'
-        "fgbio SortBam --input {input.bam} --output /dev/stdout --sort-order TemplateCoordinate "
-        " | fgbio -Xmx4g --compression 0 CallMolecularConsensusReads "
-        "--input /dev/stdin "
+        "fgbio -Xmx4g --compression 0 CallDuplexConsensusReads "
+        "--input {input.bam} "
         "--output /dev/stdout "
         "--min-reads {params.min_reads_call} "
         "--min-input-base-quality {params.min_input_base_quality_call} "
@@ -94,3 +93,37 @@ rule fgbio_call_and_filter_consensus_reads:
         "--min-base-quality {params.min_input_base_quality_filter} "
         "--max-base-error-rate {params.max_base_error_rate} "
         '{params.extra_filter}" >& {log}'
+
+
+rule fgbio_group_reads_by_umi:
+    input:
+        bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam",
+    output:
+        bam="alignment/fgbio_group_reads_by_umi/{sample}_{type}_{chr}.umi.bam",
+    params:
+        extra=config.get("fgbio_group_reads_by_umi", {}).get("extra", ""),
+        umi_strategy=config.get("fgbio_group_reads_by_umi", {}).get("umi_strategy", "paired"),
+    log:
+        "alignment/fgbio_group_reads_by_umi/{sample}_{type}_{chr}.umi.bam.log",
+    benchmark:
+        repeat(
+            "alignment/fgbio_group_reads_by_umi/{sample}_{type}_{chr}.umi.bam.benchmark.tsv",
+            config.get("fgbio_group_reads_by_umi", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("fgbio_group_reads_by_umi", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("fgbio_group_reads_by_umi", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("fgbio_group_reads_by_umi", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("fgbio_group_reads_by_umi", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("fgbio_group_reads_by_umi", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("fgbio_group_reads_by_umi", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("fgbio_group_reads_by_umi", {}).get("container", config["default_container"])
+    message:
+        "{rule}: group reads by umi in {input.bam} and output umi sorted bam"
+    shell:
+        "(fgbio fgbio_group_reads_by_umi "
+        "-i {input.bam} "
+        "-o {output.bam} "
+        "-s {params.umi_strategy} "
+        "{params.extra}) &> {log}"

@@ -33,6 +33,9 @@ fgbio_call_and_filter_consensus_reads:
 fgbio_copy_umi_from_read_name:
   container: "docker://hydragenetics/fgbio:2.1.0"
 
+fgbio_group_reads_by_umi:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 

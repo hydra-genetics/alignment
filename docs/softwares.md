@@ -93,7 +93,7 @@ Merge umi `.bam` files from the same sample using samtools merge.
 ---
 
 ## [bwa_mem_realign_consensus_reads](https://github.com/lh3/bwa)
-Realign after consensus read creation and generate a `.bam` file.
+Realign after consensus read creation by fgbio_call_and_filter_consensus_reads and generate a `.bam` file.
 
 ### :snake: Rule
 
@@ -116,7 +116,7 @@ Realign after consensus read creation and generate a `.bam` file.
 ---
 
 ## [fgbio_call_and_filter_consensus_reads](http://fulcrumgenomics.github.io/fgbio/tools/latest/)
-Call and filter consensus reads using fgbio tools
+Call and filter consensus reads based on umis using fgbio (CallDuplexConsensusReads followed by FilterConsensusReads)
 
 ### :snake: Rule
 
@@ -138,8 +138,31 @@ Call and filter consensus reads using fgbio tools
 
 ---
 
+## [fgbio_group_reads_by_umi](http://fulcrumgenomics.github.io/fgbio/tools/latest/GroupReadsByUmi.html)
+Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_filter_consensus_reads
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fgbio__fgbio_group_reads_by_umi#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fgbio__fgbio_group_reads_by_umi#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fgbio_group_reads_by_umi#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fgbio_group_reads_by_umi#
+
+---
+
 ## [fgbio_copy_umi_from_read_name](http://fulcrumgenomics.github.io/fgbio/tools/latest/CopyUmiFromReadName.html)
-Copies the UMI at the end of the BAM’s read name to the RX tag.
+Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
 
 ### :snake: Rule
 
