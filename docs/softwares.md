@@ -182,6 +182,28 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 
 #RESOURCESSCHEMA__samtools_extract_reads#
 
+---
+
+## [samtools_extract_reads_umi](http://www.htslib.org/doc/samtools-view.html)
+Extract reads from each chromosome and put into separate `.bam` files using samtools view.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_extract_reads_umi#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_extract_reads_umi#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_extract_reads_umi#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_extract_reads_umi#
 
 ---
 
