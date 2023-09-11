@@ -93,7 +93,7 @@ Call and filter consensus reads based on umis using fgbio (CallDuplexConsensusRe
 ---
 
 ## [fgbio_group_reads_by_umi](http://fulcrumgenomics.github.io/fgbio/tools/latest/GroupReadsByUmi.html)
-Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_filter_consensus_reads
+Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_filter_consensus_reads. Also add mate pair MQ sam tags using samblaster.
 
 ### :snake: Rule
 
@@ -181,29 +181,6 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__samtools_extract_reads#
-
----
-
-## [samtools_extract_reads_umi](http://www.htslib.org/doc/samtools-view.html)
-Extract reads from each chromosome and put into separate `.bam` files using samtools view.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__samtools__samtools_extract_reads_umi#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__samtools__samtools_extract_reads_umi#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__samtools_extract_reads_umi#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__samtools_extract_reads_umi#
 
 ---
 

@@ -30,10 +30,15 @@ rule fgbio_copy_umi_from_read_name:
     message:
         "{rule}: Copy UMI from read name to sam tag on {input.bam}"
     shell:
-        "(fgbio CopyUmiFromReadName "
-        "-i {input.bam} "
+        'sh -c "'
+        "(samtools view -h {input.bam} "
+        "| samblaster "
+        "--addMateTags "
+        "-o /dev/stdout "
+        "| fgbio CopyUmiFromReadName "
+        "-i /dev/stdin "
         "-o {output.bam} "
-        "{params.extra}) &> {log}"
+        '{params.extra})" &> {log}'
 
 
 rule fgbio_call_and_filter_consensus_reads:
@@ -122,7 +127,7 @@ rule fgbio_group_reads_by_umi:
     message:
         "{rule}: group reads by umi in {input.bam} and output umi sorted bam"
     shell:
-        "(fgbio fgbio_group_reads_by_umi "
+        "(fgbio GroupReadsByUmi "
         "-i {input.bam} "
         "-o {output.bam} "
         "-s {params.umi_strategy} "

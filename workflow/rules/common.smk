@@ -77,6 +77,14 @@ def get_deduplication_option(wildcards):
         return ""
 
 
+def get_deduplication_sort_order_option(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return "queryname"
+    else:
+        return config.get("bwa_mem", {}).get("sort_order", "coordinate")
+
+
 def generate_read_group(wildcards):
     return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
         "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),

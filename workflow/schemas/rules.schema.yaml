@@ -171,28 +171,6 @@ properties:
             type: string
             description: one bam file for each chromosome
 
-  samtools_extract_reads_umi:
-    type: object
-    description: input and output parameters for samtools_extract_reads_umi
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          bam:
-            type: string
-            description: bam file
-          bai:
-            type: string
-            description: bam index file
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          bam:
-            type: string
-            description: one bam file for each chromosome
-
   samtools_index:
     type: object
     description: input and output parameters for samtools_index

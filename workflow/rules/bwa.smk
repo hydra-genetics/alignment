@@ -27,7 +27,7 @@ rule bwa_mem:
             get_deduplication_option(wildcards),
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
-        sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),
+        sort_order=lambda wildcards: get_deduplication_sort_order_option(wildcards),
         sort_extra="-@ %s"
         % str(config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
     log:

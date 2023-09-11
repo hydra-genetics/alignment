@@ -218,20 +218,6 @@ properties:
         type: string
         description: parameters that should be forwarded
 
-  samtools_extract_reads_umi:
-    type: object
-    description: parameters used when extracting reads
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded
-
   samtools_index:
     type: object
     description: parameters for indexing a bam file
