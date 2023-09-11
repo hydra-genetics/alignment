@@ -1,6 +1,6 @@
 # Softwares used in the alignment module
 
-## [bwa-mem](https://github.com/lh3/bwa)
+## [bwa_mem](https://github.com/lh3/bwa)
 Align `.fastq` files to a reference genome and generate a `.bam` file.
 
 ### :snake: Rule
@@ -23,7 +23,7 @@ Align `.fastq` files to a reference genome and generate a `.bam` file.
 
 ---
 
-## [bwa-mem merge](http://www.htslib.org/doc/samtools-merge.html)
+## [bwa_mem_merge](http://www.htslib.org/doc/samtools-merge.html)
 Merge `.bam` files from the same sample using samtools merge.
 
 ### :snake: Rule
@@ -43,6 +43,98 @@ Merge `.bam` files from the same sample using samtools merge.
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__bwa_mem_merge#
+
+---
+
+## [bwa_mem_realign_consensus_reads](https://github.com/lh3/bwa)
+Realign after consensus read creation by fgbio_call_and_filter_consensus_reads and generate a `.bam` file.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__bwa__bwa_mem_realign_consensus_reads#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__bwa__bwa_mem_realign_consensus_reads#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__bwa_mem_realign_consensus_reads#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__bwa_mem_realign_consensus_reads#
+
+---
+
+## [fgbio_call_and_filter_consensus_reads](http://fulcrumgenomics.github.io/fgbio/tools/latest/)
+Call and filter consensus reads based on umis using fgbio (CallDuplexConsensusReads followed by FilterConsensusReads)
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fgbio__fgbio_call_and_filter_consensus_reads#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fgbio__fgbio_call_and_filter_consensus_reads#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fgbio_call_and_filter_consensus_reads#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fgbio_call_and_filter_consensus_reads#
+
+---
+
+## [fgbio_group_reads_by_umi](http://fulcrumgenomics.github.io/fgbio/tools/latest/GroupReadsByUmi.html)
+Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_filter_consensus_reads
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fgbio__fgbio_group_reads_by_umi#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fgbio__fgbio_group_reads_by_umi#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fgbio_group_reads_by_umi#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fgbio_group_reads_by_umi#
+
+---
+
+## [fgbio_copy_umi_from_read_name](http://fulcrumgenomics.github.io/fgbio/tools/latest/CopyUmiFromReadName.html)
+Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fgbio__fgbio_copy_umi_from_read_name#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fgbio__fgbio_copy_umi_from_read_name#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fgbio_copy_umi_from_read_name#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fgbio_copy_umi_from_read_name#
 
 ---
 
@@ -69,7 +161,7 @@ Align `.fastq` files to a reference genome and generate a `.bam` file.
 
 ---
 
-## [samtools extract reads](http://www.htslib.org/doc/samtools-view.html)
+## [samtools_extract_reads](http://www.htslib.org/doc/samtools-view.html)
 Extract reads from each chromosome and put into separate `.bam` files using samtools view.
 
 ### :snake: Rule
@@ -89,6 +181,29 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__samtools_extract_reads#
+
+---
+
+## [samtools_extract_reads_umi](http://www.htslib.org/doc/samtools-view.html)
+Extract reads from each chromosome and put into separate `.bam` files using samtools view.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_extract_reads_umi#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_extract_reads_umi#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_extract_reads_umi#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_extract_reads_umi#
 
 ---
 
@@ -115,7 +230,7 @@ Index `.bam` files using samtools index.
 
 ---
 
-## [samtools merge bam](http://www.htslib.org/doc/samtools-merge.html)
+## [samtools_merge_bam](http://www.htslib.org/doc/samtools-merge.html)
 Merge `.bam` files from the same sample using samtools merge.
 
 ### :snake: Rule
@@ -135,6 +250,29 @@ Merge `.bam` files from the same sample using samtools merge.
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__samtools_merge_bam#
+
+---
+
+## [samtools_merge_bam_umi](http://www.htslib.org/doc/samtools-merge.html)
+Merge umi `.bam` files from the same sample using samtools merge.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_merge_bam_umi#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_merge_bam_umi#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_merge_bam_umi#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_merge_bam_umi#
 
 ---
 
@@ -181,5 +319,3 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__star#
-
----
