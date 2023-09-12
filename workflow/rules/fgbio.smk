@@ -31,10 +31,14 @@ rule fgbio_copy_umi_from_read_name:
         "{rule}: Copy UMI from read name to sam tag on {input.bam}"
     shell:
         'sh -c "'
-        "(samtools view -h {input.bam} "
+        "(samtools sort "
+        "-n "
+        "-O sam "
+        "{input.bam} "
         "| samblaster "
-        "--addMateTags "
+        "-i /dev/stdin "
         "-o /dev/stdout "
+        "--addMateTags "
         "| fgbio CopyUmiFromReadName "
         "-i /dev/stdin "
         "-o {output.bam} "
