@@ -6,16 +6,16 @@ __license__ = "GPL-3"
 
 rule fgbio_copy_umi_from_read_name:
     input:
-        bam="alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
     output:
-        bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam"),
+        bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam"),
     params:
         extra=config.get("fgbio_copy_umi_from_read_name", {}).get("extra", ""),
     log:
-        "alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.{chr}.umi.bam.log",
+        "alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam.log",
     benchmark:
         repeat(
-            "alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam.benchmark.tsv",
+            "alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam.benchmark.tsv",
             config.get("fgbio_copy_umi_from_read_name", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("fgbio_copy_umi_from_read_name", {}).get("threads", config["default_resources"]["threads"])
@@ -37,7 +37,6 @@ rule fgbio_copy_umi_from_read_name:
         "{input.bam} "
         "| samblaster "
         "--addMateTags "
-        "--ignoreUnmated "
         "| fgbio CopyUmiFromReadName "
         "-i /dev/stdin "
         "-o {output.bam} "
@@ -46,9 +45,9 @@ rule fgbio_copy_umi_from_read_name:
 
 rule fgbio_call_and_filter_consensus_reads:
     input:
-        bam="alignment/fgbio_group_reads_by_umi/{sample}_{type}_{chr}.umi.bam",
+        bam="alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.bam",
     output:
-        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}_{chr}.umi.unmapped_bam"),
+        bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam"),
     params:
         extra_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_call", ""),
         extra_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_filter", ""),
@@ -63,10 +62,10 @@ rule fgbio_call_and_filter_consensus_reads:
         ),
         reference=config.get("reference", {}).get("fasta", ""),
     log:
-        "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}_{chr}.umi.unmapped.bam.log",
+        "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam.log",
     benchmark:
         repeat(
-            "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}_{chr}.umi.unmapped.bam.benchmark.tsv",
+            "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam.benchmark.tsv",
             config.get("fgbio_call_and_filter_consensus_reads", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("fgbio_call_and_filter_consensus_reads", {}).get("threads", config["default_resources"]["threads"])
@@ -105,17 +104,17 @@ rule fgbio_call_and_filter_consensus_reads:
 
 rule fgbio_group_reads_by_umi:
     input:
-        bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}_{chr}.umi.bam",
+        bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam",
     output:
-        bam="alignment/fgbio_group_reads_by_umi/{sample}_{type}_{chr}.umi.bam",
+        bam="alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.bam",
     params:
         extra=config.get("fgbio_group_reads_by_umi", {}).get("extra", ""),
         umi_strategy=config.get("fgbio_group_reads_by_umi", {}).get("umi_strategy", "paired"),
     log:
-        "alignment/fgbio_group_reads_by_umi/{sample}_{type}_{chr}.umi.bam.log",
+        "alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.bam.log",
     benchmark:
         repeat(
-            "alignment/fgbio_group_reads_by_umi/{sample}_{type}_{chr}.umi.bam.benchmark.tsv",
+            "alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.bam.benchmark.tsv",
             config.get("fgbio_group_reads_by_umi", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("fgbio_group_reads_by_umi", {}).get("threads", config["default_resources"]["threads"])
