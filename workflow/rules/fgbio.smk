@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule fgbio_copy_umi_from_read_name:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.umi.bam",
     output:
         bam=temp("alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam"),
     params:
@@ -31,13 +31,12 @@ rule fgbio_copy_umi_from_read_name:
         "{rule}: Copy UMI from read name to sam tag on {input.bam}"
     shell:
         'sh -c "'
-        "(samtools sort "
-        "-n "
-        "-O sam "
+        "(samtools view "
+        "-h "
+        "-f 0x2 "
         "{input.bam} "
         "| samblaster "
         "--addMateTags "
-        "--ignoreUnmated "
         "| fgbio CopyUmiFromReadName "
         "-i /dev/stdin "
         "-o {output.bam} "
