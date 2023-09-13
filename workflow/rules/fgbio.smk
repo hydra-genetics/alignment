@@ -37,6 +37,7 @@ rule fgbio_copy_umi_from_read_name:
         "{input.bam} "
         "| samblaster "
         "--addMateTags "
+        "--ignoreUnmated "
         "| fgbio CopyUmiFromReadName "
         "-i /dev/stdin "
         "-o {output.bam} "

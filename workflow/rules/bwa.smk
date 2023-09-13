@@ -88,7 +88,7 @@ rule bwa_mem_realign_consensus_reads:
     input:
         bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
     output:
-        bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam"),
+        bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam_unsorted"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
         extra_sort=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_sort", ""),
