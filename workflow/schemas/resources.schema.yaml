@@ -204,6 +204,26 @@ properties:
         type: integer
         description:  number of threads to be available
 
+  samtools_extract_reads_umi:
+    type: object
+    description: resource definitions for samtools_extract_reads_umi
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
   samtools_merge_bam:
     type: object
     description: resource definitions for samtools_merge_bam
@@ -267,6 +287,26 @@ properties:
   samtools_sort:
     type: object
     description: resource definitions for samtools sort
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  samtools_sort_umi:
+    type: object
+    description: resource definitions for samtools sort umi
     properties:
       mem_mb:
         type: integer

@@ -184,6 +184,29 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 
 ---
 
+## [samtools_extract_reads_umi](http://www.htslib.org/doc/samtools-view.html)
+Extract reads from each chromosome and put into separate `.bam` files using samtools view.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_extract_reads_umi#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_extract_reads_umi#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_extract_reads_umi#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_extract_reads_umi#
+
+---
+
 ## [samtools index](http://www.htslib.org/doc/samtools-index.html)
 Index `.bam` files using samtools index.
 
@@ -255,6 +278,29 @@ Merge umi `.bam` files from the same sample using samtools merge.
 
 ## [samtools sort](http://www.htslib.org/doc/samtools-sort.html)
 Sort `.bam` files using samtools sort.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_sort#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_sort#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_sort#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_sort#
+
+---
+
+## [samtools sort_umi](http://www.htslib.org/doc/samtools-sort.html)
+Sort `.bam` files using samtools sort. Sort on query name.
 
 ### :snake: Rule
 
