@@ -4,20 +4,40 @@ digraph snakemake_dag {
     node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
     edge[penwidth=2, color=grey];
 	0[label = "fastq", color = "0.0 0.0 0.0", style="dotted"];
-	1[label = "samtools_sort_&_index", color = "0.07 0.6 0.85", style="rounded"];
-	11[label = "samtools_sort_&_index", color = "0.07 0.6 0.85", style="rounded"];
-	2[label = "samtools_merge_bam", color = "0.00 0.6 0.85", style="rounded"];
-	3[label = "picard_mark_duplicates", color = "0.52 0.6 0.85", style="rounded"];
-	4[label = "split_into_chromosomes", color = "0.15 0.6 0.85", style="rounded"];
+	40[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
+	41[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
+	42[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
+	2[label = "samtools_merge_bam", color = "0.49 0.6 0.85", style="rounded"];
+	3[label = "picard_mark_duplicates", color = "0.40 0.6 0.85", style="rounded"];
+	4[label = "samtools_extract_reads", color = "0.13 0.6 0.85", style="rounded"];
+	51[label = "samtools_extract_reads_umi", color = "0.13 0.6 0.85", style="rounded"];
 	5[label = "bwa_mem_merge", color = "0.44 0.6 0.85", style="rounded"];
-	6[label = "bwa_mem", color = "0.30 0.6 0.85", style="rounded"];
+	6[label = "bwa_mem", color = "0.04 0.6 0.85", style="rounded"];
+	8[label = "bwa_mem_realign_consensus_reads", color = "0.27 0.6 0.85", style="rounded"];
+	9[label = "fgbio_call_and_filter_consensus_reads", color = "0.62 0.6 0.85", style="rounded"];
+	10[label = "fgbio_group_reads_by_umi", color = "0.09 0.6 0.85", style="rounded"];
+	11[label = "fgbio_copy_umi_from_read_name", color = "0.00 0.6 0.85", style="rounded"];
+	12[label = "samtools_sort_umi", color = "0.31 0.6 0.85", style="rounded"];
 	20[label = "bam", color = "0.0 0.0 0.0", style="dotted"];
+	21[label = "bam_umi", color = "0.0 0.0 0.0", style="dotted"];
+	30[label = "chrN_bam", color = "0.0 0.0 0.0", style="dotted"];
+	31[label = "chrN_bam_umi", color = "0.0 0.0 0.0", style="dotted"];
 	0 -> 6
-	2 -> 11
-	5 -> 1
+	40 -> 20
+	2 -> 40
+	8 -> 42
+	5 -> 41
 	3 -> 2
+	3 -> 30
 	4 -> 3
-	1 -> 4
 	6 -> 5
-	11 -> 20
+	41 -> 4
+	9 -> 8
+	10 -> 9
+	11 -> 10
+	12 -> 11
+	5 -> 12
+	42 -> 21
+	21 -> 51
+	51 -> 31
 }            

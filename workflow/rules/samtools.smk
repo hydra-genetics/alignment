@@ -128,41 +128,6 @@ rule samtools_merge_bam:
         "v1.1.0/bio/samtools/merge"
 
 
-rule samtools_merge_bam_umi:
-    input:
-        bams=expand(
-            "alignment/bwa_mem_realign_consensus_reads/{{sample}}_{{type}}_{chr}.umi.bam",
-            chr=extract_chr(
-                "%s.fai" % (config.get("reference", {}).get("fasta", "")),
-                filter_out=config.get("reference", {}).get("skip_chrs", []),
-            ),
-        ),
-    output:
-        bam=temp("alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam_unsorted"),
-    params:
-        extra=config.get("samtools_merge_bam_umi", {}).get("extra", ""),
-    log:
-        "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam_unsorted.log",
-    benchmark:
-        repeat(
-            "alignment/samtools_merge_bam_umi/{sample}_{type}.umi.bam_unsorted.benchmark.tsv",
-            config.get("samtools_merge_bam_umi", {}).get("benchmark_repeats", 1),
-        )
-    threads: config.get("samtools_merge_bam_umi", {}).get("threads", config["default_resources"]["threads"])
-    resources:
-        mem_mb=config.get("samtools_merge_bam_umi", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("samtools_merge_bam_umi", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("samtools_merge_bam_umi", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("samtools_merge_bam_umi", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("samtools_merge_bam_umi", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("samtools", {}).get("container", config["default_container"])
-    message:
-        "{rule}: merge chr bam files, creating {output}"
-    wrapper:
-        "v1.1.0/bio/samtools/merge"
-
-
 rule samtools_sort:
     input:
         bam="{path_file}.bam_unsorted",
@@ -194,9 +159,9 @@ rule samtools_sort:
 
 rule samtools_sort_umi:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted",
+        bam="alignment/bwa_mem/{sample}_{type}.bam_unsorted",
     output:
-        bam=temp("alignment/samtools_merge_bam/{sample}_{type}.umi.bam"),
+        bam=temp("alignment/bwa_mem/{sample}_{type}.umi.bam"),
     params:
         extra=config.get("samtools_sort", {}).get("extra", "-n"),
     log:
