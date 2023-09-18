@@ -108,6 +108,7 @@ rule fgbio_group_reads_by_umi:
         bam="alignment/fgbio_copy_umi_from_read_name/{sample}_{type}.umi.bam",
     output:
         bam="alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.bam",
+        histo="alignment/fgbio_group_reads_by_umi/{sample}_{type}.umi.histo.tsv",
     params:
         extra=config.get("fgbio_group_reads_by_umi", {}).get("extra", ""),
         umi_strategy=config.get("fgbio_group_reads_by_umi", {}).get("umi_strategy", "paired"),
@@ -133,5 +134,6 @@ rule fgbio_group_reads_by_umi:
         "(fgbio GroupReadsByUmi "
         "-i {input.bam} "
         "-o {output.bam} "
+        "-f {output.histo} "
         "-s {params.umi_strategy} "
         "{params.extra}) &> {log}"
