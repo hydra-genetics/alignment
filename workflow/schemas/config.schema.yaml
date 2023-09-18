@@ -153,10 +153,10 @@ properties:
           The first number is reads from both strands while the second and third number is for the individual strands. 
           The first number must be greater or equal to the other numbers.
       min_input_base_quality_call:
-        type: string
+        type: integer
         description: only consider bases over min base quality in consensus creation in CallDuplexConsensusReads
       min_input_base_quality_filter:
-        type: string
+        type: integer
         description: mask bases with N if under min base quality in consensus creation in FilterConsensusReads
 
   fgbio_copy_umi_from_read_name:
@@ -281,6 +281,20 @@ properties:
   samtools_sort:
     type: object
     description: parameters for sorting bam files
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  samtools_sort_umi:
+    type: object
+    description: parameters for sorting bam files on query names
     properties:
       benchmark_repeats:
         type: integer

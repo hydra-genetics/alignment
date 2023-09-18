@@ -93,7 +93,7 @@ Call and filter consensus reads based on umis using fgbio (CallDuplexConsensusRe
 ---
 
 ## [fgbio_group_reads_by_umi](http://fulcrumgenomics.github.io/fgbio/tools/latest/GroupReadsByUmi.html)
-Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_filter_consensus_reads
+Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_filter_consensus_reads. Also add mate pair MQ sam tags using samblaster.
 
 ### :snake: Rule
 
@@ -278,6 +278,29 @@ Merge umi `.bam` files from the same sample using samtools merge.
 
 ## [samtools sort](http://www.htslib.org/doc/samtools-sort.html)
 Sort `.bam` files using samtools sort.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_sort#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_sort#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_sort#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_sort#
+
+---
+
+## [samtools sort_umi](http://www.htslib.org/doc/samtools-sort.html)
+Sort `.bam` files using samtools sort. Sort on query name.
 
 ### :snake: Rule
 
