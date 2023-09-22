@@ -51,7 +51,7 @@ rule fgbio_call_and_filter_consensus_reads:
         bam=temp("alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam"),
     params:
         extra_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_call", ""),
-        extra_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_filter", ""),
+        extra_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("extra_filter", "--reverse-per-base-tags true"),
         max_base_error_rate=config.get("fgbio_call_and_filter_consensus_reads", {}).get("max_base_error_rate", "0.2"),
         min_reads_call=config.get("fgbio_call_and_filter_consensus_reads", {}).get("min_reads_call", "1 1 1"),
         min_reads_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get("min_reads_filter", "1 1 1"),
