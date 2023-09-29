@@ -190,8 +190,8 @@ rule samtools_fastq:
     input:
         bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
     output:
-        fastq1="alignment/samtools_fastq/{sample}_{type}.umi.fastq1.fastq.gz",
-        fastq2="alignment/samtools_fastq/{sample}_{type}.umi.fastq2.fastq.gz",
+        fastq1="alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
+        fastq2="alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
     params:
         sort=config.get("samtools_fastq", {}).get("sort", "-m 4G"),
         fastq=config.get("samtools_fastq", {}).get("fastq", "-n"),
