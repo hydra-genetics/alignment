@@ -91,7 +91,7 @@ def compile_output_list(wildcards):
     files = {
         "alignment/samtools_merge_bam": [".bam"],
         "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
-        "alignment/samtools_fastq": [".umi.fastq1.fastq.gz", ".umi.fastq2.fastq.gz"],
+        "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
     }
     output_files = [
         "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
