@@ -207,6 +207,29 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 
 ---
 
+## [samtools_fastq](http://www.htslib.org/doc/samtools-fasta.html)
+Converts a bam file to separate fastq files
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_fastq#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_fastq#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_fastq#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_fastq#
+
+---
+
 ## [samtools index](http://www.htslib.org/doc/samtools-index.html)
 Index `.bam` files using samtools index.
 
@@ -342,3 +365,4 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__star#
+

@@ -232,6 +232,23 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  samtools_fastq:
+    type: object
+    description: parameters for samtools_fastq
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      sort:
+        type: string
+        description: parameters that should be forwarded to samtools sort
+      fastq:
+        type: string
+        description: parameters that should be forwarded to samtools fastq
+
   samtools_index:
     type: object
     description: parameters for indexing a bam file

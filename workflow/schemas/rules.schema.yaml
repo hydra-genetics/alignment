@@ -193,6 +193,28 @@ properties:
             type: string
             description: one bam file for each chromosome
 
+  samtools_fastq:
+    type: object
+    description: input and output parameters for samtools_fastq
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input bam file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          fastq1:
+            type: string
+            description: fastq file with the first read in the read pair
+          fastq2:
+            type: string
+            description: fastq file with the second read in the read pair
+
   samtools_index:
     type: object
     description: input and output parameters for samtools_index

@@ -223,6 +223,31 @@ properties:
       threads:
         type: integer
         description:  number of threads to be available
+  
+  samtools_fastq:
+    type: object
+    description: resource definitions for samtools_fastq
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: |
+          memory used per cpu
+          NOTE: should be at least the amount put into the sort parameters
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: use at least 3 threads so that sort gets at least 1 exclusive thread
+          NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
   samtools_merge_bam:
     type: object

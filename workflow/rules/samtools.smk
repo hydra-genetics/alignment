@@ -184,3 +184,34 @@ rule samtools_sort_umi:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
         "v1.3.2/bio/samtools/sort"
+
+
+rule samtools_fastq:
+    input:
+        bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
+    output:
+        fastq1="alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
+        fastq2="alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+    params:
+        sort=config.get("samtools_fastq", {}).get("sort", "-m 4G"),
+        fastq=config.get("samtools_fastq", {}).get("fastq", "-n"),
+    log:
+        "alignment/samtools_fastq/{sample}_{type}.output.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_fastq/{sample}_{type}.output.benchmark.tsv",
+            config.get("samtools_fastq", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("samtools_fastq", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("samtools_fastq", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("samtools_fastq", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("samtools_fastq", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_fastq", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_fastq", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("samtools_fastq", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Convert the bam file {input.bam} into a fastq file"
+    wrapper:
+        "v2.6.0/bio/samtools/fastq/separate"
