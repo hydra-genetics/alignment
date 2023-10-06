@@ -1,6 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
-
 __author__ = "Jonas Almlöf, Patrik Smeds"
 __copyright__ = "Copyright 2021, Jonas Almlöf, Patrik Smeds"
 __email__ = "jonas.almlof@scilifelab.uu.se, patrik.smeds@scilifelab.uu.se"
@@ -9,10 +6,10 @@ __license__ = "GPL-3"
 
 rule samtools_extract_reads:
     input:
-        "alignment/bwa_mem/{sample}_{type}.bam",
-        "alignment/bwa_mem/{sample}_{type}.bam.bai",
+        bam="alignment/bwa_mem/{sample}_{type}.bam",
+        bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
     output:
-        temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"),
+        bam=temp("alignment/samtools_extract_reads/{sample}_{type}_{chr}.bam"),
     params:
         extra=config.get("samtools_extract_reads", {}).get("extra", ""),
     log:
@@ -37,11 +34,41 @@ rule samtools_extract_reads:
         "(samtools view -@ {threads} {params.extra} -b {input} {wildcards.chr} > {output}) &> {log}"
 
 
+rule samtools_extract_reads_umi:
+    input:
+        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
+        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
+    output:
+        bam=temp("alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam"),
+    params:
+        extra=config.get("samtools_extract_reads", {}).get("extra", ""),
+    log:
+        "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.bam.benchmark.tsv",
+            config.get("samtools_extract_reads_umi", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("samtools_extract_reads_umi", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("samtools_extract_reads_umi", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("samtools_extract_reads_umi", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("samtools_extract_reads_umi", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_extract_reads_umi", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_extract_reads_umi", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("samtools_extract_reads_umi", {}).get("container", config["default_container"])
+    message:
+        "{rule}: create bam {output} with only reads from {wildcards.chr}"
+    shell:
+        "(samtools view -@ {threads} {params.extra} -b {input} {wildcards.chr} > {output}) &> {log}"
+
+
 rule samtools_index:
     input:
-        "{file}.bam",
+        bam="{file}.bam",
     output:
-        temp("{file}.bam.bai"),
+        bai=temp("{file}.bam.bai"),
     params:
         extra=config.get("samtools_index", {}).get("extra", ""),
     log:
@@ -103,9 +130,9 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        "{path_file}.bam_unsorted",
+        bam="{path_file}.bam_unsorted",
     output:
-        temp("{path_file}.bam"),
+        bam=temp("{path_file}.bam"),
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:
@@ -128,3 +155,63 @@ rule samtools_sort:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
         "v1.3.2/bio/samtools/sort"
+
+
+rule samtools_sort_umi:
+    input:
+        bam="alignment/bwa_mem/{sample}_{type}.bam_unsorted",
+    output:
+        bam=temp("alignment/bwa_mem/{sample}_{type}.umi.bam"),
+    params:
+        extra=config.get("samtools_sort", {}).get("extra", "-n"),
+    log:
+        "alignment/samtools_merge_bam/{sample}_{type}.umi.bam.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_merge_bam/{sample}_{type}.umi.bam.benchmark.tsv",
+            config.get("samtools_sort", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("samtools_sort", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("samtools_sort", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("samtools_sort", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_sort", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("samtools_sort", {}).get("container", config["default_container"])
+    message:
+        "{rule}: sort bam file {input} using samtools"
+    wrapper:
+        "v1.3.2/bio/samtools/sort"
+
+
+rule samtools_fastq:
+    input:
+        bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
+    output:
+        fastq1="alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
+        fastq2="alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
+    params:
+        sort=config.get("samtools_fastq", {}).get("sort", "-m 4G"),
+        fastq=config.get("samtools_fastq", {}).get("fastq", "-n"),
+    log:
+        "alignment/samtools_fastq/{sample}_{type}.output.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_fastq/{sample}_{type}.output.benchmark.tsv",
+            config.get("samtools_fastq", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("samtools_fastq", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("samtools_fastq", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("samtools_fastq", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("samtools_fastq", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_fastq", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_fastq", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("samtools_fastq", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Convert the bam file {input.bam} into a fastq file"
+    wrapper:
+        "v2.6.0/bio/samtools/fastq/separate"

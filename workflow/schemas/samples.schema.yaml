@@ -7,5 +7,9 @@ properties:
   tumor_content:
     type: string
     description: tumor cell content in sample
+  deduplication:
+    type: string
+    description: optional, what type of deduplication should be used (umi = umi-deduplication, not specified or not umi = picard mark duplicate)
+
 required:
   - sample

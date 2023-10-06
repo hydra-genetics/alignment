@@ -1,0 +1,345 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake rule input and output files description file
+type: object
+properties:
+  bwa_mem:
+    type: object
+    description: input and output parameters for bwa_mem
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          reads:
+            type: string
+            description: |
+              fastq files from the same sample.
+              fastq files obtained by get_fastq_file defined in [`common.smk`](https://github.com/hydra-genetics/prealignment/blob/develop/workflow/rules/common.smk)
+          idx:
+            type: string
+            description: |
+              reference files for bwa-mem, location are defined in the `config.yaml`
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: |
+              aligned bam file.
+              NOTE: if the fastq files are divided into different lanes for the same sample,
+              they will be aligned separately
+
+  bwa_mem_merge:
+    type: object
+    description: input and output parameters for bwa_mem
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bams:
+            type: string
+            description: |
+              bam files from the same sample (and the same sample type)
+              a list of bam files is obtained using the information in the `units.tsv` file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: an unsorted merged bam file
+
+  bwa_mem_realign_consensus_reads:
+    type: object
+    description: input and output parameters for bwa_mem_realign_consensus_reads
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: unmapped `bam` file with consensus reads based on umi barcodes
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: realigned and sorted `bam` file based on umi consensus reads
+
+  fgbio_call_and_filter_consensus_reads:
+    type: object
+    description: input and output parameters for fgbio_call_and_filter_consensus_reads
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input 'bam' file with umi tags
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: unmapped `bam` file with consensus reads that are hard filtered
+
+  fgbio_copy_umi_from_read_name:
+    type: object
+    description: input and output parameters for fgbio_copy_umi_from_read_name
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input `bam` file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: Output `bam` file with umi tag added (default tag name RX) extracted from the read name
+
+  fgbio_group_reads_by_umi:
+    type: object
+    description: input and output parameters for fgbio_group_reads_by_umi
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input bam file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: output bam that is umi sorted
+
+  picard_mark_duplicates:
+    type: object
+    description: input and output parameters for picard_mark_duplicates
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bams:
+            type: string
+            description: bam file containing one chromosome
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: duplicate marked bam file containing one chromosome
+          metrics:
+            type: string
+            description: duplicate statistics for qc
+
+  samtools_extract_reads:
+    type: object
+    description: input and output parameters for samtools_extract_reads
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: bam file
+          bai:
+            type: string
+            description: bam index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: one bam file for each chromosome
+
+  samtools_extract_reads_umi:
+    type: object
+    description: input and output parameters for samtools_extract_reads_umi
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: bam file
+          bai:
+            type: string
+            description: bam index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: one bam file for each chromosome
+
+  samtools_fastq:
+    type: object
+    description: input and output parameters for samtools_fastq
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input bam file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          fastq1:
+            type: string
+            description: fastq file with the first read in the read pair
+          fastq2:
+            type: string
+            description: fastq file with the second read in the read pair
+
+  samtools_index:
+    type: object
+    description: input and output parameters for samtools_index
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: bam file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bai:
+            type: string
+            description: bam index file
+
+  samtools_merge_bam:
+    type: object
+    description: input and output parameters for samtools_merge_bam
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bams:
+            type: string
+            description: |
+              list of bam files for all the chromosomes
+              the list is generated by the function extract_chr defined in the [hydra-genetics](https://github.com/hydra-genetics/hydra-genetics/blob/develop/hydra_genetics/utils/misc.py) module
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: merged unsorted bam file
+
+  samtools_merge_bam_umi:
+    type: object
+    description: input and output parameters for samtools_merge_bam_umi
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bams:
+            type: string
+            description: |
+              list of umi bam files for all the chromosomes
+              the list is generated by the function extract_chr defined in the [hydra-genetics](https://github.com/hydra-genetics/hydra-genetics/blob/develop/hydra_genetics/utils/misc.py) module
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: merged unsorted umi bam file
+
+  samtools_sort:
+    type: object
+    description: input and output parameters for samtools_sort
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: unsorted bam file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: sorted bam file
+
+  samtools_sort_umi:
+    type: object
+    description: input and output parameters for samtools_sort_umi
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: unsorted bam file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: query name sorted bam file
+
+  star:
+    type: object
+    description: input and output parameters for star
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          fq1:
+            type: string
+            description: merged fastq file from read 1
+          fq2:
+            type: string
+            description: merged fastq file from read 2
+          idx:
+            type: string
+            description: |
+              star reference genome index
+              file location is set in `config.yaml`
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: aligned bam file
+          sj:
+            type: string
+            description: junction file with split read information useful for interpreting rna data

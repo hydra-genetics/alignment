@@ -30,14 +30,18 @@ properties:
 
   bwa_mem:
     type: object
-    description: resource definitions for bwa
+    description: resource definitions for bwa_mem
     properties:
       mem_mb:
         type: integer
-        description: memory in MB used per cpu
+        description: |
+          memory in MB used per cpu
+          NOTE: bwa mem uses a large amount of memory.
       mem_per_cpu:
         type: integer
-        description: memory used per cpu
+        description: |
+          memory used per cpu
+          NOTE: bwa mem uses a large amount of memory.
       partition:
         type: string
         description: partition to use on cluster
@@ -46,9 +50,12 @@ properties:
         description: max execution time
       threads:
         type: integer
-        description:  number of threads to be available
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: use multiple threads for decreased run time.
+          NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
-  bwa_merge_bam:
+  bwa_mem_merge:
     type: object
     description: resource definitions for merging bwa bam files
     properties:
@@ -61,12 +68,101 @@ properties:
       partition:
         type: string
         description: partition to use on cluster
-      time:
-        type: string
-        description: max execution time
       threads:
         type: integer
         description:  number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  bwa_mem_realign_consensus_reads:
+    type: object
+    description: resource definitions for bwa_mem_realign_consensus_reads
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: Use multiple threads for decreased run time.
+          NOTE: If multiple threads is used the memory must also be increased (mem_mb)
+      time:
+        type: string
+        description: max execution time
+
+  fgbio_call_and_filter_consensus_reads:
+    type: object
+    description: resource definitions for fgbio_call_and_filter_consensus_reads
+    properties:
+      mem_mb:
+        type: integer
+        description: |
+          max memory in MB to be available
+          NOTE: must be at least 8 GB
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: Use multiple threads for decreased run time.
+      time:
+        type: string
+        description: max execution time
+
+  fgbio_copy_umi_from_read_name:
+    type: object
+    description: resource definitions for fgbio_copy_umi_from_read_name
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: Use multiple threads for decreased run time.
+      time:
+        type: string
+        description: max execution time
+
+  fgbio_group_reads_by_umi:
+    type: object
+    description: resource definitions for fgbio_group_reads_by_umi
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   picard_mark_duplicates:
     type: object
@@ -90,7 +186,7 @@ properties:
 
   samtools_extract_reads:
     type: object
-    description: resource definitions for samtools during read extraction
+    description: resource definitions for samtools_extract_reads
     properties:
       mem_mb:
         type: integer
@@ -108,9 +204,74 @@ properties:
         type: integer
         description:  number of threads to be available
 
+  samtools_extract_reads_umi:
+    type: object
+    description: resource definitions for samtools_extract_reads_umi
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+  
+  samtools_fastq:
+    type: object
+    description: resource definitions for samtools_fastq
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: |
+          memory used per cpu
+          NOTE: should be at least the amount put into the sort parameters
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: use at least 3 threads so that sort gets at least 1 exclusive thread
+          NOTE: if multiple threads is used the memory must also be increased (mem_mb)
+
   samtools_merge_bam:
     type: object
-    description: resource definitions for samtools during mergin of bam files
+    description: resource definitions for samtools_merge_bam
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  number of threads to be available
+
+  samtools_merge_bam_umi:
+    type: object
+    description: resource definitions for samtools_merge_bam_umi
     properties:
       mem_mb:
         type: integer
@@ -168,9 +329,9 @@ properties:
         type: integer
         description:  number of threads to be available
 
-  star:
+  samtools_sort_umi:
     type: object
-    description: resource definitions for star aligment
+    description: resource definitions for samtools sort umi
     properties:
       mem_mb:
         type: integer
@@ -187,6 +348,29 @@ properties:
       threads:
         type: integer
         description:  number of threads to be available
+
+  star:
+    type: object
+    description: resource definitions for star alignment
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: use multiple threads for decreased run time.
+          NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
 required:
   - default_resources

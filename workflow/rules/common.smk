@@ -54,8 +54,11 @@ wildcard_constraints:
     type="N|T|R",
 
 
+### Functions
+
+
 if config.get("trimmer_software", "None") == "fastp_pe":
-    alignment_input = lambda wilcards: [
+    alignment_input = lambda wildcards: [
         "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.fastq.gz",
         "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.fastq.gz",
     ]
@@ -64,6 +67,14 @@ elif config.get("trimmer_software", "None") == "None":
         get_fastq_file(units, wildcards, "fastq1"),
         get_fastq_file(units, wildcards, "fastq2"),
     ]
+
+
+def get_deduplication_option(wildcards):
+    sample = get_sample(samples, wildcards)
+    if sample.get("deduplication", "") == "umi":
+        return "-Y "
+    else:
+        return ""
 
 
 def generate_read_group(wildcards):
@@ -79,6 +90,8 @@ def generate_read_group(wildcards):
 def compile_output_list(wildcards):
     files = {
         "alignment/samtools_merge_bam": [".bam"],
+        "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
+        "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
     }
     output_files = [
         "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)

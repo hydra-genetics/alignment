@@ -16,8 +16,23 @@ bwa_mem:
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
 
+bwa_mem_realign_consensus_reads:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
+fgbio_call_and_filter_consensus_reads:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
+fgbio_copy_umi_from_read_name:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
+fgbio_group_reads_by_umi:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
+
+samtools_fastq:
+  sort: "-m 1G"
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
