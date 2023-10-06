@@ -1,5 +1,58 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/hydra-genetics/alignment/compare/v0.4.0...v0.5.0) (2023-10-06)
+
+
+### Features
+
+* added group_by_umi rule and documentation ([19aa316](https://www.github.com/hydra-genetics/alignment/commit/19aa3163804cfc3dd4dd06562c4dfedbbcde6ed2))
+* added metrics output file for GroupReadsByUmi ([9250dce](https://www.github.com/hydra-genetics/alignment/commit/9250dcee52d606c0da5d69b609c5cdf07678a054))
+* added rule samtools_fastq to enable output of fgbio processed fastq files ([4fcc2a6](https://www.github.com/hydra-genetics/alignment/commit/4fcc2a6b1b3334ed8477505418323e09dc712de7))
+* added rules and documentation for umi alignment ([c947a09](https://www.github.com/hydra-genetics/alignment/commit/c947a09f9ec6d12fbd75ca631d68ed8a246894fb))
+* added samblaster for MQ tagging ([a8cba22](https://www.github.com/hydra-genetics/alignment/commit/a8cba2244ae8108937cf5c1272e97a4a1d539e3c))
+* added umi parameter function and rm duplicated rules ([dc3ccc2](https://www.github.com/hydra-genetics/alignment/commit/dc3ccc2fa5e33297f2b00e40c70435b39c4e4644))
+* added umi splitting for snv calling ([ec58daa](https://www.github.com/hydra-genetics/alignment/commit/ec58daaa83ddfffc476249692d64ce60c961b02c))
+* make umi calling selectable in config ([4b315c1](https://www.github.com/hydra-genetics/alignment/commit/4b315c1b9187fd8dd45b141ec4b4d54016b28947))
+* umi calling without config and with copied rules ([e7fcf8c](https://www.github.com/hydra-genetics/alignment/commit/e7fcf8ce1244b24c8ca84cae38d4da0f682eca50))
+* update snakemake versionm, allow range up to version 8 ([14b4772](https://www.github.com/hydra-genetics/alignment/commit/14b47727542b46f3bf8b711776f4e8a458c1f19a))
+
+
+### Bug Fixes
+
+* activated last fgbio command ([27f1922](https://www.github.com/hydra-genetics/alignment/commit/27f1922643a5b18daeada8d7afe64288170fcf10))
+* added rule variable names and added readthedocs ([dd8877d](https://www.github.com/hydra-genetics/alignment/commit/dd8877d2f8e73965d81eb26ace5de9480c8d5077))
+* added schema documentation and input file tags ([28f9aec](https://www.github.com/hydra-genetics/alignment/commit/28f9aec53addf3e0c2f486ea2cc68f1d35619f20))
+* correct type in schema for fgbio_call_and_filter_consensus_reads ([4ad47bf](https://www.github.com/hydra-genetics/alignment/commit/4ad47bfb363ef142a21a2144cfc53683f26fb85e))
+* corrected output file name ([3ac1e2c](https://www.github.com/hydra-genetics/alignment/commit/3ac1e2c1c3d46307ef6346547d7f527c017276a9))
+* corrected output file name in rule all ([5ea452a](https://www.github.com/hydra-genetics/alignment/commit/5ea452a6bea1aea9421ec68ebf0ba4bf9625efa6))
+* fgbio can not use split bam files ([0eae482](https://www.github.com/hydra-genetics/alignment/commit/0eae48233adbbcb0ef215aad96fec4605163b79a))
+* fgbio should start from merge bam files instead of PicardMarkDup file ([48f51ab](https://www.github.com/hydra-genetics/alignment/commit/48f51ab53c53697eb03c62c85f1444c3f6ab5b68))
+* ignore missing mates and sort bam before index ([65fc53b](https://www.github.com/hydra-genetics/alignment/commit/65fc53bb92cc621f18b2124891a0b2acf861a20c))
+* input to fgbio_copy_umi_from_read_name should be qname sorted ([005c740](https://www.github.com/hydra-genetics/alignment/commit/005c740814173907a164317b041f5265cc0dc16d))
+* remove singeltons ([a82300b](https://www.github.com/hydra-genetics/alignment/commit/a82300bf63afabf753534a69a93c0470eb06986a))
+* remove unmated paires ([b1371bf](https://www.github.com/hydra-genetics/alignment/commit/b1371bff05f8819fc52b0bc3ec090720ad8ff7ae))
+* rm sort temp files and only keep proper pairs ([474e81a](https://www.github.com/hydra-genetics/alignment/commit/474e81a9cf86986b3152e6ef0ad189079addb800))
+* rm unused rule ([d77e382](https://www.github.com/hydra-genetics/alignment/commit/d77e382e77b26fe0ab33a0fc0e384efb83b69ddc))
+* test fixes ([7f0e63e](https://www.github.com/hydra-genetics/alignment/commit/7f0e63e3ad1ed24cb633364940c1c382cdf5b922))
+* test fixes ([12f7611](https://www.github.com/hydra-genetics/alignment/commit/12f7611adcf15b618b527ec493fad0533726de36))
+* use default values for piped input and output for samblaster ([9c94250](https://www.github.com/hydra-genetics/alignment/commit/9c94250777ffbdae2c0a49c83da102d36116cbfb))
+
+
+### Documentation
+
+* add graph to intro ([9e30f42](https://www.github.com/hydra-genetics/alignment/commit/9e30f42f3cda594e65617c125b31cd4c74095704))
+* added index.md file ([1905388](https://www.github.com/hydra-genetics/alignment/commit/19053889beb866a905532f982d858db9d36d3f70))
+* added the new umi rules to the documentation ([adeaae2](https://www.github.com/hydra-genetics/alignment/commit/adeaae2628558e051b017de81fb879cfb705b435))
+* build file ([5240d12](https://www.github.com/hydra-genetics/alignment/commit/5240d128b02834ee21e8c5bab3595a23b7d8a668))
+* change order and spelling ([937428f](https://www.github.com/hydra-genetics/alignment/commit/937428f7cc76a02b40f148985d162db358426e55))
+* improved rtd ([f7235af](https://www.github.com/hydra-genetics/alignment/commit/f7235af7688d2de9f0e7570c609704dcd686792e))
+* remove pycodestyle and pytest from readme since not in actions ([f27a5da](https://www.github.com/hydra-genetics/alignment/commit/f27a5dafa121a35e271b23c80c9480f2e78a46a3))
+* spelling and capitalisation ([54d56ae](https://www.github.com/hydra-genetics/alignment/commit/54d56ae0535164a09227317ed8be7bbd6bcc4df9))
+* update module part in README with latest release ([397457e](https://www.github.com/hydra-genetics/alignment/commit/397457ed78361bd705e382b87b88fafdaa19703a))
+* updated requirements ([75cf137](https://www.github.com/hydra-genetics/alignment/commit/75cf137fcf219824f8656e394e21d223406d9166))
+* updated requirements ([4a5b105](https://www.github.com/hydra-genetics/alignment/commit/4a5b105408890c3a57b37b0b1343757f31527ef7))
+* updated rtd ([75d3334](https://www.github.com/hydra-genetics/alignment/commit/75d33349905e23eb9bfdc0a6d2ae1e95bc50764c))
+
 ## [0.4.0](https://www.github.com/hydra-genetics/alignment/compare/v0.3.1...v0.4.0) (2023-04-14)
 
 
