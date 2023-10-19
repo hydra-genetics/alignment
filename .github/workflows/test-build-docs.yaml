@@ -1,4 +1,4 @@
-name: Snakemake dry run
+name: build mkdocs
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  snakemake-dry-run:
+  build-mkdocs:
     name: Run snakemake dry run
     runs-on: ubuntu-22.04
     steps:
