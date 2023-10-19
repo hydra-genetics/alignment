@@ -13,7 +13,7 @@ on:
 
 jobs:
   build-mkdocs:
-    name: Run snakemake dry run
+    name: build mkdocs
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -28,6 +28,6 @@ jobs:
         run: |
           pip install -r requirements.test.txt
           pip install -r docs/requirements.txt
-      - name: snakemake dry run
+      - name: build mkdocs
         run: |
           mkdocs build
