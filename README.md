@@ -1,5 +1,5 @@
 <p align="center">
-<a href="https://hydra-genetics-prealignment.readthedocs.io">https://hydra-genetics-alignment.readthedocs.io</a>
+<a href="https://hydra-genetics-alignment.readthedocs.io">https://hydra-genetics-alignment.readthedocs.io</a>
 </p>
 
 # <img src="https://github.com/hydra-genetics/alignment/blob/develop/images/hydragenetics.png" width=40 /> hydra-genetics/alignment
