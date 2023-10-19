@@ -279,22 +279,6 @@ properties:
           parameters that should be forwarded
           RECOMMENDED: use -c -p to only keep one of the read groups IDs when merging files from the same sample
 
-  samtools_merge_bam_umi:
-    type: object
-    description: parameters for merging bam files
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: |
-          parameters that should be forwarded
-          RECOMMENDED: use -c -p to only keep one of the read groups IDs when merging files from the same sample
-
   samtools_sort:
     type: object
     description: parameters for sorting bam files
