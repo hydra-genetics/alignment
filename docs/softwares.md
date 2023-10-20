@@ -276,29 +276,6 @@ Merge `.bam` files from the same sample using samtools merge.
 
 ---
 
-## [samtools_merge_bam_umi](http://www.htslib.org/doc/samtools-merge.html)
-Merge umi `.bam` files from the same sample using samtools merge.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__samtools__samtools_merge_bam_umi#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__samtools__samtools_merge_bam_umi#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__samtools_merge_bam_umi#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__samtools_merge_bam_umi#
-
----
-
 ## [samtools sort](http://www.htslib.org/doc/samtools-sort.html)
 Sort `.bam` files using samtools sort.
 
