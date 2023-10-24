@@ -1,5 +1,16 @@
 # Changelog
 
+### [0.5.1](https://www.github.com/hydra-genetics/alignment/compare/v0.5.0...v0.5.1) (2023-10-24)
+
+
+### Documentation
+
+* add link to readthedocs to readme ([ce29609](https://www.github.com/hydra-genetics/alignment/commit/ce29609dae5428d8459d93c54afe5015a6d89486))
+* rm documentation of unused rule ([a0ca665](https://www.github.com/hydra-genetics/alignment/commit/a0ca6653d21a0a73d6e35d3e5327024499153a50))
+* rm documentation of unused rule ([611e9a3](https://www.github.com/hydra-genetics/alignment/commit/611e9a3f2e420a336c6f334efc081a8f7cd841a1))
+* update compatibility document ([3fb434d](https://www.github.com/hydra-genetics/alignment/commit/3fb434d383abdebb8f448ccc2cfeda95e1c39814))
+* update rule plugin version ([77fe140](https://www.github.com/hydra-genetics/alignment/commit/77fe140f1751c294697b865a3c79ac67ba727d33))
+
 ## [0.5.0](https://www.github.com/hydra-genetics/alignment/compare/v0.4.0...v0.5.0) (2023-10-06)
 
 
