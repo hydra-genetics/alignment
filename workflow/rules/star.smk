@@ -10,7 +10,7 @@ rule star:
         fq2="prealignment/merged/{sample}_{type}_fastq2.fastq.gz",
         idx=config.get("star", {}).get("genome_index", ""),
     output:
-        bam=temp("alignment/star/{sample}_{type}.bam"),
+        aln=temp("alignment/star/{sample}_{type}.bam"),
         sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
         log=temp("alignment/star/{sample}_{type}.log.out"),
         log_final=temp("alignment/star/{sample}_{type}.log.final.out"),
