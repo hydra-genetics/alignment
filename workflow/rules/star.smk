@@ -32,6 +32,6 @@ rule star:
     container:
         config.get("star", {}).get("container", config["default_container"])
     message:
-        "{rule}: align with star, creating {output.bam}"
+        "{rule}: align with star, creating {output.aln}"
     wrapper:
         "v2.9.0/bio/star/align"
