@@ -12,6 +12,8 @@ rule star:
     output:
         bam=temp("alignment/star/{sample}_{type}.bam"),
         sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
+        log=temp("alignment/star/{sample}_{type}.log.out"),
+        log_final=temp("alignment/star/{sample}_{type}.log.final.out"),
         unmapped=temp(["alignment/star/{sample}_{type}.unmapped.1.fastq.gz","alignment/star/{sample}_{type}.unmapped.2.fastq.gz"]),
     params:
         extra=config.get("star", {}).get("extra", "--outSAMtype BAM SortedByCoordinate"),
