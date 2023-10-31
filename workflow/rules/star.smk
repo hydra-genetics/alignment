@@ -12,6 +12,7 @@ rule star:
     output:
         bam=temp("alignment/star/{sample}_{type}.bam"),
         sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
+        unmapped=temp(["alignment/star/{sample}_{type}.unmapped.1.fastq.gz","alignment/star/{sample}_{type}.unmapped.2.fastq.gz"]),
     params:
         extra=config.get("star", {}).get("extra", "--outSAMtype BAM SortedByCoordinate"),
         idx="{input.idx}",
