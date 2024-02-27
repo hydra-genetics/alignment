@@ -88,18 +88,17 @@ def generate_read_group(wildcards):
     )
 
 
-def get_non_chr_contigs(wildcards):
+def get_contig_list(wildcards, contig_patterns, append_unmapped=False):
     ref_fasta = config.get("reference", {}).get("fasta", "")
-    non_chr_contig_pattern = config.get("reference", {}).get("non_chr_contigs")
-    skip_chroms = config.get("reference", {}).get("skip_chrs", [])
-    all_contigs = extract_chr(f"{ref_fasta}.fai" ,filter_out=skip_chroms)
+    
+    all_contigs = extract_chr(f"{ref_fasta}.fai" ,filter_out=[])
 
-    non_chr_contigs = []
-    for pattern in non_chr_contig_pattern:
+    contigs = []
+    for pattern in contig_patterns:
         for contig in all_contigs:
             contig_match  = re.match(pattern, contig) 
             if contig_match is not None:
-                non_chr_contigs.append(contig_match.group())
+                contigs.append(contig_match.group())
 
     if len(set(non_chr_contigs)) < len(non_chr_contigs): # check for duplicate conting entries
         chr_set = set()
@@ -107,10 +106,11 @@ def get_non_chr_contigs(wildcards):
         dup_contigs_str = ", ".join(duplicate_contigs)
         sys.exit(f"Duplicate contigs detected:\n {dup_contigs_str}\n\
         Please revise the regular expressions listed in non_chr_contigs")
-        
-    non_chr_contigs.append('*') # for extracting unmapped reads with samtools view
     
-    return non_chr_contigs
+    if append_unmapped:
+        contigs.append('*') # for extracting unmapped reads with samtools view
+    
+    return contigs
 
 
 def compile_output_list(wildcards):

@@ -41,7 +41,9 @@ rule samtools_extract_reads_non_chr:
     output:
         bam=temp("alignment/samtools_extract_reads/{sample}_{type}_non_chr.bam"),
     params:
-        contigs=get_non_chr_contigs,
+        contigs=lambda wildcards: get_contigs(
+                    wildcards, config.get("reference", {}).get("non_chr_contigs", []), 
+                    append_unmapped=True)
         extra=config.get("samtools_extract_reads_non_chr", {}).get("extra", ""),
     log:
         "alignment/samtools_extract_reads/{sample}_{type}_non_chr.bam.log",
@@ -130,7 +132,9 @@ rule samtools_merge_bam:
             "alignment/picard_mark_duplicates/{{sample}}_{{type}}_{chr}.bam",
             chr=extract_chr(
                 "%s.fai" % (config.get("reference", {}).get("fasta", "")),
-                filter_out=config.get("reference", {}).get("skip_chrs", []),
+                filter_out=lambda wildcards: get_contigs(
+                    wildcards, config.get("reference", {}).get("skip_chrs", []), 
+                    append_unmapped=False),
             ),
         ),
         non_chr_bams="alignment/picard_mark_duplicates/{sample}_{type}_non_chr.bam"
