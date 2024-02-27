@@ -33,6 +33,11 @@ properties:
         items:
             type: string
         description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
+      non_chr_contigs:
+        type: array
+        items:
+            type: string
+        description: list of regular expressions for non-chromosomal contigs in the reference genome
 
   bwa_mem:
     type: object
@@ -203,10 +208,38 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+  
+  picard_mark_duplicates_non_chr:
+    type: object
+    description: parameters for picard_mark_duplicates_non_chr
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   samtools_extract_reads:
     type: object
     description: parameters used when extracting reads
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  samtools_extract_reads_non_chr:
+    type: object
+    description: parameters for samtools_extract_reads_non_chr
     properties:
       benchmark_repeats:
         type: integer

@@ -7,6 +7,10 @@ default_container: "docker://hydragenetics/common:0.1.9"
 reference:
   fasta: "reference/WASH7P.fna"
   fai: "reference/WASH7P.fna.fai"
+  non_chr_contigs:
+    - ".*_random"
+    - ".chrUn*"
+    - "chrEBV"
 
 bwa_mem:
   amb: "reference/WASH7P.fna.amb"

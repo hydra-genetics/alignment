@@ -139,7 +139,7 @@ Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in 
 ---
 
 ## [picard mark duplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
-Align `.fastq` files to a reference genome and generate a `.bam` file.
+Generate a bam file for a single chromosome with duplicates marked
 
 ### :snake: Rule
 
@@ -158,6 +158,29 @@ Align `.fastq` files to a reference genome and generate a `.bam` file.
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__picard_mark_duplicates#
+
+---
+
+## [picard_mark_duplicates_non_chr](url_to_tool)
+Generate a bam file for a non-chromosomal contigs and unmapped reads with duplicates marked
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__picard__picard_mark_duplicates_non_chr#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__picard__picard_mark_duplicates_non_chr#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__picard_mark_duplicates_non_chr#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__picard_mark_duplicates_non_chr#
 
 ---
 
@@ -181,6 +204,29 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__samtools_extract_reads#
+
+---
+
+## [samtools_extract_reads_non_chr](url_to_tool)
+Extract reads from non-chromosomal contigs and unmapped reads to separate `.bam` files using samtools view.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_extract_reads_non_chr#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_extract_reads_non_chr#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_extract_reads_non_chr#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_extract_reads_non_chr#
 
 ---
 

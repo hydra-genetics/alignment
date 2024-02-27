@@ -149,6 +149,28 @@ properties:
             type: string
             description: duplicate statistics for qc
 
+  picard_mark_duplicates_non_chr:
+    type: object
+    description: input and output parameters for picard_mark_duplicates_non_chr
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bams:
+            type: string
+            description: bam file containing non-chromosomal contigs requested in the config and unmapped reads
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: duplicate marked bam file containing non-chromosomal contigs requested in the config and unmapped reads
+          metrics:
+            type: string
+            description: duplicate statistics for qc
+
   samtools_extract_reads:
     type: object
     description: input and output parameters for samtools_extract_reads
@@ -170,6 +192,28 @@ properties:
           bam:
             type: string
             description: one bam file for each chromosome
+
+  samtools_extract_reads_non_chr:
+    type: object
+    description: input and output parameters for samtools_extract_reads_non_chr
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: bam file
+          bai:
+            type: string
+            description: bam index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: one bam file containing non-chromosomal contigs requested in the config and unmapped reads
 
   samtools_extract_reads_umi:
     type: object
