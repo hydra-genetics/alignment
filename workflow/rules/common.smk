@@ -88,27 +88,50 @@ def generate_read_group(wildcards):
     )
 
 
-def get_contig_list(wildcards, contig_patterns, append_unmapped=False):
-    ref_fasta = config.get("reference", {}).get("fasta", "")
-    
-    all_contigs = extract_chr(f"{ref_fasta}.fai" ,filter_out=[])
-
+def get_chr_from_re(contig_patterns):
     contigs = []
+    ref_fasta = config.get("reference", {}).get("fasta", "")
+    all_contigs = extract_chr(f"{ref_fasta}.fai" ,filter_out=[])
     for pattern in contig_patterns:
         for contig in all_contigs:
             contig_match  = re.match(pattern, contig) 
             if contig_match is not None:
                 contigs.append(contig_match.group())
-
-    if len(set(non_chr_contigs)) < len(non_chr_contigs): # check for duplicate conting entries
+    
+    if len(set(contigs)) < len(contigs): # check for duplicate conting entries
         chr_set = set()
-        duplicate_contigs = [c for c in non_chr_contigs if c in chr_set or chr_set.add(c)]
+        duplicate_contigs = [c for c in contigs if c in chr_set or chr_set.add(c)]
         dup_contigs_str = ", ".join(duplicate_contigs)
         sys.exit(f"Duplicate contigs detected:\n {dup_contigs_str}\n\
-        Please revise the regular expressions listed in non_chr_contigs")
+        Please revise the regular expressions listed under reference in the config")
     
-    if append_unmapped:
-        contigs.append('*') # for extracting unmapped reads with samtools view
+    return contigs
+
+
+def get_chrom_bams(wildcards):
+    contig_patterns = config.get("reference", {}).get("skip_chrs", [])
+
+    ref_fasta= config.get("reference", {}).get("fasta", "")
+    
+    if len(contig_patterns) == 0:
+        skip_contigs = []
+    else:
+        skip_contigs = get_chr_from_re(contig_patterns)
+
+    chroms = extract_chr(f"{ref_fasta}.fai" ,filter_out=skip_contigs)
+
+    bam_list = [
+        f"alignment/picard_mark_duplicates/{wildcards.sample}_{wildcards.type}_{chr}.bam" 
+        for chr in chroms]
+
+    return bam_list
+
+
+def get_contig_list(wildcards):
+    contig_patterns = config.get("reference", {}).get("non_chr_contigs", "")
+    contigs = get_chr_from_re(contig_patterns)
+
+    contigs.append('*') # for extracting unmapped reads with samtools view
     
     return contigs
 

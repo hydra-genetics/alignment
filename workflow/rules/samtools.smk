@@ -1,4 +1,4 @@
-__author__ = "Jonas Almlöf, Patrik Smeds"
+__author__ = "Jonas Almlöf, Patrik Smeds, Pádraic Corcoran"
 __copyright__ = "Copyright 2021, Jonas Almlöf, Patrik Smeds"
 __email__ = "jonas.almlof@scilifelab.uu.se, patrik.smeds@scilifelab.uu.se"
 __license__ = "GPL-3"
@@ -41,9 +41,7 @@ rule samtools_extract_reads_non_chr:
     output:
         bam=temp("alignment/samtools_extract_reads/{sample}_{type}_non_chr.bam"),
     params:
-        contigs=lambda wildcards: get_contigs(
-                    wildcards, config.get("reference", {}).get("non_chr_contigs", []), 
-                    append_unmapped=True)
+        contigs=get_contig_list,
         extra=config.get("samtools_extract_reads_non_chr", {}).get("extra", ""),
     log:
         "alignment/samtools_extract_reads/{sample}_{type}_non_chr.bam.log",
@@ -128,15 +126,7 @@ rule samtools_index:
 
 rule samtools_merge_bam:
     input:
-        bams=expand(
-            "alignment/picard_mark_duplicates/{{sample}}_{{type}}_{chr}.bam",
-            chr=extract_chr(
-                "%s.fai" % (config.get("reference", {}).get("fasta", "")),
-                filter_out=lambda wildcards: get_contigs(
-                    wildcards, config.get("reference", {}).get("skip_chrs", []), 
-                    append_unmapped=False),
-            ),
-        ),
+        bams=get_chrom_bams,
         non_chr_bams="alignment/picard_mark_duplicates/{sample}_{type}_non_chr.bam"
         if config.get("reference", {}).get("non_chr_contigs", None) is not None 
         else [],
