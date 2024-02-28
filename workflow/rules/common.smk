@@ -109,15 +109,13 @@ def get_chr_from_re(contig_patterns):
 
 
 def get_chrom_bams(wildcards):
-    contig_patterns = config.get("reference", {}).get("skip_chrs", [])
-
-    ref_fasta= config.get("reference", {}).get("fasta", "")
-    
+    contig_patterns = config.get("reference", {}).get("skip_contigs", [])
     if len(contig_patterns) == 0:
         skip_contigs = []
     else:
         skip_contigs = get_chr_from_re(contig_patterns)
 
+    ref_fasta= config.get("reference", {}).get("fasta", "")
     chroms = extract_chr(f"{ref_fasta}.fai" ,filter_out=skip_contigs)
 
     bam_list = [
@@ -128,7 +126,7 @@ def get_chrom_bams(wildcards):
 
 
 def get_contig_list(wildcards):
-    contig_patterns = config.get("reference", {}).get("non_chr_contigs", "")
+    contig_patterns = config.get("reference", {}).get("keep_contigs", "")
     contigs = get_chr_from_re(contig_patterns)
 
     contigs.append('*') # for extracting unmapped reads with samtools view

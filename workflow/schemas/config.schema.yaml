@@ -28,16 +28,16 @@ properties:
       fai:
         type: string
         description: fasta reference fai file
-      skip_chrs:
+      skip_contigs:
         type: array
         items:
             type: string
-        description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
-      non_chr_contigs:
+        description: list of chromosomes/scaffolds that should be skipped, used when determining which chr bam files will be merged
+      keep_contigs:
         type: array
         items:
             type: string
-        description: list of regular expressions for non-chromosomal contigs in the reference genome
+        description: list of regular expressions for non-chromosomal contigs, results in a single duplicate marked bam containing non-chromosomal contigs that is merged with the chr bam files
 
   bwa_mem:
     type: object
