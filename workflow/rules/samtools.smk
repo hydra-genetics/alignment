@@ -92,7 +92,7 @@ rule samtools_extract_reads_umi:
     container:
         config.get("samtools_extract_reads_umi", {}).get("container", config["default_container"])
     message:
-        "{rule}: create bam {output} with only reads from {params.contigs}"
+        "{rule}: create bam {output} with only reads from {wildcards.chr}"
     shell:
         "(samtools view -@ {threads} {params.extra} -b {input} {wildcards.chr} > {output}) &> {log}"
 
