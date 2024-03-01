@@ -1,2 +1,3 @@
-@HD	VN:1.0	SO:unsorted
+@HD	VN:1.6
 @SQ	SN:chr1	LN:15009	M5:360a39d17c5b587d2cc4be3ccf56e2a3	UR:file:.tests/integration/reference/WASH7P.fna
+@SQ	SN:chr1_KI270706v1_random	LN:2000	M5:f7fefb21abd6af3d18ba14d714180143	UR:file:.tests/integration/reference/WASH7P.fna

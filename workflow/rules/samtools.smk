@@ -48,12 +48,14 @@ rule samtools_extract_reads_non_chr:
     benchmark:
         repeat(
             "alignment/samtools_extract_reads/{sample}_{type}_non_chr.bam.benchmark.tsv",
-            config.get("samtools_extract_reads_non_chr", {}).get("benchmark_repeats", 1)
+            config.get("samtools_extract_reads_non_chr", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("samtools_extract_reads_non_chr", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("samtools_extract_reads_non_chr", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("samtools_extract_reads_non_chr", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        mem_per_cpu=config.get("samtools_extract_reads_non_chr", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
         partition=config.get("samtools_extract_reads_non_chr", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("samtools_extract_reads_non_chr", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("samtools_extract_reads_non_chr", {}).get("time", config["default_resources"]["time"]),
@@ -62,7 +64,7 @@ rule samtools_extract_reads_non_chr:
     message:
         "{rule}: create bam {output} with only reads from {params.contigs}"
     shell:
-        "(samtools view -@ {threads} {params.extra} -b {input} {params.contigs} > {output}) &> {log}"
+        "(samtools view -@ {threads} {params.extra} -b {input} {params.contigs} '*' > {output}) &> {log}"
 
 
 rule samtools_extract_reads_umi:
@@ -128,7 +130,7 @@ rule samtools_merge_bam:
     input:
         bams=get_chrom_bams,
         non_chr_bams="alignment/picard_mark_duplicates/{sample}_{type}_non_chr.bam"
-        if config.get("reference", {}).get("non_chr_contigs", None) is not None 
+        if config.get("reference", {}).get("keep_contigs", None) is not None
         else [],
     output:
         bam=temp("alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted"),
@@ -243,5 +245,3 @@ rule samtools_fastq:
         "{rule}: Convert the bam file {input.bam} into a fastq file"
     wrapper:
         "v2.6.0/bio/samtools/fastq/separate"
-
-

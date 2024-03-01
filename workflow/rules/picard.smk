@@ -47,17 +47,19 @@ rule picard_mark_duplicates_non_chr:
     benchmark:
         repeat(
             "alignment/picard_mark_duplicates_non_chr/{sample}_{type}.output.benchmark.tsv",
-            config.get("picard_mark_duplicates_non_chr", {}).get("benchmark_repeats", 1)
+            config.get("picard_mark_duplicates_non_chr", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("picard_mark_duplicates_non_chr", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("picard_mark_duplicates_non_chr", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("picard_mark_duplicates_non_chr", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        mem_per_cpu=config.get("picard_mark_duplicates_non_chr", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
         partition=config.get("picard_mark_duplicates_non_chr", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("picard_mark_duplicates_non_chr", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("picard_mark_duplicates_non_chr", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("picard_mark_duplicates_non_chr", {}).get("container", config["default_container"])
+        config.get("picard_mark_duplicates", {}).get("container", config["default_container"])
     message:
         "{rule}: mark duplicates in {input.bams} using picard"
     wrapper:
