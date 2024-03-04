@@ -211,7 +211,7 @@ properties:
         type: object
         description: list of outputs
         properties:
-          output1:
+          bam:
             type: string
             description: one bam file containing non-chromosomal contigs, requested using merged_contigs in config, and unmapped reads
 
