@@ -20,10 +20,10 @@ jobs:
         id: branch-name
         uses: tj-actions/branch-names@v5.2
       - uses: actions/checkout@v3
-      - name: Set up Python 3.8
+      - name: Set up Python 3.11
         uses: actions/setup-python@v3
         with:
-          python-version: 3.8
+          python-version: 3.11
       - name: Install requirements.txt
         run: |
           pip install -r requirements.txt
