@@ -254,7 +254,7 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 ---
 
 ## [samtools_extract_reads_non_chr_umi](http://www.htslib.org/doc/samtools-view.html)
-Introduction to samtools_extract_reads_non_chr_umi
+Extract reads from contigs specified by merged_contigs and put into separate `.bam` files using samtools view.
 
 ### :snake: Rule
 
