@@ -253,6 +253,28 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 
 ---
 
+## [samtools_extract_reads_non_chr_umi](url_to_tool)
+Introduction to samtools_extract_reads_non_chr_umi
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_extract_reads_non_chr_umi#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_extract_reads_non_chr_umi#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_extract_reads_non_chr_umi#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_extract_reads_non_chr_umi#
+---
+
 ## [samtools_fastq](http://www.htslib.org/doc/samtools-fasta.html)
 Converts a bam file to separate fastq files
 

@@ -1,5 +1,7 @@
-17009 2 11
+20009 3 11
 0 chr1 WASH7P [organism=Homo sapiens] [GeneID=653635] [chromosome=1]
 0 15009 0
+0 chrM (null)
+15009 3000 0
 0 chr1_KI270706v1_random (null)
-15009 2000 0
+18009 2000 0

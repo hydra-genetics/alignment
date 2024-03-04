@@ -111,7 +111,10 @@ def get_chr_from_re(contig_patterns):
 
 
 def get_chrom_bams(wildcards):
-    contig_patterns = config.get("reference", {}).get("skip_contigs", [])
+    skip_contig_patterns = config.get("reference", {}).get("skip_contigs", [])
+    merge_contig_patterns = config.get("reference", {}).get("merge_contigs", [])
+    contig_patterns = skip_contig_patterns + merge_contig_patterns
+
     if len(contig_patterns) == 0:
         skip_contigs = []
     else:
@@ -126,7 +129,7 @@ def get_chrom_bams(wildcards):
 
 
 def get_contig_list(wildcards):
-    contig_patterns = config.get("reference", {}).get("keep_contigs", "")
+    contig_patterns = config.get("reference", {}).get("merge_contigs", "")
     contigs = get_chr_from_re(contig_patterns)
 
     return contigs

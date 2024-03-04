@@ -203,6 +203,26 @@ properties:
       threads:
         type: integer
         description:  number of threads to be available
+  
+  samtools_extract_reads_non_chr:
+      type: object
+      description: resource definitions for samtools_extract_reads_non_chr
+      properties:
+        mem_mb:
+          type: integer
+          description: max memory in MB to be available
+        mem_per_cpu:
+          type: integer
+          description: memory in MB used per cpu
+        partition:
+          type: string
+          description: partition to use on cluster
+        threads:
+          type: integer
+          description: number of threads to be available
+        time:
+          type: string
+          description: max execution time
 
   samtools_extract_reads_umi:
     type: object
@@ -223,6 +243,26 @@ properties:
       threads:
         type: integer
         description:  number of threads to be available
+  
+    samtools_extract_reads_non_chr_umi:
+      type: object
+      description: resource definitions for samtools_extract_reads_non_chr_umi
+      properties:
+        mem_mb:
+          type: integer
+          description: max memory in MB to be available
+        mem_per_cpu:
+          type: integer
+          description: memory in MB used per cpu
+        partition:
+          type: string
+          description: partition to use on cluster
+        threads:
+          type: integer
+          description: number of threads to be available
+        time:
+          type: string
+          description: max execution time
   
   samtools_fastq:
     type: object
