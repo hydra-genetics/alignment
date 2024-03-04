@@ -273,6 +273,7 @@ Extract reads from contigs specified by merged_contigs and put into separate `.b
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__samtools_extract_reads_non_chr_umi#
+
 ---
 
 ## [samtools_fastq](http://www.htslib.org/doc/samtools-fasta.html)
