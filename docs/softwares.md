@@ -161,7 +161,7 @@ Generate a bam file for a single chromosome with duplicates marked
 
 ---
 
-## [picard_mark_duplicates_non_chr](url_to_tool)
+## [picard_mark_duplicates_non_chr](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 Generate a bam file for a non-chromosomal contigs and unmapped reads with duplicates marked
 
 ### :snake: Rule
@@ -207,7 +207,7 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 
 ---
 
-## [samtools_extract_reads_non_chr](url_to_tool)
+## [samtools_extract_reads_non_chr](http://www.htslib.org/doc/samtools-view.html)
 Extract reads from non-chromosomal contigs and unmapped reads to separate `.bam` files using samtools view.
 
 ### :snake: Rule
@@ -253,7 +253,7 @@ Extract reads from each chromosome and put into separate `.bam` files using samt
 
 ---
 
-## [samtools_extract_reads_non_chr_umi](url_to_tool)
+## [samtools_extract_reads_non_chr_umi](http://www.htslib.org/doc/samtools-view.html)
 Introduction to samtools_extract_reads_non_chr_umi
 
 ### :snake: Rule
