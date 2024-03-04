@@ -111,12 +111,14 @@ rule samtools_extract_reads_non_chr_umi:
     benchmark:
         repeat(
             "alignment/samtools_extract_reads_non_chr_umi/{sample}_{type}_non_chr.umi.bam.benchmark.tsv",
-            config.get("samtools_extract_reads_non_chr_umi", {}).get("benchmark_repeats", 1)
+            config.get("samtools_extract_reads_non_chr_umi", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("samtools_extract_reads_non_chr_umi", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("samtools_extract_reads_non_chr_umi", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("samtools_extract_reads_non_chr_umi", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        mem_per_cpu=config.get("samtools_extract_reads_non_chr_umi", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
         partition=config.get("samtools_extract_reads_non_chr_umi", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("samtools_extract_reads_non_chr_umi", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("samtools_extract_reads_non_chr_umi", {}).get("time", config["default_resources"]["time"]),
