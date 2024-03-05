@@ -99,8 +99,8 @@ rule samtools_extract_reads_umi:
 
 rule samtools_extract_reads_non_chr_umi:
     input:
-        bam="alignment/bwa_mem/{sample}_{type}.umi.bam",
-        bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
+        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
+        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.bam.bai",
     output:
         bam=temp("alignment/samtools_extract_reads/{sample}_{type}_non_chr.umi.bam"),
     params:
