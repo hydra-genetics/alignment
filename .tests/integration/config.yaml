@@ -7,6 +7,12 @@ default_container: "docker://hydragenetics/common:0.1.9"
 reference:
   fasta: "reference/WASH7P.fna"
   fai: "reference/WASH7P.fna.fai"
+  skip_contigs: # contigs to be skipped during mark duplicates and excluded from merged bam
+    - "chrM"
+  merge_contigs: # contigs to be merged to a single BAM for mark duplicates
+    - ".*_random"
+    - ".chrUn*"
+
 
 bwa_mem:
   amb: "reference/WASH7P.fna.amb"

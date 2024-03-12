@@ -5,6 +5,7 @@ __license__ = "GPL-3"
 
 
 import pandas
+import re
 import yaml
 from snakemake.utils import validate
 from snakemake.utils import min_version
@@ -85,6 +86,53 @@ def generate_read_group(wildcards):
         "{}.{}.{}".format(wildcards.flowcell, wildcards.lane, wildcards.barcode),
         "{}_{}".format(wildcards.sample, wildcards.type),
     )
+
+
+def get_chr_from_re(contig_patterns):
+    contigs = []
+    ref_fasta = config.get("reference", {}).get("fasta", "")
+    all_contigs = extract_chr(f"{ref_fasta}.fai", filter_out=[])
+    for pattern in contig_patterns:
+        for contig in all_contigs:
+            contig_match = re.match(pattern, contig)
+            if contig_match is not None:
+                contigs.append(contig_match.group())
+
+    if len(set(contigs)) < len(contigs):  # check for duplicate conting entries
+        chr_set = set()
+        duplicate_contigs = [c for c in contigs if c in chr_set or chr_set.add(c)]
+        dup_contigs_str = ", ".join(duplicate_contigs)
+        sys.exit(
+            f"Duplicate contigs detected:\n {dup_contigs_str}\n\
+        Please revise the regular expressions listed under reference in the config"
+        )
+
+    return contigs
+
+
+def get_chrom_bams(wildcards):
+    skip_contig_patterns = config.get("reference", {}).get("skip_contigs", [])
+    merge_contig_patterns = config.get("reference", {}).get("merge_contigs", [])
+    contig_patterns = skip_contig_patterns + merge_contig_patterns
+
+    if len(contig_patterns) == 0:
+        skip_contigs = []
+    else:
+        skip_contigs = get_chr_from_re(contig_patterns)
+
+    ref_fasta = config.get("reference", {}).get("fasta", "")
+    chroms = extract_chr(f"{ref_fasta}.fai", filter_out=skip_contigs)
+
+    bam_list = [f"alignment/picard_mark_duplicates/{wildcards.sample}_{wildcards.type}_{chr}.bam" for chr in chroms]
+
+    return bam_list
+
+
+def get_contig_list(wildcards):
+    contig_patterns = config.get("reference", {}).get("merge_contigs", "")
+    contigs = get_chr_from_re(contig_patterns)
+
+    return contigs
 
 
 def compile_output_list(wildcards):
