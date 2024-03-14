@@ -11,7 +11,6 @@ reference:
     - "chrM"
   merge_contigs: # contigs to be merged to a single BAM for mark duplicates
     - ".*_random"
-    - ".chrUn*"
 
 
 bwa_mem:
