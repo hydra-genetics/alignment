@@ -132,16 +132,16 @@ rule samtools_extract_reads_non_chr_umi:
 
 rule samtools_index:
     input:
-        bam="{file}.bam",
+        bam="alignment/{file}.bam",
     output:
-        bai=temp("{file}.bam.bai"),
+        bai=temp("alignment/{file}.bam.bai"),
     params:
         extra=config.get("samtools_index", {}).get("extra", ""),
     log:
-        "{file}.bam.bai.log",
+        "alignment/{file}.bam.bai.log",
     benchmark:
         repeat(
-            "{file}.bam.bai.benchmark.tsv",
+            "alignment/{file}.bam.bai.benchmark.tsv",
             config.get("samtools_index", {}).get("benchmark_repeats", 1),
         )
     container:
@@ -154,7 +154,7 @@ rule samtools_index:
         threads=config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("samtools_index", {}).get("time", config["default_resources"]["time"]),
     message:
-        "{rule}: create index for {wildcards.file}"
+        "{rule}: create index for {input.bam}"
     wrapper:
         "v1.1.0/bio/samtools/index"
 
@@ -193,16 +193,16 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        bam="{path_file}.bam_unsorted",
+        bam="alignment/{path_file}.bam_unsorted",
     output:
-        bam=temp("{path_file}.bam"),
+        bam=temp("alignment/{path_file}.bam"),
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:
-        "{path_file}.bam.sort.log",
+        "alignment/{path_file}.bam.sort.log",
     benchmark:
         repeat(
-            "{path_file}.bam.sort.benchmark.tsv",
+            "alignment/{path_file}.bam.sort.benchmark.tsv",
             config.get("samtools_sort", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"])
@@ -215,7 +215,7 @@ rule samtools_sort:
     container:
         config.get("samtools_sort", {}).get("container", config["default_container"])
     message:
-        "{rule}: sort bam file {input} using samtools"
+        "{rule}: sort bam file {input.bam} using samtools"
     wrapper:
         "v1.3.2/bio/samtools/sort"
 
