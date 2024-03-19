@@ -132,16 +132,16 @@ rule samtools_extract_reads_non_chr_umi:
 
 rule samtools_index:
     input:
-        bam="alignment/{file}.bam",
+        bam="{file}.bam",
     output:
-        bai=temp("alignment/{file}.bam.bai"),
+        bai=temp("{file}.bam.bai"),
     params:
         extra=config.get("samtools_index", {}).get("extra", ""),
     log:
-        "alignment/{file}.bam.bai.log",
+        "{file}.bam.bai.log",
     benchmark:
         repeat(
-            "alignment/{file}.bam.bai.benchmark.tsv",
+            "{file}.bam.bai.benchmark.tsv",
             config.get("samtools_index", {}).get("benchmark_repeats", 1),
         )
     container:
@@ -193,16 +193,16 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        bam="alignment/{path_file}.bam_unsorted",
+        bam="{file}.bam_unsorted",
     output:
-        bam=temp("alignment/{path_file}.bam"),
+        bam=temp("{file}.bam"),
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:
-        "alignment/{path_file}.bam.sort.log",
+        "{file}.bam.sort.log",
     benchmark:
         repeat(
-            "alignment/{path_file}.bam.sort.benchmark.tsv",
+            "{file}.bam.sort.benchmark.tsv",
             config.get("samtools_sort", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"])
