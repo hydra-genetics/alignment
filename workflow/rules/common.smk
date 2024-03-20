@@ -53,6 +53,7 @@ wildcard_constraints:
     lane="L[0-9]+",
     sample="|".join(get_samples(samples)),
     type="N|T|R",
+    file="^alignment/.+",
 
 
 ### Functions
