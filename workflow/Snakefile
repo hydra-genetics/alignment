@@ -12,6 +12,18 @@ include: "rules/samtools.smk"
 include: "rules/star.smk"
 
 
+ruleorder: bwa_mem > samtools_sort
+ruleorder: fgbio_copy_umi_from_read_name > samtools_sort
+ruleorder: fgbio_group_reads_by_umi > samtools_sort
+ruleorder: picard_mark_duplicates > samtools_sort
+ruleorder: picard_mark_duplicates_non_chr > samtools_sort
+ruleorder: samtools_extract_reads > samtools_sort
+ruleorder: samtools_extract_reads_non_chr > samtools_sort
+ruleorder: samtools_extract_reads_umi > samtools_sort
+ruleorder: samtools_extract_reads_non_chr_umi > samtools_sort
+ruleorder: star > samtools_sort
+
+
 report: "report/workflow.rst"
 
 
