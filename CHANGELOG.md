@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/hydra-genetics/alignment/compare/v0.5.1...v0.6.0) (2024-04-17)
+
+
+### Features
+
+* add ruleorders so they are not needed in pipeline ([506e22e](https://www.github.com/hydra-genetics/alignment/commit/506e22e7def6d0f598bdfd8ae97416ecbd72a271))
+* add rules to handle contigs that are not chromosomes and unmapped reads in the mark duplicates stage ([9f9a7ce](https://www.github.com/hydra-genetics/alignment/commit/9f9a7ce2ecd2d0ebe001eb79ce61d1c163e70d5c))
+
+
+### Bug Fixes
+
+* add wildcard constraint for file ([0cf6d98](https://www.github.com/hydra-genetics/alignment/commit/0cf6d9846ee2531381fe84e86740e8cad2798578))
+* make general rules in alignment only work on file in alignment folder ([6814775](https://www.github.com/hydra-genetics/alignment/commit/681477583179d50ee9b37a9126b868a057a453b0))
+* **samtools:** fix umi bam bai filename ([b518fd5](https://www.github.com/hydra-genetics/alignment/commit/b518fd5057b0b6fdea9d150f6125aeb5cbd8b064))
+* updated file wildcard constraint ([0dfe75e](https://www.github.com/hydra-genetics/alignment/commit/0dfe75e2000f4877b70e00ed5836a597ebd7774f))
+* use same wildcard name ([651dc9f](https://www.github.com/hydra-genetics/alignment/commit/651dc9f0a7793e64fa43417fe2c849ab69689ec7))
+
+
+### Documentation
+
+* fix formatting in softwares.md ([6bbf62c](https://www.github.com/hydra-genetics/alignment/commit/6bbf62cfa594f741ccbef638a54d64f8ad5028f6))
+* fix rules schema ([86d331b](https://www.github.com/hydra-genetics/alignment/commit/86d331b3652ff9120e27f648a462047cc90ab47e))
+* fix schemas ([47ea7f0](https://www.github.com/hydra-genetics/alignment/commit/47ea7f0ca064f00ee95248bc0cff49d9ee803142))
+* fix urls ([06bceff](https://www.github.com/hydra-genetics/alignment/commit/06bceffca56fbdacc82c5e3c4ef7b636bca34010))
+* update DNA dag for rtd ([e8d469e](https://www.github.com/hydra-genetics/alignment/commit/e8d469e9cfa260e71778603353310734be892cdb))
+* update docs requirements ([aa195c4](https://www.github.com/hydra-genetics/alignment/commit/aa195c41e5a276de28163be7697f4d269959ec9f))
+* update resources schema ([2665bd4](https://www.github.com/hydra-genetics/alignment/commit/2665bd48d2ff5c11e0418118ce2f031fe1eb3ea0))
+* update the rulegraph DNA workflow ([0c7b354](https://www.github.com/hydra-genetics/alignment/commit/0c7b3545b02783e6c702691a63091f816a660fca))
+
 ### [0.5.1](https://www.github.com/hydra-genetics/alignment/compare/v0.5.0...v0.5.1) (2023-10-24)
 
 
