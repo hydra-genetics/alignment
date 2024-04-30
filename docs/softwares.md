@@ -412,3 +412,45 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 
 #RESOURCESSCHEMA__star#
 
+
+## [minimap2](url_to_tool)
+Introduction to minimap2
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__minimap2__minimap2#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__minimap2#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__minimap2#
+
+## [minimap2_merge](url_to_tool)
+Introduction to minimap2_merge
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2_merge#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__minimap2__minimap2_merge#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__minimap2_merge#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__minimap2_merge#

@@ -412,5 +412,51 @@ properties:
           RECOMMENDATION: use multiple threads for decreased run time.
           NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  minimap2:
+    type: object
+    description: resource definitions for minimap2
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  minimap2_merge:
+    type: object
+    description: resource definitions for minimap2_merge
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
 required:
   - default_resources
