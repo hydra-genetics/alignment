@@ -18,8 +18,7 @@ rule minimap2:
             config.get("minimap2", {}).get("preset","map-ont")
         ),
         sorting=config.get("minimap2", {}).get("sort_order", "coordinate"),
-        sort_extra="-@ %s"
-        % str(config.get("minimap2", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
+        sort_extra="",
     log:
         "alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam.log",
     benchmark:
@@ -39,7 +38,7 @@ rule minimap2:
     message:
         "{rule}: run minimap2 on {input}"
     wrapper:
-        "v3.5.0/bio/minimap2/aligner"
+        "v3.9.0/bio/minimap2/aligner"
 
 
 rule minimap2_merge:
@@ -49,14 +48,14 @@ rule minimap2_merge:
             for u in get_units(units, wildcards)
         ],
     output:
-        bam="alignment/minimap2/{sample}_{type}.bam_unsorted",
+        bam="alignment/minimap2/{sample}_{type}_unsorted.bam",
     params:
         extra=config.get("minimap2", {}).get("extra", ""),
     log:
-        "alignment/minimap2/{sample}_{type}.bam_unsorted.bam.log",
+        "alignment/minimap2/{sample}_{type}_unsorted.bam.log",
     benchmark:
         repeat(
-            "alignment/minimap2/{sample}_{type}bam_unsorted.bam.benchmark.tsv",
+            "alignment/minimap2/{sample}_{type}_unsorted.bam.benchmark.tsv",
             config.get("minimap2", {}).get("benchmark_repeats", 1)
         )
     threads: config.get("minimap2_merge", {}).get("threads", config["default_resources"]["threads"])
@@ -71,4 +70,4 @@ rule minimap2_merge:
     message:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
-        "v3.5.0/bio/samtools/merge"
+        "v3.9.0/bio/samtools/merge"

@@ -59,14 +59,14 @@ rule bwa_mem_merge:
             for u in get_units(units, wildcards)
         ],
     output:
-        bam=temp("alignment/bwa_mem/{sample}_{type}.bam_unsorted"),
+        bam=temp("alignment/bwa_mem/{sample}_{type}_unsorted.bam"),
     params:
         config.get("bwa_mem_merge", {}).get("extra", ""),
     log:
-        "alignment/bwa_mem/{sample}_{type}.bam_unsorted.log",
+        "alignment/bwa_mem/{sample}_{type}_unsorted.bam.log",
     benchmark:
         repeat(
-            "alignment/bwa_mem/{sample}_{type}.bam_unsorted.benchmark.tsv",
+            "alignment/bwa_mem/{sample}_{type}_unsorted.bam.benchmark.tsv",
             config.get("bwa_mem_merge", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("bwa_mem_merge", {}).get("threads", config["default_resources"]["threads"])
@@ -88,7 +88,7 @@ rule bwa_mem_realign_consensus_reads:
     input:
         bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
     output:
-        bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam_unsorted"),
+        bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi_unsorted.bam"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
         extra_sort=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_sort", ""),

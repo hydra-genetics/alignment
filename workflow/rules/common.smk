@@ -125,7 +125,7 @@ def generate_minimap2_read_group(wildcards, input):
         if 'RG' in header:
             # Access the first read group (assuming single RG in the bam)
             read_group = header['RG'][0]
-            rg_line = "-R @RG\\t" + "\\t".join(f'{key}:{val}' for key, val in read_group.items())
+            rg_line = "-R '@RG\\t" + "\\t".join(f'{key}:{val}' for key, val in read_group.items()) + "'"
             return rg_line
         else:
             return ""
@@ -220,5 +220,4 @@ def compile_output_list(wildcards):
             ]
         )
 
-    print(output_files)
     return output_files
