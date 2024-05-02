@@ -37,7 +37,11 @@ jobs:
       - name: Add conda to system path
         run: |
           echo $CONDA/bin >> $GITHUB_PATH
-      - name: Integration test - small dataset
+      - name: Integration test illumina - small dataset
         working-directory: .tests/integration
         run: |
           snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --configfiles config.yaml config_fastp_pe.yaml --show-failed-logs --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
+      - name: Integration test longread - small dataset 
+        working-directory: .tests/integration
+        run: |
+          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --configfiles config_longread.yaml --show-failed-logs --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
