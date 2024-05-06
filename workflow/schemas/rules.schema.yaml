@@ -127,6 +127,54 @@ properties:
             type: string
             description: output bam that is umi sorted
 
+  # Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  minimap2:
+    type: object
+    description: input and output parameters for minimap2
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          target:
+            type: string
+            description: a mininmap2 index file for the reference genome
+          query:
+            type: string
+            description: bam file with unaligned reads
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: description output1
+            #value: set to override value in table, else remove
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  minimap2_merge:
+    type: object
+    description: input and output parameters for minimap2_merge
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bams:
+            type: string
+            description: description: |
+              bam files from the same sample (and the same sample type)
+              a list of bam files is obtained using the information in the `units.tsv` file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: an unsorted merged bam file
+
   picard_mark_duplicates:
     type: object
     description: input and output parameters for picard_mark_duplicates
@@ -388,50 +436,3 @@ properties:
           sj:
             type: string
             description: junction file with split read information useful for interpreting rna data
-
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  minimap2:
-    type: object
-    description: input and output parameters for minimap2
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          input1:
-            type: string
-            description: description input1
-            #value: set to override value in table, else remove
-
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          output1:
-            type: string
-            description: description output1
-            #value: set to override value in table, else remove
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  minimap2_merge:
-    type: object
-    description: input and output parameters for minimap2_merge
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          input1:
-            type: string
-            description: description input1
-            #value: set to override value in table, else remove
-
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          output1:
-            type: string
-            description: description output1
-            #value: set to override value in table, else remove
