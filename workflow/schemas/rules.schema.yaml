@@ -127,7 +127,6 @@ properties:
             type: string
             description: output bam that is umi sorted
 
-  # Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   minimap2:
     type: object
     description: input and output parameters for minimap2
@@ -150,9 +149,7 @@ properties:
           output1:
             type: string
             description: description output1
-            #value: set to override value in table, else remove
 
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   minimap2_merge:
     type: object
     description: input and output parameters for minimap2_merge
@@ -163,7 +160,7 @@ properties:
         properties:
           bams:
             type: string
-            description: description: |
+            description: |
               bam files from the same sample (and the same sample type)
               a list of bam files is obtained using the information in the `units.tsv` file
 
