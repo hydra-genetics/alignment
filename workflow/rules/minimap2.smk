@@ -15,16 +15,16 @@ rule minimap2:
         % (
             config.get("minimap2", {}).get("extra", ""),
             config.get("minimap2", {}).get("read_group", generate_minimap2_read_group(wildcards, input)),
-            config.get("minimap2", {}).get("preset","map-ont")
+            config.get("minimap2", {}).get("preset", "map-ont"),
         ),
         sorting=config.get("minimap2", {}).get("sort_order", "coordinate"),
-        sort_extra="",
+        sort_extra=config.get("minimap2", {}).get("sort_extra", ""),
     log:
         "alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam.log",
     benchmark:
         repeat(
             "alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam.benchmark.tsv",
-            config.get("minimap2", {}).get("benchmark_repeats", 1)
+            config.get("minimap2", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("minimap2", {}).get("threads", config["default_resources"]["threads"])
     resources:
@@ -44,8 +44,7 @@ rule minimap2:
 rule minimap2_merge:
     input:
         bams=lambda wildcards: [
-            "alignment/minimap2/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode)
-            for u in get_units(units, wildcards)
+            "alignment/minimap2/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode) for u in get_units(units, wildcards)
         ],
     output:
         bam="alignment/minimap2/{sample}_{type}_unsorted.bam",
@@ -56,7 +55,7 @@ rule minimap2_merge:
     benchmark:
         repeat(
             "alignment/minimap2/{sample}_{type}_unsorted.bam.benchmark.tsv",
-            config.get("minimap2", {}).get("benchmark_repeats", 1)
+            config.get("minimap2", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("minimap2_merge", {}).get("threads", config["default_resources"]["threads"])
     resources:

@@ -98,11 +98,10 @@ def generate_read_group(wildcards):
 
 
 def get_minimap2_query(wildcards):
-    
-    unit = units.loc[(wildcards.sample, wildcards.type, 
-    wildcards.processing_unit, wildcards.barcode)]
-    bam_file = unit["bam"] 
-   
+
+    unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
+    bam_file = unit["bam"]
+
     return bam_file
 
 
@@ -111,21 +110,21 @@ def generate_minimap2_read_group(wildcards, input):
     Extracts the read group line from a bam file using pysam.
 
     Args:
-        bam_file (str): Path to the bam file.
+        input: Path to the bam file.
 
     Returns:
         str: The read group line (e.g. @RG\\tID:group1\\tLB:library1\\tPU:unit1).
-            If no read group is found, None is returned.
+            If no read group is found, an empty string is returned.
     """
 
-    with pysam.AlignmentFile(input.query, 'rb',  check_sq=False) as bam:
+    with pysam.AlignmentFile(input.query, "rb", check_sq=False) as bam:
         # Get the header dictionary
         header = bam.header
         # Check if Read Groups are present
-        if 'RG' in header:
+        if "RG" in header:
             # Access the first read group (assuming single RG in the bam)
-            read_group = header['RG'][0]
-            rg_line = "-R '@RG\\t" + "\\t".join(f'{key}:{val}' for key, val in read_group.items()) + "'"
+            read_group = header["RG"][0]
+            rg_line = "-R '@RG\\t" + "\\t".join(f"{key}:{val}" for key, val in read_group.items()) + "'"
             return rg_line
         else:
             return ""
@@ -179,7 +178,7 @@ def get_contig_list(wildcards):
 
 
 def compile_output_list(wildcards):
-    
+
     if config["longread_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
