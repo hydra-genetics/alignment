@@ -413,8 +413,8 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 #RESOURCESSCHEMA__star#
 
 
-## [minimap2](url_to_tool)
-Introduction to minimap2
+## [minimap2](https://github.com/lh3/minimap2)
+Align long read sequencing data stored in a `bam`file to a reference genome to produce a `bam` with aligned reads.
 
 ### :snake: Rule
 
@@ -434,8 +434,8 @@ Introduction to minimap2
 
 #RESOURCESSCHEMA__minimap2#
 
-## [minimap2_merge](url_to_tool)
-Introduction to minimap2_merge
+## [minimap2_merge](http://www.htslib.org/doc/samtools-merge.html)
+Merge minimap2 `.bam` files from the same sample using samtools merge.
 
 ### :snake: Rule
 
