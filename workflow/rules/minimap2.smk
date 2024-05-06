@@ -9,7 +9,7 @@ rule minimap2:
         query=lambda wildcards: get_minimap2_query(wildcards),
         target=config.get("minimap2", {}).get("mmi", ""),
     output:
-        bam="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
+        bam=temp("alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam"),
     params:
         extra=lambda wildcards, input: "%s %s -x %s"
         % (
@@ -47,7 +47,7 @@ rule minimap2_merge:
             "alignment/minimap2/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode) for u in get_units(units, wildcards)
         ],
     output:
-        bam="alignment/minimap2/{sample}_{type}_unsorted.bam",
+        bam=temp("alignment/minimap2/{sample}_{type}_unsorted.bam"),
     params:
         extra=config.get("minimap2", {}).get("extra", ""),
     log:
