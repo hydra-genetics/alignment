@@ -146,9 +146,9 @@ properties:
         type: object
         description: list of outputs
         properties:
-          output1:
+          bam:
             type: string
-            description: description output1
+            description: bam file with unaligned reads (Note that the methylation tags will also be present in the aligned bam file)
 
   minimap2_merge:
     type: object
