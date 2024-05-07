@@ -1,4 +1,5 @@
 digraph snakemake_dag {
+             rankdir=LR;
 	graph [bb="0,0,103,252",
 		bgcolor=white,
 		margin=0
