@@ -35,3 +35,7 @@ jobs:
         working-directory: .tests/integration
         run: |
           snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_fastp_pe.yaml
+      - name: snakemake dry run longread
+        working-directory: .tests/integration
+        run: |
+          snakemake -n -s ../../workflow/Snakefile --configfile config_longread.yaml 

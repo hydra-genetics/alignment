@@ -2,6 +2,8 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
+longread_alignment: false
+
 trimmer_software: "fastp_pe"
 
 default_container: "docker://hydragenetics/common:0.1.1"
