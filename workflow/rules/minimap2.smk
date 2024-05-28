@@ -9,7 +9,7 @@ rule minimap2:
         query=lambda wildcards: get_minimap2_query(wildcards),
         target=config.get("minimap2", {}).get("mmi", ""),
     output:
-        bam=temp("alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam"),
+        bam=temp("alignment/minimap2/{sample}.bam"),
     params:
         extra=lambda wildcards, input: "%s %s -x %s"
         % (
@@ -20,10 +20,10 @@ rule minimap2:
         sorting=config.get("minimap2", {}).get("sort_order", "coordinate"),
         sort_extra=config.get("minimap2", {}).get("sort_extra", ""),
     log:
-        "alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam.log",
+        "alignment/minimap2/{sample}.bam.log",
     benchmark:
         repeat(
-            "alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam.benchmark.tsv",
+            "alignment/minimap2/{sample}.bam.benchmark.tsv",
             config.get("minimap2", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("minimap2", {}).get("threads", config["default_resources"]["threads"])
@@ -41,32 +41,3 @@ rule minimap2:
         "v3.9.0/bio/minimap2/aligner"
 
 
-rule minimap2_merge:
-    input:
-        bams=lambda wildcards: [
-            "alignment/minimap2/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode) for u in get_units(units, wildcards)
-        ],
-    output:
-        bam=temp("alignment/minimap2/{sample}_{type}_unsorted.bam"),
-    params:
-        extra=config.get("minimap2", {}).get("extra", ""),
-    log:
-        "alignment/minimap2/{sample}_{type}_unsorted.bam.log",
-    benchmark:
-        repeat(
-            "alignment/minimap2/{sample}_{type}_unsorted.bam.benchmark.tsv",
-            config.get("minimap2", {}).get("benchmark_repeats", 1),
-        )
-    threads: config.get("minimap2_merge", {}).get("threads", config["default_resources"]["threads"])
-    resources:
-        mem_mb=config.get("minimap2_merge", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("minimap2_merge", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("minimap2_merge", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("minimap2_merge", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("minimap2_merge", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("minimap2_merge", {}).get("container", config["default_container"])
-    message:
-        "{rule}: merge bam file {input} using samtools"
-    wrapper:
-        "v3.9.0/bio/samtools/merge"
