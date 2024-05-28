@@ -103,7 +103,7 @@ def get_minimap2_query(wildcards):
     print("SAMPLE: ", units.loc[(wildcards.sample)])
     #unit = units.loc[(wildcards.sample, wildcards.type, wildcards.flowcell, wildcards.barcode)]
     unit = units.loc[(wildcards.sample)]
-    bam_file = unit["bam"]
+    bam_file = units.loc[units['sample'] == sample, 'bam'].iloc[0]
     print("BAM: ",bam_file)
     return bam_file
 
