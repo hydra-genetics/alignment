@@ -115,7 +115,8 @@ def get_minimap2_query(wildcards):
     print("DataFrame columns:", units.columns)
     # Retrieve the 'bam' entry for the given sample
     try:
-        bam_value = units.loc[units['sample'] == sample, 'bam'].iloc[0]
+        bam_value = units.loc[units['sample'] == wildcards.sample, 'bam'].iloc[0]
+        #bam_value = units.loc[(units['sample'] == wildcards.sample) & (units['type'] == wildcards.type), 'bam'].iloc[0]
     except KeyError:
         raise KeyError(f"'sample' column not found in the DataFrame. Columns are: {units.columns}")
     except IndexError:
