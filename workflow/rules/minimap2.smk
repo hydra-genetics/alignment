@@ -9,7 +9,7 @@ rule minimap2:
         query=lambda wildcards: get_minimap2_query(wildcards),
         target=config.get("minimap2", {}).get("mmi", ""),
     output:
-        bam=temp("alignment/minimap2/{sample}.mm2.bam"),
+        bam=str("alignment/minimap2/{sample}.mm2.bam"),
     params:
         extra=lambda wildcards, input: "%s %s -x %s"
         % (
