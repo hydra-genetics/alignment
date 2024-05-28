@@ -113,15 +113,21 @@ def get_minimap2_query(wildcards):
     print("UNIT: ", units)
     # Debugging: Print the DataFrame columns
     print("DataFrame columns:", units.columns)
-    # Retrieve the 'bam' entry for the given sample
+
+    # Debugging: Print the wildcards
+    print(f"Wildcards: {wildcards}")
+
+    # Retrieve the 'bam' entry for the given sample and type
     try:
-        bam_value = units.loc[units['sample'] == wildcards.sample, 'bam'].iloc[0]
-        #bam_value = units.loc[(units['sample'] == wildcards.sample) & (units['type'] == wildcards.type), 'bam'].iloc[0]
+        bam_value = units.loc[(units['sample'] == wildcards.sample) & (units['type'] == wildcards.type), 'bam'].iloc[0]
     except KeyError:
-        raise KeyError(f"'sample' column not found in the DataFrame. Columns are: {units.columns}")
+        raise KeyError(f"Columns not found in the DataFrame. Columns are: {units.columns}")
     except IndexError:
-        raise IndexError(f"No entry found for sample '{sample}' in the DataFrame.")
+        raise IndexError(f"No entry found for sample '{wildcards.sample}' and type '{wildcards.type}' in the DataFrame.")
+
+    print(f"Retrieved BAM path: {bam_value}")
     return bam_value
+
 
 
 def generate_minimap2_read_group(wildcards, input):
