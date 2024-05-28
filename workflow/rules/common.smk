@@ -99,7 +99,7 @@ def generate_read_group(wildcards):
 
 def get_minimap2_query(wildcards):
 
-    unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
+    unit = units.loc[(wildcards.sample, wildcards.type, wildcards.flowcell, wildcards.barcode, wildcards.processing_unit)]
     bam_file = unit["bam"]
 
     return bam_file
