@@ -96,7 +96,7 @@ def generate_read_group(wildcards):
         "{}_{}".format(wildcards.sample, wildcards.type),
     )
 
-
+"""
 def get_minimap2_query(wildcards):
     print("UNIT: ", units)
     print("INDEX: ", units.index)
@@ -106,6 +106,21 @@ def get_minimap2_query(wildcards):
     bam_file = units.loc[units['sample'] == sample, 'bam'].iloc[0]
     print("BAM: ",bam_file)
     return bam_file
+"""
+
+def get_minimap2_query(wildcards):
+    # Load the DataFrame from a TSV file
+    print("UNIT: ", units)
+    # Debugging: Print the DataFrame columns
+    print("DataFrame columns:", units.columns)
+    # Retrieve the 'bam' entry for the given sample
+    try:
+        bam_value = units.loc[units['sample'] == sample, 'bam'].iloc[0]
+    except KeyError:
+        raise KeyError(f"'sample' column not found in the DataFrame. Columns are: {units.columns}")
+    except IndexError:
+        raise IndexError(f"No entry found for sample '{sample}' in the DataFrame.")
+    return bam_value
 
 
 def generate_minimap2_read_group(wildcards, input):
