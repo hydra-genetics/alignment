@@ -37,7 +37,9 @@ rule minimap2:
         config.get("minimap2", {}).get("container", config["default_container"])
     message:
         "{rule}: run minimap2 on {input}"
-    wrapper:
-        "v3.9.0/bio/minimap2/aligner"
+    sheLL:
+        echo {query}
+#    wrapper:
+#        "v3.9.0/bio/minimap2/aligner"
 
 
