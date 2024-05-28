@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule minimap2:
     input:
-        query=str(lambda wildcards: get_minimap2_query(wildcards)),
+        query=lambda wildcards: get_minimap2_query(wildcards),
         target=config.get("minimap2", {}).get("mmi", ""),
     output:
         bam=str("alignment/minimap2/{sample}.mm2.bam"),
