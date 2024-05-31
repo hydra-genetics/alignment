@@ -138,6 +138,73 @@ Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in 
 
 ---
 
+## [minimap2](https://github.com/lh3/minimap2)
+Align long read sequencing data stored in a `bam`file to a reference genome to produce a `bam` with aligned reads.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__minimap2__minimap2#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__minimap2#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__minimap2#
+
+## [minimap2_merge](http://www.htslib.org/doc/samtools-merge.html)
+Merge minimap2 `.bam` files from the same sample using samtools merge.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2_merge#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__minimap2__minimap2_merge#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__minimap2_merge#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__minimap2_merge#
+
+---
+
+## [pbmm2](https://github.com/PacificBiosciences/pbmm2)
+A minimap2 SMRT wrapper for PacBio data: native PacBio data in ⇨ native PacBio BAM out.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbmm2__pbmm2#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbmm2__pbmm2#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbmm2#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbmm2#
+
+---
+
 ## [picard mark duplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 Generate a bam file for a single chromosome with duplicates marked
 
@@ -412,66 +479,6 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 
 #RESOURCESSCHEMA__star#
 
+---
 
-## [minimap2](https://github.com/lh3/minimap2)
-Align long read sequencing data stored in a `bam`file to a reference genome to produce a `bam` with aligned reads.
 
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__minimap2__minimap2#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__minimap2#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__minimap2#
-
-## [minimap2_merge](http://www.htslib.org/doc/samtools-merge.html)
-Merge minimap2 `.bam` files from the same sample using samtools merge.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2_merge#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__minimap2__minimap2_merge#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__minimap2_merge#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__minimap2_merge#
-
-## [pbmm2](url_to_tool)
-Introduction to pbmm2
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__pbmm2__pbmm2#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__pbmm2__pbmm2#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__pbmm2#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__pbmm2#

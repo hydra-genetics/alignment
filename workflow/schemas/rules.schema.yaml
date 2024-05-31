@@ -172,6 +172,29 @@ properties:
             type: string
             description: an unsorted merged bam file
 
+  pbmm2_align:
+    type: object
+    description: input and output parameters for pbmm2
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          reference:
+            type: string
+            description: a mininmap2 index file for the reference genome
+          query:
+            type: string
+            description: bam file with unaligned reads
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: bam file with aligned reads (Note that the methylation tags will also be present in the aligned bam file)
+
   picard_mark_duplicates:
     type: object
     description: input and output parameters for picard_mark_duplicates
@@ -434,25 +457,3 @@ properties:
             type: string
             description: junction file with split read information useful for interpreting rna data
 
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  pbmm2:
-    type: object
-    description: input and output parameters for pbmm2
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          input1:
-            type: string
-            description: description input1
-            #value: set to override value in table, else remove
-
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          output1:
-            type: string
-            description: description output1
-            #value: set to override value in table, else remove
