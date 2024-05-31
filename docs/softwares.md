@@ -454,3 +454,24 @@ Merge minimap2 `.bam` files from the same sample using samtools merge.
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__minimap2_merge#
+
+## [pbmm2](url_to_tool)
+Introduction to pbmm2
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbmm2__pbmm2#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbmm2__pbmm2#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbmm2#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbmm2#
