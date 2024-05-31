@@ -3,8 +3,6 @@ __copyright__ = "Copyright 2023, Uppsala universitet"
 __email__ = "padraic.corcoran@scilifelab.uu.se"
 __license__ = "GPL-3"
 
-
-
 rule pbmm2_align:
     input:
         reference=config.get("pbmm2_align", {}).get("index", ""),
@@ -36,4 +34,3 @@ rule pbmm2_align:
         "{rule}: Align reads in {input.query} against {input.reference}"
     wrapper:
         "v1.28.0/bio/pbmm2/align"
-
