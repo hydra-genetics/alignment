@@ -53,6 +53,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
 
+
 wildcard_constraints:
     barcode="[A-Z+]+",
     chr="[^_]+",
@@ -97,7 +98,6 @@ def generate_read_group(wildcards):
 
 
 def get_minimap2_query(wildcards):
-
     unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
     bam_file = unit["bam"]
 
@@ -177,7 +177,6 @@ def get_contig_list(wildcards):
 
 
 def compile_output_list(wildcards):
-
     if config["longread_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
@@ -220,7 +219,9 @@ def compile_output_list(wildcards):
 
     return output_files
 
+
 #### CUSTOM HELPER FUNCTIONS ####
+
 
 def pbmm2_input(wildcards):
     print(units)
@@ -234,6 +235,4 @@ def pbmm2_input(wildcards):
             query_files.append(input[0].fastq2)
     else:
         raise ValueError("Neither fastq or bam file configured for {wildcard.sample}")
-    print(query_files)
     return query_files
-
