@@ -187,21 +187,21 @@ Run the minimap2 SMRT wrapper for PacBio data: native PacBio data in ⇨ native 
 
 ### :snake: Rule
 
-#SNAKEMAKE_RULE_SOURCE__pbmm2__pbmm2#
+#SNAKEMAKE_RULE_SOURCE__pbmm2__pbmm2_align#
 
 #### :left_right_arrow: input / output files
 
-#SNAKEMAKE_RULE_TABLE__pbmm2__pbmm2#
+#SNAKEMAKE_RULE_TABLE__pbmm2__pbmm2_align#
 
 ### :wrench: Configuration
 
 #### Software settings (`config.yaml`)
 
-#CONFIGSCHEMA__pbmm2#
+#CONFIGSCHEMA__pbmm2_align#
 
 #### Resources settings (`resources.yaml`)
 
-#RESOURCESSCHEMA__pbmm2#
+#RESOURCESSCHEMA__pbmm2_align#
 
 ---
 
