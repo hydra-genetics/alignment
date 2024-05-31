@@ -182,8 +182,8 @@ Merge minimap2 `.bam` files from the same sample using samtools merge.
 
 ---
 
-## [pbmm2](https://github.com/PacificBiosciences/pbmm2)
-A minimap2 SMRT wrapper for PacBio data: native PacBio data in ⇨ native PacBio BAM out.
+## [pbmm2_align](https://github.com/PacificBiosciences/pbmm2)
+Run the minimap2 SMRT wrapper for PacBio data: native PacBio data in ⇨ native PacBio BAM out.
 
 ### :snake: Rule
 
