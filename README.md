@@ -140,3 +140,4 @@ The following output files should be targeted via another rule:
 
 ### RNA Alignment
 ![rule_graph](images/alignment_rna.svg)
+
