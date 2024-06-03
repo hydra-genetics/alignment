@@ -35,5 +35,3 @@ rule pbmm2_align:
         "{rule}: Align reads in {input.query} against {input.reference}"
     wrapper:
         "v1.28.0/bio/pbmm2/align"
-
-
