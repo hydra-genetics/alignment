@@ -1,7 +1,8 @@
-__author__ = "Padraic Corcoran and Magdalena"
-__copyright__ = "Copyright 2023, Uppsala universitet"
+__author__ = "Padraic Corcoran"
+__copyright__ = "Copyright 2024, Padraic Corcoran"
 __email__ = "padraic.corcoran@scilifelab.uu.se"
 __license__ = "GPL-3"
+
 
 rule pbmm2_align:
     input:
@@ -34,3 +35,5 @@ rule pbmm2_align:
         "{rule}: Align reads in {input.query} against {input.reference}"
     wrapper:
         "v1.28.0/bio/pbmm2/align"
+
+
