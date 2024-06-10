@@ -9,17 +9,17 @@ rule pbmm2_align:
         reference=config.get("pbmm2_align", {}).get("index", ""),
         query=pbmm2_input,
     output:
-        bam="long_read/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.pbmm2.bam",
+        bam="alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.pbmm2.bam",
     params:
         preset=config.get("pbmm2_align", {}).get("preset", ""),
         sample=lambda wildcards: wildcards.sample,
         loglevel="INFO",
         extra=config.get("pbmm2_align", {}).get("extra", ""),
     log:
-        bam="long_read/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam.log",
+        bam="alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam.log",
     benchmark:
         repeat(
-            "long_read/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam.benchmark.tsv",
+            "alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam.benchmark.tsv",
             config.get("pbmm2_align", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbmm2_align", {}).get("threads", config["default_resources"]["threads"])
