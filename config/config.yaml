@@ -16,8 +16,8 @@ bwa_mem:
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
 
- pbmm2_align:
-  index: reference/homo_sapiens.mmi
+pbmm2_align:
+  index: "reference/homo_sapiens.mmi"
   preset: "HIFI"
 
 picard_mark_duplicates:
@@ -28,3 +28,5 @@ star:
   genome_index: "reference/star_idx"
 
 trimmer_software: "fastp_pe"
+
+

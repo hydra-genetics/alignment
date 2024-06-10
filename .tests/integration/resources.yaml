@@ -16,6 +16,8 @@ fgbio_call_and_filter_consensus_reads:
   threads: 2
 
 samtools_fastq:
-  threads: 3
+ threads: 3
   
+star:
+  threads: 1
 

@@ -32,6 +32,9 @@ validate(config, schema="../schemas/resources.schema.yaml")
 
 ### Read and validate samples file
 
+print ("COONFIG: ", config)
+
+
 samples = pandas.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
@@ -61,7 +64,7 @@ wildcard_constraints:
     lane="L[0-9]+",
     sample="|".join(get_samples(samples)),
     type="N|T|R",
-    file="^bam/.+",
+    file="^alignment/.+",
 
 
 ### Functions
