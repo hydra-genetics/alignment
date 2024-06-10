@@ -61,7 +61,7 @@ wildcard_constraints:
     lane="L[0-9]+",
     sample="|".join(get_samples(samples)),
     type="N|T|R",
-    file="^alignment/.+",
+    file="^bam/.+",
 
 
 ### Functions
@@ -86,7 +86,7 @@ def get_deduplication_option(wildcards):
     else:
         return ""
 
-
+      
 def generate_read_group(wildcards):
     return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
         "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
@@ -96,12 +96,26 @@ def generate_read_group(wildcards):
         "{}_{}".format(wildcards.sample, wildcards.type),
     )
 
-
+  
 def get_minimap2_query(wildcards):
-    unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
-    bam_file = unit["bam"]
+    # Load the DataFrame from a TSV file
+    print("UNIT: ", units)
+    # Debugging: Print the DataFrame columns
+    print("DataFrame columns:", units.columns)
 
-    return bam_file
+    # Debugging: Print the wildcards
+    print(f"Wildcards: {wildcards}")
+
+    # Retrieve the 'bam' entry for the given sample and type
+    try:
+        bam_value = units.loc[(units['sample'] == wildcards.sample) & (units['type'] == wildcards.type), 'bam'].iloc[0]
+    except KeyError:
+        raise KeyError(f"Columns not found in the DataFrame. Columns are: {units.columns}")
+    except IndexError:
+        raise IndexError(f"No entry found for sample '{wildcards.sample}' and type '{wildcards.type}' in the DataFrame.")
+
+    print(f"Retrieved BAM path: {bam_value}")
+    return bam_value
 
 
 def generate_minimap2_read_group(wildcards, input):
@@ -147,7 +161,6 @@ def get_chr_from_re(contig_patterns):
             f"Duplicate contigs detected:\n {dup_contigs_str}\n\
         Please revise the regular expressions listed under reference in the config"
         )
-
     return contigs
 
 
@@ -160,19 +173,16 @@ def get_chrom_bams(wildcards):
         skip_contigs = []
     else:
         skip_contigs = get_chr_from_re(contig_patterns)
-
+        
     ref_fasta = config.get("reference", {}).get("fasta", "")
     chroms = extract_chr(f"{ref_fasta}.fai", filter_out=skip_contigs)
-
     bam_list = [f"alignment/picard_mark_duplicates/{wildcards.sample}_{wildcards.type}_{chr}.bam" for chr in chroms]
-
     return bam_list
 
 
 def get_contig_list(wildcards):
     contig_patterns = config.get("reference", {}).get("merge_contigs", "")
     contigs = get_chr_from_re(contig_patterns)
-
     return contigs
 
 
