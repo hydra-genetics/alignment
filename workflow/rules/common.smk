@@ -86,7 +86,7 @@ def get_deduplication_option(wildcards):
     else:
         return ""
 
-
+      
 def generate_read_group(wildcards):
     return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
         "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
@@ -96,18 +96,7 @@ def generate_read_group(wildcards):
         "{}_{}".format(wildcards.sample, wildcards.type),
     )
 
-"""
-def get_minimap2_query(wildcards):
-    print("UNIT: ", units)
-    print("INDEX: ", units.index)
-    print("SAMPLE: ", units.loc[(wildcards.sample)])
-    #unit = units.loc[(wildcards.sample, wildcards.type, wildcards.flowcell, wildcards.barcode)]
-    unit = units.loc[(wildcards.sample)]
-    bam_file = units.loc[units['sample'] == sample, 'bam'].iloc[0]
-    print("BAM: ",bam_file)
-    return bam_file
-"""
-
+  
 def get_minimap2_query(wildcards):
     # Load the DataFrame from a TSV file
     print("UNIT: ", units)
@@ -127,7 +116,6 @@ def get_minimap2_query(wildcards):
 
     print(f"Retrieved BAM path: {bam_value}")
     return bam_value
-
 
 
 def generate_minimap2_read_group(wildcards, input):
@@ -173,7 +161,6 @@ def get_chr_from_re(contig_patterns):
             f"Duplicate contigs detected:\n {dup_contigs_str}\n\
         Please revise the regular expressions listed under reference in the config"
         )
-
     return contigs
 
 
@@ -186,24 +173,20 @@ def get_chrom_bams(wildcards):
         skip_contigs = []
     else:
         skip_contigs = get_chr_from_re(contig_patterns)
-
+        
     ref_fasta = config.get("reference", {}).get("fasta", "")
     chroms = extract_chr(f"{ref_fasta}.fai", filter_out=skip_contigs)
-
     bam_list = [f"alignment/picard_mark_duplicates/{wildcards.sample}_{wildcards.type}_{chr}.bam" for chr in chroms]
-
     return bam_list
 
 
 def get_contig_list(wildcards):
     contig_patterns = config.get("reference", {}).get("merge_contigs", "")
     contigs = get_chr_from_re(contig_patterns)
-
     return contigs
 
 
 def compile_output_list(wildcards):
-
     if config["longread_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
@@ -245,3 +228,21 @@ def compile_output_list(wildcards):
         )
 
     return output_files
+
+
+#### CUSTOM HELPER FUNCTIONS ####
+
+
+def pbmm2_input(wildcards):
+    print(units)
+    input = get_units(units, wildcards)
+    print("INPUT", input)
+    if hasattr(input[0], "bam") and pandas.notna(input[0].bam):
+        query_files = [input[0].bam]
+    elif hasattr(input[0], "fastq1") and pandas.notna(input[0].fastq1):
+        query_files = [input[0].fastq1]
+        if hasattr(input[0], "fastq2") and pandas.notna(input[0].fastq2):
+            query_files.append(input[0].fastq2)
+    else:
+        raise ValueError("Neither fastq or bam file configured for {wildcard.sample}")
+    return query_files

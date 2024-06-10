@@ -16,6 +16,10 @@ bwa_mem:
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
 
+ pbmm2_align:
+  index: reference/homo_sapiens.mmi
+  preset: "HIFI"
+
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 

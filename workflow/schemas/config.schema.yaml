@@ -245,6 +245,20 @@ properties:
           parameters that should be forwarded
           RECOMMENDATION: use -c -p to only keep one of the read groups IDs when merging files from the same sample
 
+  pbmm2_align:
+    type: object
+    description: parameters for pbmm2
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   picard_mark_duplicates:
     type: object
     description: mark duplicates settings
@@ -433,7 +447,9 @@ properties:
       default is "None"
     pattern: "^(fastp_pe|merged|None)$"
 
+
 required:
   - samples
   - units
   - default_container
+
