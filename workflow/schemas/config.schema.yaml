@@ -229,22 +229,6 @@ properties:
       - mmi
       - preset
 
-  minimap2_merge:
-    type: object
-    description: parameters for minimap2_merge
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: |
-          parameters that should be forwarded
-          RECOMMENDATION: use -c -p to only keep one of the read groups IDs when merging files from the same sample
-
   pbmm2_align:
     type: object
     description: parameters for pbmm2
