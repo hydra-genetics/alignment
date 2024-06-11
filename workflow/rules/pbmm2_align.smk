@@ -3,6 +3,7 @@ __copyright__ = "Copyright 2024, Padraic Corcoran"
 __email__ = "padraic.corcoran@scilifelab.uu.se"
 __license__ = "GPL-3"
 
+
 rule pbmm2_align:
     input:
         reference=config.get("pbmm2_align", {}).get("index", ""),
