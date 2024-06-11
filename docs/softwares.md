@@ -138,6 +138,29 @@ Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in 
 
 ---
 
+## [pbmm2_align](url_to_tool)
+Introduction to pbmm2_align
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbmm2_align__pbmm2_align#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbmm2_align__pbmm2_align#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbmm2_align#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbmm2_align#
+
+---
+
 ## [picard mark duplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 Generate a bam file for a single chromosome with duplicates marked
 
@@ -454,3 +477,5 @@ Merge minimap2 `.bam` files from the same sample using samtools merge.
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__minimap2_merge#
+
+
