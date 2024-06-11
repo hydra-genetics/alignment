@@ -456,3 +456,4 @@ properties:
           sj:
             type: string
             description: junction file with split read information useful for interpreting rna data
+

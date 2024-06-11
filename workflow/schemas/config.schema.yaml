@@ -448,7 +448,6 @@ properties:
     pattern: "^(fastp_pe|merged|None)$"
 
 
-
 required:
   - samples
   - units

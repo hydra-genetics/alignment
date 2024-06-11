@@ -225,7 +225,6 @@ def compile_output_list(wildcards):
 
 #### CUSTOM HELPER FUNCTIONS ####
 
-
 def pbmm2_input(wildcards):
     print(units)
     input = get_units(units, wildcards)
@@ -240,4 +239,3 @@ def pbmm2_input(wildcards):
         raise ValueError("Neither fastq or bam file configured for {wildcard.sample}")
     return query_files
 
-    
