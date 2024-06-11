@@ -36,10 +36,12 @@ rule pbmm2_align:
     wrapper:
         "v1.28.0/bio/pbmm2/align"
 
+
 rule pbmm2_merge:
     input:
         bams=lambda wildcards: [
-            "alignment/pbmm2_align/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode) for u in get_units(units, wildcards)
+            "alignment/pbmm2_align/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode)
+            for u in get_units(units, wildcards)
         ],
     output:
         bam=temp("alignment/pbmm2_align/{sample}_{type}_unsorted.bam"),
