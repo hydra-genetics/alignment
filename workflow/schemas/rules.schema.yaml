@@ -127,6 +127,25 @@ properties:
             type: string
             description: output bam that is umi sorted
 
+  hifiasm:
+    type: object
+    description: input and output parameters for hifiasm
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          fasta:
+            type: string
+            description: genome reference fasta file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          outputlist:
+            type: string
+            description: list of a range of outputfiles produced
+
   minimap2:
     type: object
     description: input and output parameters for minimap2
@@ -148,25 +167,6 @@ properties:
           bam:
             type: string
             description: bam file with unaligned reads (Note that the methylation tags will also be present in the aligned bam file)
-
-  hifiasm:
-    type: object
-    description: input and output parameters for hifiasm
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          fasta:
-            type: string
-            description: genome reference fasta file
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          output:
-            type: string
-            description: list of a range of outputfiles produced
 
   minimap2_merge:
     type: object

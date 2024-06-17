@@ -10,7 +10,7 @@ rule hifiasm:
     # optional
     output:
         #"long_read/hifiasm/{sample}_{type}_{processing_unit}_{barcode}.a_ctg.gfa",
-        multiext(
+        outputlist=multiext(
             "long_read/hifiasm/{sample}_{type}_{processing_unit}_{barcode}.",
             "a_ctg.gfa",
             "a_ctg.lowQ.bed",
