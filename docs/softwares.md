@@ -138,6 +138,75 @@ Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in 
 
 ---
 
+## [hifiasm](https://github.com/chhylp123/hifiasm)
+Introduction to hifiasm
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__hifiasm__hifiasm#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__hifiasm__hifiasm#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__hifiasm#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__hifiasm#
+
+---
+
+## [minimap2](https://github.com/lh3/minimap2)
+Align long read sequencing data stored in a `bam`file to a reference genome to produce a `bam` with aligned reads.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__minimap2__minimap2#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__minimap2#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__minimap2#
+
+---
+
+## [minimap2_merge](http://www.htslib.org/doc/samtools-merge.html)
+Merge minimap2 `.bam` files from the same sample using samtools merge.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2_merge#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__minimap2__minimap2_merge#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__minimap2_merge#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__minimap2_merge#
+
+---
+
 ## [pbmm2_align](url_to_tool)
 Introduction to pbmm2_align
 
@@ -436,46 +505,8 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 #RESOURCESSCHEMA__star#
 
 
-## [minimap2](https://github.com/lh3/minimap2)
-Align long read sequencing data stored in a `bam`file to a reference genome to produce a `bam` with aligned reads.
 
-### :snake: Rule
 
-#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2#
 
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__minimap2__minimap2#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__minimap2#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__minimap2#
-
-## [minimap2_merge](http://www.htslib.org/doc/samtools-merge.html)
-Merge minimap2 `.bam` files from the same sample using samtools merge.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2_merge#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__minimap2__minimap2_merge#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__minimap2_merge#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__minimap2_merge#
 
 

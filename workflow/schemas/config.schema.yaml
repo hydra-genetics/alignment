@@ -195,6 +195,20 @@ properties:
         type: string
         description: umi strategy for how the umis should be grouped (paired for duplex umis)
 
+  hifiasm:
+    type: object
+    description: parameters for hifiasm
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   minimap2:
     type: object
     description: parameters for minimap2
