@@ -28,17 +28,18 @@ rule hifiasm:
     log:
         "long_read/hifiasm/{sample}_{type}_{processing_unit}_{barcode}.log",
     container:
-        config.get("hifiasm", {}).get("container", config["default_container"]),
+        config.get("hifiasm", {}).get("container", config["default_container"])
     params:
         extra="--primary -f 37 -l 1 -s 0.75 -O 1",
-    threads: config.get("hifiasm", {}).get("threads", config["default_resources"]["threads"]),
+    threads: config.get("hifiasm", {}).get("threads", config["default_resources"]["threads"])
     resources:
         partition=config.get("hifiasm", {}).get("partition", config["default_resources"]["partition"]),
         time=config.get("hifiasm", {}).get("time", config["default_resources"]["time"]),
-        mem_per_cpu=config.get("hifiasm", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]), 
+        mem_per_cpu=config.get("hifiasm", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         threads=config.get("hifiasm", {}).get("threads", config["default_resources"]["threads"]),
     wrapper:
         # "file:///beegfs-storage/projects/wp3/nobackup/Workspace/magz_testing/snakemake-wrappers/bio/hifiasm"
         "v3.3.6/bio/hifiasm"
+
 
 # Dervied from https://snakemake-wrappers.readthedocs.io/en/stable/wrappers/hifiasm.html
