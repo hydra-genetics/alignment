@@ -15,6 +15,13 @@ bwa_mem_realign_consensus_reads:
 fgbio_call_and_filter_consensus_reads:
   threads: 2
 
+hifiasm:
+  threads: 10
+  time: "12:00:00"
+  mem_mb: 7168
+  mem_per_cpu: 21504
+  partition: low
+
 samtools_fastq:
   threads: 3
   
