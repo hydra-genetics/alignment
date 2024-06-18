@@ -193,16 +193,16 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        bam="{file}_unsorted.bam",
+        bam="{file}_merged.bam",  # Changed to _merged.bam
     output:
-        bam=temp("{file}.bam"),
+        bam=temp("{file}.sorted.bam"),  # Ensure unique naming
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:
-        "{file}.bam.sort.log",
+        "{file}.sorted.bam.sort.log",
     benchmark:
         repeat(
-            "{file}.bam.sort.benchmark.tsv",
+            "{file}.sorted.bam.sort.benchmark.tsv",
             config.get("samtools_sort", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"])

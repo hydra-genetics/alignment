@@ -51,8 +51,8 @@ else:
     )
 validate(units, schema="../schemas/units.schema.yaml")
 
-### Set wildcard constraints
 
+### Set wildcard constraints
 
 wildcard_constraints:
     barcode="[A-Z+]+",
@@ -62,7 +62,7 @@ wildcard_constraints:
     sample="|".join(get_samples(samples)),
     type="N|T|R",
     file="^alignment/.+",
-
+    processing_unit="[a-zA-Z0-9-_]+",
 
 ### Functions
 
@@ -179,7 +179,20 @@ def get_contig_list(wildcards):
 
 def compile_output_list(wildcards):
 
-    if config["longread_alignment"]:
+    if config["pacbio_alignment"]:
+        files = {
+            "alignment/minimap2": [".bam"],
+            "alignment/pbmm2_align": [".bam"],
+        }
+        output_files = [
+            "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+            for prefix in files.keys()
+            for sample in get_samples(samples)
+            for unit_type in get_unit_types(units, sample)
+            if unit_type in ["N", "T"]
+            for suffix in files[prefix]
+        ]
+    elif config["longread_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
         }
@@ -191,7 +204,6 @@ def compile_output_list(wildcards):
             if unit_type in ["N", "T"]
             for suffix in files[prefix]
         ]
-
     else:
         files = {
             "alignment/samtools_merge_bam": [".bam"],
@@ -220,3 +232,27 @@ def compile_output_list(wildcards):
         )
 
     return output_files
+
+
+#### CUSTOM HELPER FUNCTIONS ####
+
+
+def pbmm2_input(wildcards):
+    print(units)
+    input = get_units(units, wildcards)
+    #print("INPUT", input)
+    if hasattr(input[0], "bam") and pandas.notna(input[0].bam):
+        query_files = [input[0].bam]
+    elif hasattr(input[0], "fastq1") and pandas.notna(input[0].fastq1):
+        query_files = [input[0].fastq1]
+        if hasattr(input[0], "fastq2") and pandas.notna(input[0].fastq2):
+            query_files.append(input[0].fastq2)
+    else:
+        raise ValueError("Neither fastq or bam file configured for {wildcard.sample}")
+    print("PBMM return", query_files)
+    return query_files
+
+
+def get_units_filtered(units, wildcards):
+    # Filter out any units that would result in an unsorted pattern
+    return [u for u in get_units(units, wildcards) if not u.barcode.endswith("_unsorted")]
