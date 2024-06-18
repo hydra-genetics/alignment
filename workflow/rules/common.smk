@@ -182,6 +182,7 @@ def compile_output_list(wildcards):
     if config["longread_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
+            "alignment/pbmm2_align": [".bam"],
         }
         output_files = [
             "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
