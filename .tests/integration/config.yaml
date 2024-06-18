@@ -13,7 +13,6 @@ reference:
   merge_contigs: # contigs to be merged to a single BAM for mark duplicates
     - ".*_random"
 
-
 bwa_mem:
   amb: "reference/WASH7P.fna.amb"
   ann: "reference/WASH7P.fna.ann"
@@ -40,6 +39,9 @@ hifiasm:
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
+
+pbmm2_align:
+  reference: "reference/WASH7P.fna"        
 
 pbmm2_merge:
   extra: ""

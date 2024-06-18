@@ -1,3 +1,3 @@
 sample	type	platform	machine	processing_unit	barcode	methylation	bam
 HG003	N	PACBIO	NA	m84010_220919_235306_s2	NNNN	Yes	pacbio_reads/HG003.m84010_220919_235306_s2.GRCh38.bam
-pr_064_004	N	PACBIO	REVIO	m84045_240413_222650_s4	ACGCTCATGCGAGTAT	Yes	pacbio_reads/m84045_240413_222650_s4.hifi_reads.bc2088.bam
+pr-064-004	N	PACBIO	REVIO	m84045_240413_222650_s4	ACGCTCATGCGAGTAT	Yes	pacbio_reads/m84045_240413_222650_s4.hifi_reads.bc2088.bam
