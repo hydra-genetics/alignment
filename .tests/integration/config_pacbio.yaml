@@ -1,0 +1,21 @@
+# resources: "resources.yaml"
+# samples: "samples_pacbio.tsv"
+# units: "units_pacbio.tsv"
+
+default_container: "docker://hydragenetics/common:1.14.0"
+
+pacbio_alignment: true
+
+# reference:
+# fasta: "reference/human_GRCh38.fasta"
+
+trgt_genotype:
+  bed: "reference/human_GRCh38_trgt.bed"
+  container: "docker://hydragenetics/trgt:1.0.0"
+
+  trgt_plot:
+  image_type: "svg"
+  plot_type: "allele"
+  show: "motifs"
+  container: "docker://hydragenetics/trgt:1.0.0"
+

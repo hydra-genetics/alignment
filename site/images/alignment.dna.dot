@@ -1,0 +1,53 @@
+digraph snakemake_dag {
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	0[label = "fastq", color = "0.28 0.6 0.85", style="dotted"];
+	61[label = "fastq", color = "0.0 0.0 0.0", style="dotted"];
+	40[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
+	41[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
+	42[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
+	2[label = "samtools_merge_bam", color = "0.14 0.6 0.85", style="rounded"];
+	3[label = "picard_mark_duplicates", color = "0.04 0.6 0.85", style="rounded"];
+	4[label = "samtools_extract_reads", color = "0.56 0.6 0.85", style="rounded"];
+	51[label = "samtools_extract_reads_umi", color = "0.13 0.6 0.85", style="rounded"];
+	5[label = "bwa_mem_merge", color = "0.18 0.6 0.85", style="rounded"];
+	6[label = "bwa_mem", color = "0.39 0.6 0.85", style="rounded"];
+	8[label = "picard_mark_duplicates_non_chr", color = "0.63 0.6 0.85", style="rounded"];
+	9[label = "samtools_extract_reads_non_chr", color = "0.35 0.6 0.85", style="rounded"];
+	10[label = "bwa_mem_realign_consensus_reads", color = "0.42 0.6 0.85", style="rounded"];
+	11[label = "fgbio_call_and_filter_consensus_reads", color = "0.11 0.6 0.85", style="rounded"];
+	12[label = "fgbio_group_reads_by_umi", color = "0.00 0.6 0.85", style="rounded"];
+	13[label = "fgbio_copy_umi_from_read_name", color = "0.25 0.6 0.85", style="rounded"];
+	14[label = "samtools_sort_umi", color = "0.60 0.6 0.85", style="rounded"];
+	15[label = "samtools_fastq", color = "0.53 0.6 0.85", style="rounded"];
+	20[label = "bam", color = "0.0 0.0 0.0", style="dotted"];
+	21[label = "bam_umi", color = "0.0 0.0 0.0", style="dotted"];
+	30[label = "chrN_bam", color = "0.0 0.0 0.0", style="dotted"];
+	31[label = "chrN_bam_umi", color = "0.0 0.0 0.0", style="dotted"];
+	0 -> 6
+	40 -> 20
+	15 -> 61
+	5 -> 41
+	2 -> 40
+	10 -> 42
+	8 -> 42
+	3 -> 2
+	8 -> 2
+	3 -> 30
+	8 -> 30
+	4 -> 3
+	41 -> 4
+	6 -> 5
+	9 -> 8
+	41 -> 9
+	11 -> 10
+	12 -> 11
+	13 -> 12
+	14 -> 13
+	5 -> 14
+	11 -> 15
+	42 -> 21
+	21 -> 51
+	51 -> 31
+}            
