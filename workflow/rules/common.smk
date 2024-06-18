@@ -192,7 +192,7 @@ def compile_output_list(wildcards):
             if unit_type in ["N", "T"]
             for suffix in files[prefix]
         ]
-    elsif config["longread_alignment"]:
+    elif config["longread_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
         }
