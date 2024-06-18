@@ -41,9 +41,13 @@ hifiasm:
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
+pbmm2_merge:
+  extra: ""
+
 samtools_fastq:
   sort: "-m 1G"
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
   genome_index: "reference/star_idx/"
+

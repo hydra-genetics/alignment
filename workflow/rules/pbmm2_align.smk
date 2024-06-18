@@ -9,7 +9,7 @@ rule pbmm2_align:
         reference=config.get("pbmm2_align", {}).get("index", ""),
         query=pbmm2_input,
     output:
-        bam="alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.pbmm2.bam",
+        bam="alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam",
     params:
         preset=config.get("pbmm2_align", {}).get("preset", ""),
         sample=lambda wildcards: wildcards.sample,
