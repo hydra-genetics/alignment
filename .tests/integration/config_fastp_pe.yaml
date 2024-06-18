@@ -1,4 +1,4 @@
 trimmer_software: "fastp_pe"
 
-pacbio_alignment: true
+pacbio_alignment: false
 
