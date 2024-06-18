@@ -13,7 +13,6 @@ reference:
   merge_contigs: # contigs to be merged to a single BAM for mark duplicates
     - ".*_random"
 
-
 bwa_mem:
   amb: "reference/WASH7P.fna.amb"
   ann: "reference/WASH7P.fna.ann"
@@ -37,6 +36,19 @@ fgbio_group_reads_by_umi:
 hifiasm:
   container: "docker://hydragenetics/hifiasm:0.19.8"
   extra: ""
+
+pbmm2_align:
+  index: "reference/WASH7P.hifi.mmi"
+  preset: "HIFI"
+  container: "docker://hydragenetics/pbmm2:1.10"
+
+pbmm2_samtools_sort:
+  extra: "--threads 10 -l 9 -m 4G"  # set threads 10, best compression rate l, and maximum mem per thread  m 4G
+  container: "docker://hydragenetics/common:1.14.0"
+
+pbmm2_samtools_index:
+  extra: "--threads 10 -l 9 -m 4G"  # set threads 10, best compression rate l, and maximum mem per thread  m 4G
+  container: "docker://hydragenetics/common:1.14.0"
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
