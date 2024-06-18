@@ -179,7 +179,7 @@ def get_contig_list(wildcards):
 
 def compile_output_list(wildcards):
 
-    if config["longread_alignment"]:
+    if config["pacbio_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
             "alignment/pbmm2_align": [".bam"],
@@ -192,7 +192,18 @@ def compile_output_list(wildcards):
             if unit_type in ["N", "T"]
             for suffix in files[prefix]
         ]
-
+    elsif config["longread_alignment"]:
+        files = {
+            "alignment/minimap2": [".bam"],
+        }
+        output_files = [
+            "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+            for prefix in files.keys()
+            for sample in get_samples(samples)
+            for unit_type in get_unit_types(units, sample)
+            if unit_type in ["N", "T"]
+            for suffix in files[prefix]
+        ]
     else:
         files = {
             "alignment/samtools_merge_bam": [".bam"],
