@@ -305,4 +305,3 @@ rule samtools_fastq_single:
         """
         (samtools fastq {params.extra}  {input} > {output}) &> {log}
         """
-
