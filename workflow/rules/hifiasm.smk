@@ -6,12 +6,12 @@ __license__ = "GPL-3"
 
 rule hifiasm:
     input:
-        fasta=["long_read/hifiasm/{sample}_{type}_{processing_unit}_{barcode}.s2fq.fastq.gz"],
+        fasta=["alignment/hifiasm/{sample}_{type}.s2fq.fastq.gz"],
     # optional
     output:
         #"long_read/hifiasm/{sample}_{type}_{processing_unit}_{barcode}.a_ctg.gfa",
         outputlist=multiext(
-            "long_read/hifiasm/{sample}_{type}_{processing_unit}_{barcode}.",
+            "long_read/hifiasm/{sample}_{type}.",
             "a_ctg.gfa",
             "a_ctg.lowQ.bed",
             "a_ctg.noseq.gfa",
@@ -26,7 +26,7 @@ rule hifiasm:
             "r_utg.noseq.gfa",
         ),
     log:
-        "long_read/hifiasm/{sample}_{type}_{processing_unit}_{barcode}.log",
+        "alignment/hifiasm/{sample}_{type}.hifiasm.log",
     container:
         config.get("hifiasm", {}).get("container", config["default_container"])
     params:

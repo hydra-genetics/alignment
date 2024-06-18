@@ -389,6 +389,26 @@ properties:
           RECOMMENDATION: use at least 3 threads so that sort gets at least 1 exclusive thread
           NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
+  samtools_fastq_single:
+    type: object
+    description: resource definitions for samtools fastq single
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+        
   samtools_merge_bam:
     type: object
     description: resource definitions for samtools_merge_bam

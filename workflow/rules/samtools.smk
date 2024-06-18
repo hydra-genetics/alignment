@@ -278,3 +278,31 @@ rule samtools_fastq:
         "{rule}: Convert the bam file {input.bam} into a fastq file"
     wrapper:
         "v2.6.0/bio/samtools/fastq/separate"
+
+
+rule samtools_fastq_single:
+    input:
+        query=pbmm2_input,
+        #query="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
+    output:
+        fastq="alignment/hifiasm/{sample}_{type}.s2fq.fastq.gz",
+    log:
+        "alignment/hifiasm/{sample}_{type}.interleaved.log",
+    message:
+        "Extracting fastq reads from BAM file, single end. For PE use alignment/samtools_fastq."
+    # Samtools takes additional threads through its option -@
+    threads: config.get("make_fastq", {}).get("threads", config["default_resources"]["threads"])  # This value - 1 will be sent to -@
+    resources:
+        partition=config.get("make_fastq", {}).get("partition", config["default_resources"]["partition"]),
+        time=config.get("make_fastq", {}).get("time", config["default_resources"]["time"]),
+        threads=config.get("make_fastq", {}).get("threads", config["default_resources"]["threads"]),
+        mem_per_cpu=config.get("make_fastq", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+    container:
+        config.get("samtools_index", {}).get("container", config["default_container"])
+    params:
+        extra="",
+    shell:
+        """
+        (samtools fastq {params.extra}  {input} > {output}) &> {log}
+        """
+

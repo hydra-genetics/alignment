@@ -1,4 +1,5 @@
 
+hydra-genetics==1.14.0
 jinja2<3.1.0
 mkdocs==1.4.2
 pymdown-extensions==10.0
@@ -8,3 +9,4 @@ mdx_spanner==0.0.5
 mkdocs-yaml-schema-plugin==0.2.3
 mkdocs-snakemake-rule-plugin==0.3.5
 mkdocs-material==9.1.7
+snakemake>=8,<9
