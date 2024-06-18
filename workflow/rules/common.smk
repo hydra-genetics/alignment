@@ -240,7 +240,7 @@ def compile_output_list(wildcards):
 def pbmm2_input(wildcards):
     print(units)
     input = get_units(units, wildcards)
-    print("INPUT", input)
+    #print("INPUT", input)
     if hasattr(input[0], "bam") and pandas.notna(input[0].bam):
         query_files = [input[0].bam]
     elif hasattr(input[0], "fastq1") and pandas.notna(input[0].fastq1):
@@ -249,4 +249,5 @@ def pbmm2_input(wildcards):
             query_files.append(input[0].fastq2)
     else:
         raise ValueError("Neither fastq or bam file configured for {wildcard.sample}")
+    print("PBMM return", query_files)
     return query_files
