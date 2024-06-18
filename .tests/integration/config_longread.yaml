@@ -3,6 +3,7 @@ units: "units_pacbio.tsv"
 resources: "resources.yaml"
 
 longread_alignment: true
+pacbio_alignment: true
 
 default_container: "docker://hydragenetics/common:1.14.0"
 
