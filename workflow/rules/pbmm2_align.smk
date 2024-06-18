@@ -36,43 +36,6 @@ rule pbmm2_align:
     wrapper:
         "v1.28.0/bio/pbmm2/align"
 
-'''
-rule pbmm2_merge:
-    input:
-        bams=lambda wildcards: [
-            f"alignment/pbmm2_align/{wildcards.sample}_{wildcards.type}_{u.processing_unit}_{u.barcode}.bam"
-            for u in get_units(units, wildcards)
-        ],
-    output:
-        bam=temp("alignment/pbmm2_align/{sample}_{type}.bam"),
-    params:
-        extra=config.get("minimap2_merge", {}).get("extra", ""),
-    log:
-        "alignment/pbmm2_align/{sample}_{type}_unsorted.bam.log",
-    benchmark:
-        repeat(
-            "alignment/pbmm2_align/{sample}_{type}_unsorted.bam.benchmark.tsv",
-            config.get("minimap2_merge", {}).get("benchmark_repeats", 1),
-        )
-    threads: config.get("minimap2_merge", {}).get("threads", config["default_resources"]["threads"])
-    resources:
-        mem_mb=config.get("minimap2_merge", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("minimap2_merge", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("minimap2_merge", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("minimap2_merge", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("minimap2_merge", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("minimap2_merge", {}).get("container", config["default_container"])
-    message:
-        "{rule}: merge bam file {input} using samtools"
-    wrapper:
-        "v3.9.0/bio/samtools/merge"
-
-'''
-
-def get_units_filtered(units, wildcards):
-    # Filter out any units that would result in an unsorted pattern
-    return [u for u in get_units(units, wildcards) if not u.barcode.endswith("_unsorted")]
 
 rule pbmm2_merge:
     input:
@@ -104,6 +67,3 @@ rule pbmm2_merge:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
         "v3.9.0/bio/samtools/merge"
-
-
-

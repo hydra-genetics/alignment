@@ -251,3 +251,8 @@ def pbmm2_input(wildcards):
         raise ValueError("Neither fastq or bam file configured for {wildcard.sample}")
     print("PBMM return", query_files)
     return query_files
+
+
+def get_units_filtered(units, wildcards):
+    # Filter out any units that would result in an unsorted pattern
+    return [u for u in get_units(units, wildcards) if not u.barcode.endswith("_unsorted")]
