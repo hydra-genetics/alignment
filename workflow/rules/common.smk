@@ -51,8 +51,8 @@ else:
     )
 validate(units, schema="../schemas/units.schema.yaml")
 
-### Set wildcard constraints
 
+### Set wildcard constraints
 
 wildcard_constraints:
     barcode="[A-Z+]+",
@@ -62,7 +62,7 @@ wildcard_constraints:
     sample="|".join(get_samples(samples)),
     type="N|T|R",
     file="^alignment/.+",
-
+    processing_unit="[a-zA-Z0-9-_]+",
 
 ### Functions
 
