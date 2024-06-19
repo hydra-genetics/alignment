@@ -178,8 +178,13 @@ def get_contig_list(wildcards):
 
 
 def compile_output_list(wildcards):
-
-    if config["pacbio_alignment"]:
+    #xs=get_unit_types(units, sample)
+    #print("WILD", units)
+    #for index, row in units.iterrows():
+    #    print(row['platform'])
+    if row['platform'] == 'PACBIO':
+        #print ("IS PACBIO")
+        #elif config["pacbio_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
             "alignment/pbmm2_align": [".bam"],
@@ -238,9 +243,9 @@ def compile_output_list(wildcards):
 
 
 def pbmm2_input(wildcards):
-    print(units)
+    #print(units)
     input = get_units(units, wildcards)
-    print("INPUT", input)
+    #print("INPUT", input)
     if hasattr(input[0], "bam") and pandas.notna(input[0].bam):
         query_files = [input[0].bam]
     elif hasattr(input[0], "fastq1") and pandas.notna(input[0].fastq1):
