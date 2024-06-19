@@ -283,7 +283,6 @@ rule samtools_fastq:
 rule samtools_fastq_single:
     input:
         query=pbmm2_input,
-        #query="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
     output:
         fastq="alignment/hifiasm/{sample}_{type}.s2fq.fastq.gz",
     log:

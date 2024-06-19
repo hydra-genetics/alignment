@@ -179,6 +179,7 @@ def get_contig_list(wildcards):
 
 def compile_output_list(wildcards):
     #print("WILD", units)
+    output_files=[]
     for index, row in units.iterrows():
         if "pacbio" in row['platform'].lower():
             #print("IS PACBIO")
