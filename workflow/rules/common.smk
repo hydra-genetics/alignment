@@ -177,7 +177,66 @@ def get_contig_list(wildcards):
     return contigs
 
 
-
+def compile_output_list(wildcards):
+    print("WILD:", wildcards)
+    output_files =[]
+    files = {
+        "alignment/minimap2": [".bam"],
+        "alignment/pbmm2_align": [".bam"],
+    }
+    output_files =[
+        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type in ["N", "T"]
+        for suffix in files[prefix]
+        for platform in get_platforms(units, sample).lower()
+        if platform in ['ont']
+    ]
+    files = {
+        "alignment/minimap2": [".bam"],
+    }
+    output_files.append([
+        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type in ["N", "T"]
+        for suffix in files[prefix]
+        for platform in get_unit_platform(units, sample).lower()
+        if platform in ['pacbio']
+    ])
+    files = {
+            "alignment/samtools_merge_bam": [".bam"],
+            "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
+            "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
+    }
+    output_files.append([
+        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type in ["N", "T"]
+        for suffix in files[prefix]
+        for platform in get_unit_platform(units, sample).lower()
+        if platform in ['illumina', 'nextseq', 'novaseq', 'miseq']
+    ])
+    files = {
+        "alignment/star": [".bam"],
+    }
+    output_files.append([
+        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        if unit_type in ["R"]
+        for suffix in files[prefix]
+        for platform in get_unit_platform(units, sample).lower()
+        if platform in ['illumina', 'nextseq', 'novaseq', 'miseq']
+    ])
+    print("OUT", output_files)
+    return output_files
 
 
 '''
@@ -253,68 +312,6 @@ def compile_output_list(wildcards):
 
 '''
 
-def compile_output_list(wildcards):
-    print("WILD:", wildcards)
-    output_files =[]
-    files = {
-        "alignment/minimap2": [".bam"],
-        "alignment/pbmm2_align": [".bam"],
-    }
-    output_files =[
-        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
-        for prefix in files.keys()
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type in ["N", "T"]
-        for suffix in files[prefix]
-        for platform in get_platforms(units, sample).lower()
-        if platform in ['ont']
-    ]
-    files = {
-        "alignment/minimap2": [".bam"],
-    }
-    output_files.append([
-        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
-        for prefix in files.keys()
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type in ["N", "T"]
-        for suffix in files[prefix]
-        for platform in get_unit_platform(units, sample).lower()
-        if platform in ['pacbio']
-    ])
-    files = {
-            "alignment/samtools_merge_bam": [".bam"],
-            "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
-            "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
-    }
-    output_files.append([
-        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
-        for prefix in files.keys()
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type in ["N", "T"]
-        for suffix in files[prefix]
-        for platform in get_unit_platform(units, sample).lower()
-        if platform in ['illumina', 'nextseq', 'novaseq', 'miseq']
-    ])
-    files = {
-        "alignment/star": [".bam"],
-    }
-    output_files.append([
-        "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
-        for prefix in files.keys()
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-        if unit_type in ["R"]
-        for suffix in files[prefix]
-        for platform in get_unit_platform(units, sample).lower()
-        if platform in ['illumina', 'nextseq', 'novaseq', 'miseq']
-    ])
-    print("OUT", output_files)
-    return output_files
-
-
 '''
 def compile_output_list(wildcards):
     #xs=get_unit_types(units, sample)
@@ -379,6 +376,7 @@ def compile_output_list(wildcards):
     return output_files
 
 '''
+
 
 #### CUSTOM HELPER FUNCTIONS ####
 
