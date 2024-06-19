@@ -116,7 +116,7 @@ Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_
 ---
 
 ## [fgbio_copy_umi_from_read_name](http://fulcrumgenomics.github.io/fgbio/tools/latest/CopyUmiFromReadName.html)
-Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
+Copies the UMI at the end of the `.bam`’s read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
 
 ### :snake: Rule
 
@@ -162,7 +162,7 @@ Introduction to hifiasm
 ---
 
 ## [minimap2](https://github.com/lh3/minimap2)
-Align long read sequencing data stored in a `bam`file to a reference genome to produce a `bam` with aligned reads.
+Align long read sequencing data stored in a `.bam` file to a reference genome to produce a `bam` with aligned reads.
 
 ### :snake: Rule
 
@@ -231,7 +231,7 @@ Introduction to pbmm2_align
 ---
 
 ## [picard mark duplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
-Generate a bam file for a single chromosome with duplicates marked
+Generate a `.bam` file for a single chromosome with duplicates marked
 
 ### :snake: Rule
 
@@ -254,7 +254,7 @@ Generate a bam file for a single chromosome with duplicates marked
 ---
 
 ## [picard_mark_duplicates_non_chr](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
-Generate a bam file for a non-chromosomal contigs and unmapped reads with duplicates marked
+Generate a `.bam` file for a non-chromosomal contigs and unmapped reads with duplicates marked
 
 ### :snake: Rule
 
@@ -369,7 +369,7 @@ Extract reads from contigs specified by merged_contigs and put into separate `.b
 ---
 
 ## [samtools_fastq](http://www.htslib.org/doc/samtools-fasta.html)
-Converts a bam file to separate fastq files
+Converts a `.bam` file to separate fastq files
 
 ### :snake: Rule
 
@@ -392,7 +392,7 @@ Converts a bam file to separate fastq files
 ---
 
 ## [samtools_fastq_single](http://www.htslib.org/doc/samtools-fasta.html)
-Converts a .bam file to separate fastq files
+Converts a `.bam` file to separate fastq files
 
 ### :snake: Rule
 
@@ -415,7 +415,7 @@ Converts a .bam file to separate fastq files
 ---
 
 ## [samtools index](http://www.htslib.org/doc/samtools-index.html)
-Index .bam files using samtools index.
+Index `.bam` files using samtools index.
 
 ### :snake: Rule
 
@@ -438,7 +438,7 @@ Index .bam files using samtools index.
 ---
 
 ## [samtools_merge_bam](http://www.htslib.org/doc/samtools-merge.html)
-Merge .bam files from the same sample using samtools merge.
+Merge `.bam` files from the same sample using samtools merge.
 
 ### :snake: Rule
 
