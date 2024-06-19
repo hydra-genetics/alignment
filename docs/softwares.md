@@ -392,7 +392,7 @@ Converts a bam file to separate fastq files
 ---
 
 ## [samtools_fastq_single](http://www.htslib.org/doc/samtools-fasta.html)
-Converts a bam file to separate fastq files
+Converts a .bam file to separate fastq files
 
 ### :snake: Rule
 
@@ -415,7 +415,7 @@ Converts a bam file to separate fastq files
 ---
 
 ## [samtools index](http://www.htslib.org/doc/samtools-index.html)
-Index `.bam` files using samtools index.
+Index .bam files using samtools index.
 
 ### :snake: Rule
 
@@ -438,7 +438,7 @@ Index `.bam` files using samtools index.
 ---
 
 ## [samtools_merge_bam](http://www.htslib.org/doc/samtools-merge.html)
-Merge `.bam` files from the same sample using samtools merge.
+Merge .bam files from the same sample using samtools merge.
 
 ### :snake: Rule
 
