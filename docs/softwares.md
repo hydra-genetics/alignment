@@ -389,6 +389,29 @@ Converts a `.bam` file to separate fastq files
 
 ---
 
+## [samtools_fastq_single](http://www.htslib.org/doc/samtools-fasta.html)
+Converts a `.bam` file to a fastq file
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_fastq#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_fastq#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_fastq_single#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_fastq_single#
+
+---
+
 ## [samtools index](http://www.htslib.org/doc/samtools-index.html)
 Index `.bam` files using samtools index.
 
