@@ -191,7 +191,7 @@ def compile_output_list(wildcards):
         for unit_type in get_unit_types(units, sample)
         if unit_type in ["N", "T"]
         for suffix in files[prefix]
-        for platform in get_platforms(units, sample).lower()
+        for platform.lower() in lambda wildcards: get_platforms(units, wildcards)
         if platform in ['ont']
     ]
     files = {
