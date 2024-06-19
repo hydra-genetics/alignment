@@ -178,13 +178,86 @@ def get_contig_list(wildcards):
 
 
 def compile_output_list(wildcards):
-    #xs=get_unit_types(units, sample)
     #print("WILD", units)
-    #for index, row in units.iterrows():
-    #    print(row['platform'])
-    if row['platform'] == 'PACBIO':
-        #print ("IS PACBIO")
-        #elif config["pacbio_alignment"]:
+    for index, row in units.iterrows():
+        if "pacbio" in row['platform'].lower():
+            #print("IS PACBIO")
+            files = {
+                "alignment/minimap2": [".bam"],
+                "alignment/pbmm2_align": [".bam"],
+            }
+            sample = row['sample']
+            unit_type = row['type']
+            output_files = [
+                "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+                for prefix in files.keys()
+                for suffix in files[prefix]
+            ]
+            print("FILES", output_files)
+        elif "ont" in row['platform'].lower():
+            files = {
+                "alignment/minimap2": [".bam"],
+            }
+            sample = row['sample']
+            unit_type = row['type']
+            output_files = [
+                "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+                for prefix in files.keys()
+                for suffix in files[prefix]
+            ]
+            print("FILES", output_files)
+        elif "NextSeq" in row['platform']:       
+            pass
+        elif "illumina" in row['platform'].lower():
+            files = {
+                "alignment/samtools_merge_bam": [".bam"],
+                "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
+                "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
+            }
+            sample = row['sample']
+            unit_type = row['type']
+            output_files = [
+                "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+                for prefix in files.keys()
+                for suffix in files[prefix]
+            ]            
+        else:
+            print("ERROR: your samplesheet contains an expression which is not the expected platform value:", row['platform'])  
+            print("Expected values are pacbio, ont, nextseq or illumina, either lowercase or uppercase")  
+    
+        return output_files
+
+
+'''
+def compile_output_list(wildcards):
+    print("WILD", units)
+    for index, row in units.iterrows():
+        if "PACBIO" in row['platform']:
+            print("IS PACBIO")
+            files = {
+                "alignment/minimap2": [".bam"],
+                "alignment/pbmm2_align": [".bam"],
+            }
+            output_files = [
+                "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
+                for prefix in files.keys()
+                for sample in get_samples(samples)
+                for unit_type in get_unit_types(units, sample)
+                if unit_type in ["N", "T"]
+                for suffix in files[prefix]
+            ]
+            print("FILES", output_files)
+
+'''
+'''
+def compile_output_list(wildcards):
+    #xs=get_unit_types(units, sample)
+    print("WILD", units)
+    for index, row in units.iterrows():
+        print(row['platform'])
+    #if row['platform'] == 'PACBIO':
+    #    print ("IS PACBIO")
+    if config["pacbio_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
             "alignment/pbmm2_align": [".bam"],
@@ -197,6 +270,7 @@ def compile_output_list(wildcards):
             if unit_type in ["N", "T"]
             for suffix in files[prefix]
         ]
+        print("FILES", output_files)
     elif config["longread_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
@@ -238,6 +312,7 @@ def compile_output_list(wildcards):
 
     return output_files
 
+'''
 
 #### CUSTOM HELPER FUNCTIONS ####
 
