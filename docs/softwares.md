@@ -116,7 +116,7 @@ Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_
 ---
 
 ## [fgbio_copy_umi_from_read_name](http://fulcrumgenomics.github.io/fgbio/tools/latest/CopyUmiFromReadName.html)
-Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
+Copies the UMI at the end of the `.bam` read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
 
 ### :snake: Rule
 
@@ -139,7 +139,7 @@ Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in 
 ---
 
 ## [hifiasm](https://github.com/chhylp123/hifiasm)
-Introduction to hifiasm
+Hifiasm is a fast haplotype-resolved de novo assembler initially designed for PacBio HiFi reads, and can also support the telomere-to-telomere assembly by utilizing ultralong Oxford Nanopore reads. 
 
 ### :snake: Rule
 
@@ -162,7 +162,7 @@ Introduction to hifiasm
 ---
 
 ## [minimap2](https://github.com/lh3/minimap2)
-Introduction to minimap2
+Minimap2 is a versatile sequence alignment program that aligns PacBio or Oxford Nanopore sequences against a large reference database.
 
 ### :snake: Rule
 
