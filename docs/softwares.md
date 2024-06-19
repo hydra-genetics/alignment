@@ -412,8 +412,32 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 
 #RESOURCESSCHEMA__star#
 
+---
 
-## [minimap2](url_to_tool)
+## [hifiasm](https://github.com/chhylp123/hifiasm)
+Introduction to hifiasm
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__hifiasm__hifiasm#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__hifiasm__hifiasm#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__hifiasm#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__hifiasm#
+
+---
+
+## [minimap2](https://github.com/lh3/minimap2)
 Introduction to minimap2
 
 ### :snake: Rule
@@ -434,7 +458,7 @@ Introduction to minimap2
 
 #RESOURCESSCHEMA__minimap2#
 
-## [minimap2_merge](url_to_tool)
+## [minimap2_merge](http://www.htslib.org/doc/samtools-merge.html)
 Introduction to minimap2_merge
 
 ### :snake: Rule
