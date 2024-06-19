@@ -374,7 +374,7 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          query:
             type: string
             description: input bam file
       output:

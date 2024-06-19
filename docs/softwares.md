@@ -394,11 +394,11 @@ Converts a `.bam` file to a fastq file
 
 ### :snake: Rule
 
-#SNAKEMAKE_RULE_SOURCE__samtools__samtools_fastq#
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_fastq_single#
 
 #### :left_right_arrow: input / output files
 
-#SNAKEMAKE_RULE_TABLE__samtools__samtools_fastq#
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_fastq_single#
 
 ### :wrench: Configuration
 
