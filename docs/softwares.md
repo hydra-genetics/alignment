@@ -116,7 +116,7 @@ Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_
 ---
 
 ## [fgbio_copy_umi_from_read_name](http://fulcrumgenomics.github.io/fgbio/tools/latest/CopyUmiFromReadName.html)
-Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
+Copies the UMI at the end of the `.bam` read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
 
 ### :snake: Rule
 
@@ -138,8 +138,98 @@ Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in 
 
 ---
 
+## [hifiasm](https://github.com/chhylp123/hifiasm)
+Hifiasm is a fast haplotype-resolved de novo assembler initially designed for PacBio HiFi reads, and can also support the telomere-to-telomere assembly by utilizing ultralong Oxford Nanopore reads. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__hifiasm__hifiasm#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__hifiasm__hifiasm#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__hifiasm#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__hifiasm#
+
+---
+
+## [minimap2](https://github.com/lh3/minimap2)
+Minimap2 is a versatile sequence alignment program that aligns PacBio or Oxford Nanopore sequences against a large reference database.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__minimap2__minimap2#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__minimap2#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__minimap2#
+
+## [minimap2_merge](http://www.htslib.org/doc/samtools-merge.html)
+Introduction to minimap2_merge
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2_merge#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__minimap2__minimap2_merge#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__minimap2_merge#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__minimap2_merge#
+
+---
+
+## [pbmm2_align](https://github.com/PacificBiosciences/pbmm2)
+A minimap2 SMRT wrapper for PacBio data: native PacBio data in to native PacBio BAM out.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbmm2_align__pbmm2_align#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbmm2_align__pbmm2_align#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbmm2_align#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbmm2_align#
+
+---
+
 ## [picard mark duplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
-Generate a bam file for a single chromosome with duplicates marked
+Generate a `.bam` file for a single chromosome with duplicates marked
 
 ### :snake: Rule
 
@@ -162,7 +252,7 @@ Generate a bam file for a single chromosome with duplicates marked
 ---
 
 ## [picard_mark_duplicates_non_chr](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
-Generate a bam file for a non-chromosomal contigs and unmapped reads with duplicates marked
+Generate a `.bam` file for a non-chromosomal contigs and unmapped reads with duplicates marked
 
 ### :snake: Rule
 
@@ -277,7 +367,7 @@ Extract reads from contigs specified by merged_contigs and put into separate `.b
 ---
 
 ## [samtools_fastq](http://www.htslib.org/doc/samtools-fasta.html)
-Converts a bam file to separate fastq files
+Converts a `.bam` file to separate fastq files
 
 ### :snake: Rule
 
@@ -296,6 +386,29 @@ Converts a bam file to separate fastq files
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__samtools_fastq#
+
+---
+
+## [samtools_fastq_single](http://www.htslib.org/doc/samtools-fasta.html)
+Converts a `.bam` file to a fastq file
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_fastq_single#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_fastq_single#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_fastq_single#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_fastq_single#
 
 ---
 
@@ -411,46 +524,3 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__star#
-
-
-## [minimap2](https://github.com/lh3/minimap2)
-Align long read sequencing data stored in a `bam`file to a reference genome to produce a `bam` with aligned reads.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__minimap2__minimap2#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__minimap2#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__minimap2#
-
-## [minimap2_merge](http://www.htslib.org/doc/samtools-merge.html)
-Merge minimap2 `.bam` files from the same sample using samtools merge.
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__minimap2__minimap2_merge#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__minimap2__minimap2_merge#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__minimap2_merge#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__minimap2_merge#

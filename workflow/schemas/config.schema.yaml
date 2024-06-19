@@ -195,6 +195,20 @@ properties:
         type: string
         description: umi strategy for how the umis should be grouped (paired for duplex umis)
 
+  hifiasm:
+    type: object
+    description: parameters for hifiasm
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   minimap2:
     type: object
     description: parameters for minimap2
@@ -244,6 +258,20 @@ properties:
         description: |
           parameters that should be forwarded
           RECOMMENDATION: use -c -p to only keep one of the read groups IDs when merging files from the same sample
+
+  pbmm2_align:
+    type: object
+    description: parameters for pbmm2
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   picard_mark_duplicates:
     type: object
@@ -346,6 +374,20 @@ properties:
         type: string
         description: parameters that should be forwarded to samtools fastq
 
+  samtools_fastq_single:
+    type: object
+    description: parameters for samtoolss_fastq_single
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+        
   samtools_index:
     type: object
     description: parameters for indexing a bam file
@@ -432,6 +474,7 @@ properties:
       set input files for alignment software, if "None" is set the files in `units.tsv` will be used
       default is "None"
     pattern: "^(fastp_pe|merged|None)$"
+
 
 required:
   - samples
