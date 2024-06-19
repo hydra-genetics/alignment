@@ -206,7 +206,7 @@ Introduction to minimap2_merge
 ---
 
 ## [pbmm2_align](https://github.com/PacificBiosciences/pbmm2)
-Introduction to pbmm2_align
+A minimap2 SMRT wrapper for PacBio data: native PacBio data in to native PacBio BAM out.
 
 ### :snake: Rule
 
@@ -229,7 +229,7 @@ Introduction to pbmm2_align
 ---
 
 ## [picard mark duplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
-Generate a bam file for a single chromosome with duplicates marked
+Generate a `.bam` file for a single chromosome with duplicates marked
 
 ### :snake: Rule
 
@@ -252,7 +252,7 @@ Generate a bam file for a single chromosome with duplicates marked
 ---
 
 ## [picard_mark_duplicates_non_chr](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
-Generate a bam file for a non-chromosomal contigs and unmapped reads with duplicates marked
+Generate a `.bam` file for a non-chromosomal contigs and unmapped reads with duplicates marked
 
 ### :snake: Rule
 
@@ -367,7 +367,7 @@ Extract reads from contigs specified by merged_contigs and put into separate `.b
 ---
 
 ## [samtools_fastq](http://www.htslib.org/doc/samtools-fasta.html)
-Converts a bam file to separate fastq files
+Converts a `.bam` file to separate fastq files
 
 ### :snake: Rule
 
@@ -386,29 +386,6 @@ Converts a bam file to separate fastq files
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__samtools_fastq#
-
----
-
-## [samtools_fastq_single](http://www.htslib.org/doc/samtools-fasta.html)
-Converts a `.bam` file to separate fastq files
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__samtools__samtools_fastq_single#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__samtools__samtools_fastq_single#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__samtools_fastq_single#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__samtools_fastq_single#
 
 ---
 
