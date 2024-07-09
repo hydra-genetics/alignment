@@ -197,7 +197,8 @@ rule samtools_sort:
         bam=r"{file,[^.]+}_unsorted.bam",
         #bam="{file}_unsorted.bam",
     output:
-        bam=temp("{file}.bam"),
+        bam=temp(r"{file,[^.]+}.bam"),
+        #bam=temp("{file}.bam"),
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:
