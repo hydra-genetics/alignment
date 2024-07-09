@@ -4,6 +4,7 @@ __email__ = "jonas.almlof@scilifelab.uu.se, patrik.smeds@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
+
 rule samtools_extract_reads:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.bam",
@@ -193,7 +194,8 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        bam="{file}_unsorted.bam",
+        bam=r"{file,[^.]+}_unsorted.bam",
+        #bam="{file}_unsorted.bam",
     output:
         bam=temp("{file}.bam"),
     params:
