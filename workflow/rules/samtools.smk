@@ -4,7 +4,6 @@ __email__ = "jonas.almlof@scilifelab.uu.se, patrik.smeds@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-
 rule samtools_extract_reads:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.bam",
@@ -194,11 +193,9 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        bam=r"{file,[^.]+}_unsorted.bam",
-        #bam="{file}_unsorted.bam",
+        bam="{file}_unsorted.bam",
     output:
-        bam=temp(r"{file,[^.]+}.bam"),
-        #bam=temp("{file}.bam"),
+        bam=temp("{file}.bam"),
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:
@@ -286,6 +283,7 @@ rule samtools_fastq:
 rule samtools_fastq_single:
     input:
         query=pbmm2_input,
+        #query="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
     output:
         fastq="alignment/hifiasm/{sample}_{type}.s2fq.fastq.gz",
     log:
