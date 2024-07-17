@@ -183,6 +183,8 @@ def compile_output_list(wildcards):
         files = {
             "alignment/minimap2": [".bam"],
             "alignment/pbmm2_align": [".bam"],
+            "alignment/hifiasm": [".s2fq.fastq.gz"],
+            "alignment/hifiasm": [".p_ctg.gfa"],
         }
         output_files = [
             "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
@@ -195,6 +197,8 @@ def compile_output_list(wildcards):
     elif config["longread_alignment"]:
         files = {
             "alignment/minimap2": [".bam"],
+            "alignment/hifiasm": ["s2fq.fastq.gz"],
+            "alignment/hifiasm": [".p_ctg.gfa"],
         }
         output_files = [
             "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
@@ -230,7 +234,7 @@ def compile_output_list(wildcards):
                 for suffix in files[prefix]
             ]
         )
-
+    #print ("OUTPUTFILES: ". output_files)
     return output_files
 
 

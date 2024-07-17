@@ -16,6 +16,10 @@ reference:
     - ".*_random"
     - ".chrUn*"
 
+hifiasm:
+  container: "docker://hydragenetics/hifiasm:0.19.8"
+  extra: ""
+
 minimap2:
   mmi: "reference/WASH7P.hifi.mmi"
   preset: "map-hifi"

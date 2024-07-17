@@ -1,4 +1,4 @@
-__author__ = "Magdalena Zarowiecki"
+__author__ = "Magdalena Z"
 __copyright__ = "Copyright 2024, Uppsala Universitet"
 __email__ = "magdalena.z@scilifelab.uu.se"
 __license__ = "GPL-3"
@@ -8,9 +8,8 @@ rule hifiasm:
     input:
         fasta=["alignment/hifiasm/{sample}_{type}.s2fq.fastq.gz"],
     output:
-        "alignment/hifiasm/{sample}_{type}.p_ctg.gfa",
         outputlist=multiext(
-            "long_read/hifiasm/{sample}_{type}.",
+            "alignment/hifiasm/{sample}_{type}.",
             "a_ctg.gfa",
             "a_ctg.lowQ.bed",
             "a_ctg.noseq.gfa",
@@ -24,6 +23,7 @@ rule hifiasm:
             "r_utg.lowQ.bed",
             "r_utg.noseq.gfa",
         ),
+        #outputfile="alignment/hifiasm/{sample}_{type}.p_ctg.gfa",
     log:
         "alignment/hifiasm/{sample}_{type}.hifiasm.log",
     container:
@@ -36,9 +36,14 @@ rule hifiasm:
         time=config.get("hifiasm", {}).get("time", config["default_resources"]["time"]),
         mem_per_cpu=config.get("hifiasm", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         threads=config.get("hifiasm", {}).get("threads", config["default_resources"]["threads"]),
+
+
+
     wrapper:
         # "file:///beegfs-storage/projects/wp3/nobackup/Workspace/magz_testing/snakemake-wrappers/bio/hifiasm"
         "v3.3.6/bio/hifiasm"
 
 
 # Dervied from https://snakemake-wrappers.readthedocs.io/en/stable/wrappers/hifiasm.html
+
+
