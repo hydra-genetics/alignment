@@ -9,7 +9,7 @@ rule hifiasm:
         fasta=["alignment/hifiasm/{sample}_{type}.s2fq.fastq.gz"],
     # optional
     output:
-        #"long_read/hifiasm/{sample}_{type}_{processing_unit}_{barcode}.a_ctg.gfa",
+        #"alignment/hifiasm/{sample}_{type}.p_ctg.gfa",
         outputlist=multiext(
             "long_read/hifiasm/{sample}_{type}.",
             "a_ctg.gfa",
