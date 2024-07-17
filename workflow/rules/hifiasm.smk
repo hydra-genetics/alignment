@@ -40,4 +40,5 @@ rule hifiasm:
         # "file:///beegfs-storage/projects/wp3/nobackup/Workspace/magz_testing/snakemake-wrappers/bio/hifiasm"
         "v3.3.6/bio/hifiasm"
 
+
 # Dervied from https://snakemake-wrappers.readthedocs.io/en/stable/wrappers/hifiasm.html
