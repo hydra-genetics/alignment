@@ -23,7 +23,6 @@ rule hifiasm:
             "r_utg.lowQ.bed",
             "r_utg.noseq.gfa",
         ),
-        #outputfile="alignment/hifiasm/{sample}_{type}.p_ctg.gfa",
     log:
         "alignment/hifiasm/{sample}_{type}.hifiasm.log",
     container:
@@ -36,14 +35,11 @@ rule hifiasm:
         time=config.get("hifiasm", {}).get("time", config["default_resources"]["time"]),
         mem_per_cpu=config.get("hifiasm", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         threads=config.get("hifiasm", {}).get("threads", config["default_resources"]["threads"]),
-
-
-
     wrapper:
         # "file:///beegfs-storage/projects/wp3/nobackup/Workspace/magz_testing/snakemake-wrappers/bio/hifiasm"
         "v3.3.6/bio/hifiasm"
 
 
 # Dervied from https://snakemake-wrappers.readthedocs.io/en/stable/wrappers/hifiasm.html
-
-
+# Test outputfile
+# outputfile="alignment/hifiasm/{sample}_{type}.p_ctg.gfa",
