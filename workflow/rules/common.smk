@@ -234,7 +234,7 @@ def compile_output_list(wildcards):
                 for suffix in files[prefix]
             ]
         )
-    #print ("OUTPUTFILES: ". output_files)
+    # print ("OUTPUTFILES: ". output_files)
     return output_files
 
 

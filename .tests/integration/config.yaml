@@ -37,6 +37,10 @@ hifiasm:
   container: "docker://hydragenetics/hifiasm:0.19.8"
   extra: ""
 
+happy:
+  container: "docker://hydragenetics/hap.py:0.3.15"
+  extra: ""
+
 pbmm2_align:
   index: "reference/WASH7P.hifi.mmi"
   preset: "HIFI"
