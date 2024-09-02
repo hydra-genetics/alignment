@@ -7,6 +7,7 @@ __license__ = "GPL-3"
 import pandas
 import pysam
 import re
+import sys
 import yaml
 from snakemake.utils import validate
 from snakemake.utils import min_version
@@ -36,19 +37,12 @@ samples = pandas.read_table(config["samples"], dtype=str).set_index("sample", dr
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
+units = pandas.read_table(config["units"], dtype=str)
 
-if config["longread_alignment"]:
-    units = (
-        pandas.read_table(config["units"], dtype=str)
-        .set_index(["sample", "type", "processing_unit", "barcode"], drop=False)
-        .sort_index()
-    )
-else:
-    units = (
-        pandas.read_table(config["units"], dtype=str)
-        .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
-        .sort_index()
-    )
+if units.platform[0] in ['PACBIO', 'ONT']:
+    units = units.set_index(["sample", "type", "processing_unit", "barcode"], drop=False).sort_index()
+else: # assume that the platform Illumina data with a lane and flowcell columns
+    units = units.set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False).sort_index()
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -178,45 +172,49 @@ def get_contig_list(wildcards):
 
 
 def compile_output_list(wildcards):
+    platform = units.platform[0]
+    output_files = []
+    files = {
+        "alignment/minimap2": [".bam"],
+    }
+    output_files += [
+        f"{prefix}/{sample}_{unit_type}{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for unit_type in get_unit_types(units, sample)
+        if unit_type in ["N", "T"]
+        for suffix in files[prefix]
+    ]
 
-    if config["longread_alignment"]:
-        files = {
-            "alignment/minimap2": [".bam"],
-        }
-        output_files = [
-            "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
-            for prefix in files.keys()
-            for sample in get_samples(samples)
-            for unit_type in get_unit_types(units, sample)
-            if unit_type in ["N", "T"]
-            for suffix in files[prefix]
-        ]
+    files = {
+        "alignment/samtools_merge_bam": [".bam"],
+        "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
+        "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
+    }
+    output_files += [
+        f"{prefix}/{sample}_{unit_type}{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
+        for unit_type in get_unit_types(units, sample)
+        if unit_type in ["N", "T"] 
+        for suffix in files[prefix]
+    ]
+    files = {
+        "alignment/star": [".bam"],
+    }
+    output_files += [
+        f"{prefix}/{sample}_R{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        if platform not in ["ONT", "PACBIO"]
+        for unit_type in get_unit_types(units, sample)
+        if "R" in get_unit_types(units, sample)
+        for suffix in files[prefix]
+    ]
 
-    else:
-        files = {
-            "alignment/samtools_merge_bam": [".bam"],
-            "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
-            "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
-        }
-        output_files = [
-            "%s/%s_%s%s" % (prefix, sample, unit_type, suffix)
-            for prefix in files.keys()
-            for sample in get_samples(samples)
-            for unit_type in get_unit_types(units, sample)
-            if unit_type in ["N", "T"]
-            for suffix in files[prefix]
-        ]
-        files = {
-            "alignment/star": [".bam"],
-        }
-        output_files.append(
-            [
-                "%s/%s_R%s" % (prefix, sample, suffix)
-                for prefix in files.keys()
-                for sample in get_samples(samples)
-                if "R" in get_unit_types(units, sample)
-                for suffix in files[prefix]
-            ]
-        )
-
+    print(output_files)
     return output_files
