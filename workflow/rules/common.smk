@@ -176,6 +176,7 @@ def compile_output_list(wildcards):
     output_files = []
     files = {
         "alignment/minimap2": [".bam"],
+        "alignment/pbmm2_align": [".bam"],
     }
     output_files += [
         f"{prefix}/{sample}_{unit_type}{suffix}"
@@ -216,5 +217,4 @@ def compile_output_list(wildcards):
         for suffix in files[prefix]
     ]
 
-    print(output_files)
     return output_files
