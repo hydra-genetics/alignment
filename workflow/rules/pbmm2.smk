@@ -50,7 +50,7 @@ rule pbmm2_align:
         preset=config.get("pbmm2_align", {}).get("preset", ""),
         sample=lambda wildcards: wildcards.sample,
         loglevel="INFO",
-        extra=config.get("pbmm2_align", {}).get("extra", ""),
+        extra=" --sort %s " % (config.get("pbmm2_align", {}).get("extra", "")),
     log:
         bam="alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam.log",
     benchmark:
