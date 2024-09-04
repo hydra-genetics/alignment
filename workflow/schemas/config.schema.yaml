@@ -195,9 +195,9 @@ properties:
         type: string
         description: umi strategy for how the umis should be grouped (paired for duplex umis)
 
-  minimap2:
+  minimap2_align:
     type: object
-    description: parameters for minimap2
+    description: parameters for minimap2_align
     properties:
       benchmark_repeats:
         type: integer
@@ -228,6 +228,21 @@ properties:
     required:
       - mmi
       - preset
+  
+  # Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  minimap2_index:
+    type: object
+    description: parameters for minimap2_index
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   minimap2_merge:
     type: object
@@ -243,7 +258,52 @@ properties:
         type: string
         description: |
           parameters that should be forwarded
-          RECOMMENDATION: use -c -p to only keep one of the read groups IDs when merging files from the same sample
+          RECOMMENDATION: use -c -p to only keep one of the read groups IDs when merging files from the same sample and flowcell
+
+  pbmm2_align:
+    type: object
+    description: parameters for pbmm2_align
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  pbmm2_index:
+    type: object
+    description: parameters for pbmm2_index
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      preset:
+        type: string
+        description: preset for indexing the target genome
+
+  pbmm2_merge:
+    type: object
+    description: parameters for pbmm2_merge
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   picard_mark_duplicates:
     type: object
@@ -432,6 +492,7 @@ properties:
       set input files for alignment software, if "None" is set the files in `units.tsv` will be used
       default is "None"
     pattern: "^(fastp_pe|merged|None)$"
+
 
 required:
   - samples

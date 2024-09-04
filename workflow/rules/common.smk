@@ -39,9 +39,9 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 ### Read and validate units file
 units = pandas.read_table(config["units"], dtype=str)
 
-if units.platform[0] in ['PACBIO', 'ONT']:
+if units.platform[0] in ["PACBIO", "ONT"]:
     units = units.set_index(["sample", "type", "processing_unit", "barcode"], drop=False).sort_index()
-else: # assume that the platform Illumina data with a lane and flowcell columns
+else:  # assume that the platform Illumina data with a lane and flowcell columns
     units = units.set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False).sort_index()
 validate(units, schema="../schemas/units.schema.yaml")
 
@@ -92,7 +92,6 @@ def generate_read_group(wildcards):
 
 
 def get_minimap2_query(wildcards):
-
     unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
     bam_file = unit["bam"]
 
@@ -171,11 +170,19 @@ def get_contig_list(wildcards):
     return contigs
 
 
+def set_minimap2_preset(wildcards):
+    extra = config.get("minimap2_align", {}).get("extra", "")
+    preset = config.get("minimap2_align", {}).get("preset", "")
+    preset_extra = f"-x {preset} {extra}"
+
+    return preset_extra
+
+
 def compile_output_list(wildcards):
     platform = units.platform[0]
     output_files = []
     files = {
-        "alignment/minimap2": [".bam"],
+        "alignment/minimap2_align": [".bam"],
         "alignment/pbmm2_align": [".bam"],
     }
     output_files += [
@@ -201,7 +208,7 @@ def compile_output_list(wildcards):
         for platform in units.loc[(sample,)].platform
         if platform not in ["ONT", "PACBIO"]
         for unit_type in get_unit_types(units, sample)
-        if unit_type in ["N", "T"] 
+        if unit_type in ["N", "T"]
         for suffix in files[prefix]
     ]
     files = {

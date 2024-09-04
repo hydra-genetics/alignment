@@ -433,3 +433,95 @@ properties:
           sj:
             type: string
             description: junction file with split read information useful for interpreting rna data
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  pbmm2_align:
+    type: object
+    description: input and output parameters for pbmm2_align
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          input1:
+            type: string
+            description: description input1
+            #value: set to override value in table, else remove
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: description output1
+            #value: set to override value in table, else remove
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  pbmm2_index:
+    type: object
+    description: input and output parameters for pbmm2_index
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          input1:
+            type: string
+            description: description input1
+            #value: set to override value in table, else remove
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: description output1
+            #value: set to override value in table, else remove
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  pbmm2_merge:
+    type: object
+    description: input and output parameters for pbmm2_merge
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          input1:
+            type: string
+            description: description input1
+            #value: set to override value in table, else remove
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: description output1
+            #value: set to override value in table, else remove
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  minimap2_index:
+    type: object
+    description: input and output parameters for minimap2_index
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          input1:
+            type: string
+            description: description input1
+            #value: set to override value in table, else remove
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: description output1
+            #value: set to override value in table, else remove
