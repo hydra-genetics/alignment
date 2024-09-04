@@ -97,6 +97,11 @@ def get_minimap2_query(wildcards):
 
     return bam_file
 
+def get_reference_path(wildcards):
+    ref_path=config.get("reference", {}).get("fasta", ""),
+    fasta = os.path.basename(ref_path)
+
+    return 
 
 def generate_minimap2_read_group(wildcards, input):
     """

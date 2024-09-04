@@ -226,7 +226,6 @@ properties:
         type: string
         description: parameters that should be forwarded to sorting (NB. do not set -@ or --threads here, this is set from {threads})
     required:
-      - mmi
       - preset
   
   # Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
@@ -273,6 +272,9 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+      preset:
+        type: string
+        description: pbmm2 preset options for various types pacbio sequencing data (e.g., HIFI)
 
   pbmm2_index:
     type: object

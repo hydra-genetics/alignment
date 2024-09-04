@@ -13,7 +13,10 @@ reference:
     - ".*_random"
     - ".chrUn*"
 
-minimap2:
-  mmi: "reference/WASH7P.hifi.mmi"
+minimap2_align:
   preset: "map-hifi"
   container: "docker://hydragenetics/minimap2:2.26"
+
+pbmm2_align:
+  preset: "HIFI"
+  container: "docker://hydragenetics/pbmm2:1.10"

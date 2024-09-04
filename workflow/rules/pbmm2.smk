@@ -8,7 +8,7 @@ rule pbmm2_index:
     input:
         reference=config.get("reference", {}).get("fasta", ""),
     output:
-        expand("{ref}_{preset}.mmi", 
+        expand("{ref}.{preset}.mmi", 
         ref=config.get("reference", {}).get("fasta", ""),
         preset=config.get("pbmm2_align", {}).get("preset", "")
         )
@@ -34,13 +34,13 @@ rule pbmm2_index:
     message:
         "{rule}: index {input.reference} with pbmm2"
     wrapper:
-        "v4.3.0/bio/pbmm2/index"
+        "v3.9.0/bio/pbmm2/index"
 
 
 rule pbmm2_align:
     input:
         query=lambda wildcards: get_minimap2_query(wildcards),
-        reference=expand("{ref}_{preset}.mmi", 
+        reference=expand("{ref}.{preset}.mmi", 
         ref=config.get("reference", {}).get("fasta", ""),
         preset=config.get("pbmm2_align", {}).get("preset", "")
         )
