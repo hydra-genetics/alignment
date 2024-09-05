@@ -72,7 +72,7 @@ rule minimap2_align:
     message:
         "{rule}: run minimap2 to align reads from {input.query} to {input.target}"
     wrapper:
-        "v4.3.0/bio/minimap2/index"
+        "v4.3.0/bio/minimap2/aligner"
 
 
 rule minimap2_merge:
@@ -84,12 +84,12 @@ rule minimap2_merge:
     output:
         bam=temp("alignment/minimap2_align/{sample}_{type}.bam"),
     params:
-        extra=config.get("minimap2_merge", {}).get("extra", ""),
+        extra=config.get("minimap2_align", {}).get("extra", ""),
     log:
-        "alignment/minimap2/{sample}_{type}.bam.log",
+        "alignment/minimap2_align/{sample}_{type}.bam.log",
     benchmark:
         repeat(
-            "alignment/minimap2/{sample}_{type}.bam.benchmark.tsv",
+            "alignment/minimap2_align/{sample}_{type}.bam.benchmark.tsv",
             config.get("minimap2", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("minimap2_merge", {}).get("threads", config["default_resources"]["threads"])
