@@ -39,7 +39,7 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 ### Read and validate units file
 units = pandas.read_table(config["units"], dtype=str)
 
-if units.platform[0] in ["PACBIO", "ONT"]:
+if units.platform.iloc[0] in ["PACBIO", "ONT"]:
     units = units.set_index(["sample", "type", "processing_unit", "barcode"], drop=False).sort_index()
 else:  # assume that the platform Illumina data with a lane and flowcell columns
     units = units.set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False).sort_index()
@@ -184,7 +184,7 @@ def set_minimap2_preset(wildcards):
 
 
 def compile_output_list(wildcards):
-    platform = units.platform[0]
+    platform = units.platform.iloc[0]
     output_files = []
     files = {
         "alignment/minimap2_align": [".bam"],
