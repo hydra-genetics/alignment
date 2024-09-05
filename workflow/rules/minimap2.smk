@@ -8,7 +8,7 @@ rule minimap2_index:
     input:
         target=config.get("reference", {}).get("fasta", ""),
     output:
-        expand(
+        mmi=expand(
             "{ref}.{preset}.mmi",
             ref=config.get("reference", {}).get("fasta", ""),
             preset=config.get("minimap2_align", {}).get("preset", ""),
