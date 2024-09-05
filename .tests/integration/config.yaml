@@ -18,8 +18,8 @@ bwa_mem:
   ann: "reference/WASH7P.fasta.ann"
   bwt: "reference/WASH7P.fasta.bwt"
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  pac: "reference/WASH7P.fast.pac"
-  sa: "reference/WASH7P.fast.sa"
+  pac: "reference/WASH7P.fasta.pac"
+  sa: "reference/WASH7P.fasta.sa"
 
 bwa_mem_realign_consensus_reads:
   container: "docker://hydragenetics/fgbio:2.1.0"
