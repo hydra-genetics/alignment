@@ -150,6 +150,26 @@ properties:
             type: string
             description: bam file with aligned reads (Note that the methylation tags will also be present in the aligned bam file)
 
+  minimap2_index:
+    type: object
+    description: input and output parameters for minimap2_index
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          reference:
+            type: string
+            description: reference/target genome
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          mmi:
+            type: string
+            description: minimap2 index file of the target/reference genome
+
   minimap2_merge:
     type: object
     description: input and output parameters for minimap2_merge
@@ -214,7 +234,7 @@ properties:
         properties:
           output1:
             type: string
-            description: pbmm2 index file of target genome
+            description: pbmm2 index file of the target/reference genome
 
   pbmm2_merge:
     type: object
@@ -502,26 +522,3 @@ properties:
             description: junction file with split read information useful for interpreting rna data
 
 
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  minimap2_index:
-    type: object
-    description: input and output parameters for minimap2_index
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          input1:
-            type: string
-            description: description input1
-            #value: set to override value in table, else remove
-
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          output1:
-            type: string
-            description: description output1
-            #value: set to override value in table, else remove
