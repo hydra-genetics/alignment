@@ -17,6 +17,12 @@ minimap2_align:
   preset: "map-hifi"
   container: "docker://hydragenetics/minimap2:2.26"
 
+minimap2_index:
+  container: "docker://hydragenetics/minimap2:2.26"
+
 pbmm2_align:
   preset: "HIFI"
+  container: "docker://hydragenetics/pbmm2:1.10"
+
+pbmm2_index:
   container: "docker://hydragenetics/pbmm2:1.10"
