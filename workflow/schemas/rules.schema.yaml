@@ -158,7 +158,7 @@ properties:
         type: object
         description: list of inputs
         properties:
-          reference:
+          target:
             type: string
             description: reference/target genome
 
