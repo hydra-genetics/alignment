@@ -232,7 +232,7 @@ properties:
         type: object
         description: list of outputs
         properties:
-          mm1:
+          mmi:
             type: string
             description: pbmm2 index file of the target/reference genome
 
