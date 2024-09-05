@@ -153,11 +153,11 @@ Align long read sequencing data stored in a `bam`file to a reference genome to p
 
 #### Software settings (`config.yaml`)
 
-#CONFIGSCHEMA__minimap2#
+#CONFIGSCHEMA__minimap2_align#
 
 #### Resources settings (`resources.yaml`)
 
-#RESOURCESSCHEMA__minimap2#
+#RESOURCESSCHEMA__minimap2_align#
 
 ## [minimap2_index](https://github.com/lh3/minimap2)
 Prepare reference index file for minimap2.
