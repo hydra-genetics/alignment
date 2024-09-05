@@ -8,20 +8,18 @@ rule pbmm2_index:
     input:
         reference=config.get("reference", {}).get("fasta", ""),
     output:
-        expand("{ref}.{preset}.mmi", 
-        ref=config.get("reference", {}).get("fasta", ""),
-        preset=config.get("pbmm2_align", {}).get("preset", "")
-        )
+        expand(
+            "{ref}.{preset}.mmi",
+            ref=config.get("reference", {}).get("fasta", ""),
+            preset=config.get("pbmm2_align", {}).get("preset", ""),
+        ),
     params:
         preset=config.get("pbmm2_align", {}).get("preset", ""),
         extra=config.get("pbmm2_index", {}).get("extra", ""),
     log:
         "alignment/pbmm2_index/pbmm2_index.log",
     benchmark:
-        repeat(
-            "alignment/pbmm2_index/pbmm2_index.benchmark.tsv",
-            config.get("pbmm2_index", {}).get("benchmark_repeats", 1)
-        )
+        repeat("alignment/pbmm2_index/pbmm2_index.benchmark.tsv", config.get("pbmm2_index", {}).get("benchmark_repeats", 1))
     threads: config.get("pbmm2_index", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("pbmm2_index", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -40,10 +38,11 @@ rule pbmm2_index:
 rule pbmm2_align:
     input:
         query=lambda wildcards: get_minimap2_query(wildcards),
-        reference=expand("{ref}.{preset}.mmi", 
-        ref=config.get("reference", {}).get("fasta", ""),
-        preset=config.get("pbmm2_align", {}).get("preset", "")
-        )
+        reference=expand(
+            "{ref}.{preset}.mmi",
+            ref=config.get("reference", {}).get("fasta", ""),
+            preset=config.get("pbmm2_align", {}).get("preset", ""),
+        ),
     output:
         bam=temp("alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
     params:
@@ -77,7 +76,8 @@ rule pbmm2_align:
 rule pbmm2_merge:
     input:
         bams=lambda wildcards: [
-            "alignment/pbmm2_align/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode) for u in get_units(units, wildcards)
+            "alignment/pbmm2_align/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode)
+            for u in get_units(units, wildcards)
         ],
     output:
         bam=temp("alignment/pbmm2_align/{sample}_{type}.bam"),

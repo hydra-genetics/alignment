@@ -8,10 +8,11 @@ rule minimap2_index:
     input:
         target=config.get("reference", {}).get("fasta", ""),
     output:
-        expand("{ref}.{preset}.mmi", 
-        ref=config.get("reference", {}).get("fasta", ""),
-        preset=config.get("minimap2_align", {}).get("preset", "")
-        )
+        expand(
+            "{ref}.{preset}.mmi",
+            ref=config.get("reference", {}).get("fasta", ""),
+            preset=config.get("minimap2_align", {}).get("preset", ""),
+        ),
     params:
         extra=set_minimap2_preset,
     log:
@@ -38,10 +39,11 @@ rule minimap2_index:
 rule minimap2_align:
     input:
         query=lambda wildcards: get_minimap2_query(wildcards),
-        target=expand("{ref}.{preset}.mmi", 
-        ref=config.get("reference", {}).get("fasta", ""),
-        preset=config.get("minimap2_align", {}).get("preset", "")
-        )
+        target=expand(
+            "{ref}.{preset}.mmi",
+            ref=config.get("reference", {}).get("fasta", ""),
+            preset=config.get("minimap2_align", {}).get("preset", ""),
+        ),
     output:
         bam=temp("alignment/minimap2_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
     params:
