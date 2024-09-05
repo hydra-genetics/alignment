@@ -48,7 +48,6 @@ rule pbmm2_align:
     params:
         preset=config.get("pbmm2_align", {}).get("preset", ""),
         sample=lambda wildcards: wildcards.sample,
-        tmp_root="/tmp",
         loglevel="INFO",
         extra=" --sort %s " % (config.get("pbmm2_align", {}).get("extra", "")),
     log:
