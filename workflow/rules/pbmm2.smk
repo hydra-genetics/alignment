@@ -45,7 +45,7 @@ rule pbmm2_align:
         preset=config.get("pbmm2_align", {}).get("preset", "")
         )
     output:
-        bam="alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam",
+        bam=temp("alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
     params:
         preset=config.get("pbmm2_align", {}).get("preset", ""),
         sample=lambda wildcards: wildcards.sample,
