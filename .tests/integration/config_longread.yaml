@@ -5,8 +5,8 @@ resources: "resources.yaml"
 default_container: "docker://hydragenetics/common:1.14.0"
 
 reference:
-  fasta: "reference/WASH7P.fna"
-  fai: "reference/WASH7P.fna.fai"
+  fasta: "reference/WASH7P.fasta"
+  fai: "reference/WASH7P.fasta.fai"
   skip_contigs: # contigs to be skipped during mark duplicates and excluded from merged bam
     - "chrM"
   merge_contigs: # contigs to be merged to a single BAM for mark duplicates
