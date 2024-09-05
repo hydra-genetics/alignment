@@ -8,7 +8,7 @@ rule pbmm2_index:
     input:
         reference=config.get("reference", {}).get("fasta", ""),
     output:
-        expand(
+        mmi=expand(
             "{ref}.{preset}.mmi",
             ref=config.get("reference", {}).get("fasta", ""),
             preset=config.get("pbmm2_align", {}).get("preset", ""),
