@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule minimap2_index:
     input:
-        reference=config.get("reference", {}).get("fasta", ""),
+        target=config.get("reference", {}).get("fasta", ""),
     output:
         expand("{ref}.{preset}.mmi", 
         ref=config.get("reference", {}).get("fasta", ""),
