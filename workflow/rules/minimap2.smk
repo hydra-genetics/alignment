@@ -30,7 +30,7 @@ rule minimap2_index:
     container:
         config.get("minimap2_index", {}).get("container", config["default_container"])
     message:
-        "{rule}: index {input.reference} with pbmm2"
+        "{rule}: index {input.target} with minimap2"
     wrapper:
         "v4.3.0/bio/minimap2/index"
 
