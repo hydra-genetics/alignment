@@ -200,7 +200,7 @@ properties:
         type: object
         description: list of inputs
         properties:
-          query1:
+          query:
             type: string
             description: bam file of unaligned pacbio reads
           reference:
