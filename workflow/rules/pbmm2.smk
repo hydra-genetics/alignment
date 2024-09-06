@@ -86,7 +86,7 @@ rule pbmm2_merge:
         "alignment/pbmm2_align/{sample}_{type}.bam.log",
     benchmark:
         repeat(
-            "alignment/pbmm2_align/{sample}_{type}_unsorted.bam.benchmark.tsv",
+            "alignment/pbmm2_align/{sample}_{type}.bam.benchmark.tsv",
             config.get("pbmm2_align", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbmm2_merge", {}).get("threads", config["default_resources"]["threads"])
