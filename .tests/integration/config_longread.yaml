@@ -2,20 +2,27 @@ samples: "samples_pacbio.tsv"
 units: "units_pacbio.tsv"
 resources: "resources.yaml"
 
-longread_alignment: true
-
 default_container: "docker://hydragenetics/common:1.14.0"
 
 reference:
-  fasta: "reference/WASH7P.fna"
-  fai: "reference/WASH7P.fna.fai"
+  fasta: "reference/WASH7P.fasta"
+  fai: "reference/WASH7P.fasta.fai"
   skip_contigs: # contigs to be skipped during mark duplicates and excluded from merged bam
     - "chrM"
   merge_contigs: # contigs to be merged to a single BAM for mark duplicates
     - ".*_random"
     - ".chrUn*"
 
-minimap2:
-  mmi: "reference/WASH7P.hifi.mmi"
+minimap2_align:
   preset: "map-hifi"
   container: "docker://hydragenetics/minimap2:2.26"
+
+minimap2_index:
+  container: "docker://hydragenetics/minimap2:2.26"
+
+pbmm2_align:
+  preset: "HIFI"
+  container: "docker://hydragenetics/pbmm2:1.10"
+
+pbmm2_index:
+  container: "docker://hydragenetics/pbmm2:1.10"

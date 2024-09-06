@@ -127,9 +127,9 @@ properties:
             type: string
             description: output bam that is umi sorted
 
-  minimap2:
+  minimap2_align:
     type: object
-    description: input and output parameters for minimap2
+    description: input and output parameters for minimap2_align
     properties:
       input:
         type: object
@@ -148,7 +148,27 @@ properties:
         properties:
           bam:
             type: string
-            description: bam file with unaligned reads (Note that the methylation tags will also be present in the aligned bam file)
+            description: bam file with aligned reads (Note that the methylation tags will also be present in the aligned bam file)
+
+  minimap2_index:
+    type: object
+    description: input and output parameters for minimap2_index
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          target:
+            type: string
+            description: reference/target genome
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          mmi:
+            type: string
+            description: minimap2 index file of the target/reference genome
 
   minimap2_merge:
     type: object
@@ -170,7 +190,74 @@ properties:
         properties:
           bam:
             type: string
-            description: an unsorted merged bam file
+            description: a sorted merged bam file
+  
+  pbmm2_align:
+    type: object
+    description: input and output parameters for pbmm2_align
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          query:
+            type: string
+            description: bam file of unaligned pacbio reads
+          reference:
+            type: string
+            description: pbmm2 reference index file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: bam file with aligned reads (Note that the methylation tags will also be present in the aligned bam file)
+
+
+  pbmm2_index:
+    type: object
+    description: input and output parameters for pbmm2_index
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          reference:
+            type: string
+            description: target/reference genome fasta file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          mmi:
+            type: string
+            description: pbmm2 index file of the target/reference genome
+
+  pbmm2_merge:
+    type: object
+    description: input and output parameters for pbmm2_merge
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bams:
+            type: string
+            description: |
+              bam files from the same sample (and the same sample type)
+              a list of bam files is obtained using the information in the `units.tsv` file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: a sorted merged bam file
+
 
   picard_mark_duplicates:
     type: object
@@ -433,3 +520,5 @@ properties:
           sj:
             type: string
             description: junction file with split read information useful for interpreting rna data
+
+

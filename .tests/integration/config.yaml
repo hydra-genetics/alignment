@@ -1,13 +1,12 @@
 samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
-longread_alignment: false
 
 default_container: "docker://hydragenetics/common:0.1.9"
 
 reference:
-  fasta: "reference/WASH7P.fna"
-  fai: "reference/WASH7P.fna.fai"
+  fasta: "reference/WASH7P.fasta"
+  fai: "reference/WASH7P.fasta.fai"
   skip_contigs: # contigs to be skipped during mark duplicates and excluded from merged bam
     - "chrM"
   merge_contigs: # contigs to be merged to a single BAM for mark duplicates
@@ -15,12 +14,12 @@ reference:
 
 
 bwa_mem:
-  amb: "reference/WASH7P.fna.amb"
-  ann: "reference/WASH7P.fna.ann"
-  bwt: "reference/WASH7P.fna.bwt"
+  amb: "reference/WASH7P.fasta.amb"
+  ann: "reference/WASH7P.fasta.ann"
+  bwt: "reference/WASH7P.fasta.bwt"
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  pac: "reference/WASH7P.fna.pac"
-  sa: "reference/WASH7P.fna.sa"
+  pac: "reference/WASH7P.fasta.pac"
+  sa: "reference/WASH7P.fasta.sa"
 
 bwa_mem_realign_consensus_reads:
   container: "docker://hydragenetics/fgbio:2.1.0"
