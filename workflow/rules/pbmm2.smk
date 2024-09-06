@@ -83,7 +83,7 @@ rule pbmm2_merge:
     params:
         extra=config.get("pbmm2_merge", {}).get("extra", ""),
     log:
-        "alignment/pbmm2_align/{sample}_{type}_unsorted.bam.log",
+        "alignment/pbmm2_align/{sample}_{type}.bam.log",
     benchmark:
         repeat(
             "alignment/pbmm2_align/{sample}_{type}_unsorted.bam.benchmark.tsv",
