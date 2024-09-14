@@ -86,7 +86,7 @@ rule minimap2_merge:
     output:
         bam=temp("alignment/minimap2_align/{sample}_{type}.bam"),
     params:
-        extra=config.get("minimap2_align", {}).get("extra", ""),
+        extra=config.get("minimap2_merge", {}).get("extra", ""),
     log:
         "alignment/minimap2_align/{sample}_{type}.bam.log",
     benchmark:
