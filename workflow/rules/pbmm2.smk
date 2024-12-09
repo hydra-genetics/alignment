@@ -47,7 +47,7 @@ rule pbmm2_align:
         bam=temp("alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
     params:
         preset=config.get("pbmm2_align", {}).get("preset", ""),
-        sample=lambda wildcards: wildcards.sample,
+        sample=lambda wildcards: f"{wildcards.sample}_{wildcards.type}",
         loglevel="INFO",
         extra=" --sort %s " % (config.get("pbmm2_align", {}).get("extra", "")),
     log:
