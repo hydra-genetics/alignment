@@ -8,6 +8,7 @@ import pandas
 import pysam
 import re
 import sys
+import os
 import yaml
 from snakemake.utils import validate
 from snakemake.utils import min_version

@@ -9,8 +9,8 @@ rule pbmm2_index:
         reference=config.get("reference", {}).get("fasta", ""),
     output:
         mmi=expand(
-            "{ref}.{preset}.mmi",
-            ref=config.get("reference", {}).get("fasta", ""),
+            "pbmm2_index/{ref}.{preset}.mmi",
+            ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
             preset=config.get("pbmm2_align", {}).get("preset", ""),
         ),
     params:
@@ -38,11 +38,7 @@ rule pbmm2_index:
 rule pbmm2_align:
     input:
         query=lambda wildcards: get_minimap2_query(wildcards),
-        reference=expand(
-            "{ref}.{preset}.mmi",
-            ref=config.get("reference", {}).get("fasta", ""),
-            preset=config.get("pbmm2_align", {}).get("preset", ""),
-        ),
+        reference=rules.pbmm2_index.output.mmi,
     output:
         bam=temp("alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
     params:
