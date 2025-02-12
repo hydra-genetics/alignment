@@ -131,8 +131,8 @@ def generate_minimap2_read_group(wildcards, input):
                     continue
                 else:
                     rg_tags.append(f"{key}:{val}")
-            
-            rg_tags.append(f"SM:{wildcards.sample}_{wildcards.type}") # set SM to values from units.tsv
+
+            rg_tags.append(f"SM:{wildcards.sample}_{wildcards.type}")  # set SM to values from units.tsv
 
             rg_line = "-R '@RG\\t" + "\\t".join(rg_tags) + "'"
 
