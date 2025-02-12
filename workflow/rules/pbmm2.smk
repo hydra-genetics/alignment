@@ -9,7 +9,7 @@ rule pbmm2_index:
         reference=config.get("reference", {}).get("fasta", ""),
     output:
         mmi=expand(
-            "pbmm2_index/{ref}.{preset}.mmi",
+            "alignment/pbmm2_index/{ref}.{preset}.mmi",
             ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
             preset=config.get("pbmm2_align", {}).get("preset", ""),
         ),

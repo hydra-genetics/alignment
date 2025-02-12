@@ -9,7 +9,7 @@ rule minimap2_index:
         target=config.get("reference", {}).get("fasta", ""),
     output:
         mmi=expand(
-            "minimap2_index/{ref}.{preset}.mmi",
+            "alignment/minimap2_index/{ref}.{preset}.mmi",
             ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
             preset=config.get("minimap2_align", {}).get("preset", ""),
         ),
