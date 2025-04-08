@@ -118,27 +118,30 @@ def generate_minimap2_read_group(wildcards, input):
             If no read group is found, an empty string is returned.
     """
 
-    with pysam.AlignmentFile(input.query, "rb", check_sq=False) as bam:
-        # Get the header dictionary
-        header = bam.header
-        # Check if Read Groups are present
-        if "RG" in header:
-            # Access the first read group (assuming single RG in the bam)
-            read_group = header["RG"][0]
-            rg_tags = []
-            for key, val in read_group.items():
-                if key == "SM":
-                    continue
-                else:
-                    rg_tags.append(f"{key}:{val}")
-
-            rg_tags.append(f"SM:{wildcards.sample}_{wildcards.type}")  # set SM to values from units.tsv
-
-            rg_line = "-R '@RG\\t" + "\\t".join(rg_tags) + "'"
-
-            return rg_line
-        else:
-            return ""
+    try:
+        with pysam.AlignmentFile(input.query, "rb", check_sq=False) as bam:
+            # Get the header dictionary
+            header = bam.header
+            # Check if Read Groups are present
+            if "RG" in header:
+                # Access the first read group (assuming single RG in the bam)
+                read_group = header["RG"][0]
+                rg_tags = []
+                for key, val in read_group.items():
+                    if key == "SM":
+                        continue
+                    else:
+                        rg_tags.append(f"{key}:{val}")
+    
+                rg_tags.append(f"SM:{wildcards.sample}_{wildcards.type}")  # set SM to values from units.tsv
+    
+                rg_line = "-R '@RG\\t" + "\\t".join(rg_tags) + "'"
+    
+                return rg_line
+            else:
+                return generate_read_group(wildcards)
+    except FileNotFoundError:
+        return ""
 
 
 def get_chr_from_re(contig_patterns):
