@@ -38,7 +38,11 @@ rule pbmm2_index:
 rule pbmm2_align:
     input:
         query=lambda wildcards: get_minimap2_query(wildcards),
-        reference=rules.pbmm2_index.output.mmi,
+        reference=expand(
+            "alignment/pbmm2_index/{ref}.{preset}.mmi",
+            ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
+            preset=config.get("pbmm2_align", {}).get("preset", ""),
+        ),
     output:
         bam=temp("alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
     params:
