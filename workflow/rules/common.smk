@@ -63,10 +63,16 @@ wildcard_constraints:
 
 
 if config.get("trimmer_software", "None") == "fastp_pe":
-    alignment_input = lambda wildcards: [
-        "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.fastq.gz",
-        "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.fastq.gz",
-    ]
+    if config.get("subsample", None) == "seqtk":
+        alignment_input = lambda wildcards: [
+            "prealignment/seqtk_subsample/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.ds.fastq.gz",
+            "prealignment/seqtk_subsample/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.ds.fastq.gz",
+        ]
+    else:
+        alignment_input = lambda wildcards: [
+            "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq1.fastq.gz",
+            "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastq2.fastq.gz",
+        ]
 elif config.get("trimmer_software", "None") == "None":
     alignment_input = lambda wildcards: [
         get_fastq_file(units, wildcards, "fastq1"),

@@ -1,1 +1,2 @@
 trimmer_software: "fastp_pe"
+subsample: "seqtk"
