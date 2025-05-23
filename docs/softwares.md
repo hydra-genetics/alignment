@@ -247,7 +247,7 @@ Prepare reference index file for pbmm2.
 #RESOURCESSCHEMA__pbmm2_index#
 
 ## [pbmm2_merge](http://www.htslib.org/doc/samtools-merge.html)
-Introduction to pbmm2_merge
+Merge pbmm2 `.bam` files from the same sample using samtools merge.
 
 ### :snake: Rule
 
