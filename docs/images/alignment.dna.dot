@@ -4,7 +4,7 @@ digraph snakemake_dag {
     edge[penwidth=2, color=grey];
 	0[label = "fastq", color = "0.28 0.6 0.85", style="dotted"];
 	61[label = "fastq", color = "0.0 0.0 0.0", style="dotted"];
-	40[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
+
 	41[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
 	42[label = "samtools_sort", color = "0.58 0.6 0.85", style="rounded"];
 	2[label = "samtools_merge_bam", color = "0.14 0.6 0.85", style="rounded"];
@@ -26,12 +26,11 @@ digraph snakemake_dag {
 	30[label = "chrN_bam", color = "0.0 0.0 0.0", style="dotted"];
 	31[label = "chrN_bam_umi", color = "0.0 0.0 0.0", style="dotted"];
 	0 -> 6
-	40 -> 20
 	15 -> 61
 	5 -> 41
-	2 -> 40
+	2 -> 20
 	10 -> 42
-	8 -> 42
+	8 -> 20
 	3 -> 2
 	8 -> 2
 	3 -> 30

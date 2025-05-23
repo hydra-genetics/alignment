@@ -1,4 +1,4 @@
-$schema: "http://json-schema.org/draft-04/schema#"
+$schema: "http://json-schema.org/draft-07/schema#"
 description: row represents one dataset
 properties:
   sample:
@@ -8,9 +8,6 @@ properties:
     type: string
     description: type of sample data Tumor, Normal, RNA (N|T|R)
     pattern: "^(N|T|R)$"
-  platform:
-    type: string
-    description: sequence platform that have been used to generate data, ex NextSeq
   machine:
     type: string
     description: machine id
@@ -20,6 +17,7 @@ properties:
   barcode:
     type: string
     description: flowcell barcode
+    pattern: "^[A-Z+-]+$"
   lane:
     type: string
     description: lane number
@@ -33,14 +31,64 @@ properties:
   adapter:
     type: string
     description: one or more sequence, separated by ","
+  bam:
+    type: string
+    description: absolute path to bam file
+  methylation:
+    type: string
+    description: Indicator of whether the bam file has methylation tags (Yes/No)
+  platform:
+    type: string
+    description: sequence platform that have been used to generate data
+  processing_unit:
+    type: string
+    description: processing unit from the bam header
+  basecalling_model:
+        type: string
+        description: absolute path to bam file
+  run_id:
+    type: string
+    description: Run id
+allOf:
+  - if:
+      properties:
+        platform:
+          enum:
+            - Illumina
+            - ILLUMINA
+            - NextSeq
+            - NovaSeq
+            - MiSeq
+    then:
+      required:
+        - flowcell
+        - lane
+        - machine
+        - fastq1
+        - fastq2
+        - adapter
+        - barcode
+  - if:
+      properties:
+        platform:
+          const: PACBIO
+    then:
+      required:
+        - processing_unit
+        - bam
+        - methylation
+  - if:
+        properties:
+          platform:
+            const: ONT
+    then:
+      required:
+        - processing_unit
+        - bam
+        - methylation
+        - run_id
+        - basecalling_model
 required:
   - sample
   - type
   - platform
-  - machine
-  - flowcell
-  - lane
-  - barcode
-  - fastq1
-  - fastq2
-  - adapter

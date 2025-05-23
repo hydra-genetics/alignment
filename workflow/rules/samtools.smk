@@ -166,14 +166,14 @@ rule samtools_merge_bam:
         if config.get("reference", {}).get("merge_contigs", None) is not None
         else [],
     output:
-        bam=temp("alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted"),
+        bam=temp("alignment/samtools_merge_bam/{sample}_{type}_unsorted.bam"),
     params:
         extra=config.get("samtools_merge_bam", {}).get("extra", ""),
     log:
-        "alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted.log",
+        "alignment/samtools_merge_bam/{sample}_{type}_unsorted.bam.log",
     benchmark:
         repeat(
-            "alignment/samtools_merge_bam/{sample}_{type}.bam_unsorted.benchmark.tsv",
+            "alignment/samtools_merge_bam/{sample}_{type}_unsorted.bam.benchmark.tsv",
             config.get("samtools_merge_bam", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("samtools_merge_bam", {}).get("threads", config["default_resources"]["threads"])
@@ -193,7 +193,7 @@ rule samtools_merge_bam:
 
 rule samtools_sort:
     input:
-        bam="{file}.bam_unsorted",
+        bam="{file}_unsorted.bam",
     output:
         bam=temp("{file}.bam"),
     params:
@@ -222,7 +222,7 @@ rule samtools_sort:
 
 rule samtools_sort_umi:
     input:
-        bam="alignment/bwa_mem/{sample}_{type}.bam_unsorted",
+        bam="alignment/bwa_mem/{sample}_{type}_unsorted.bam",
     output:
         bam=temp("alignment/bwa_mem/{sample}_{type}.umi.bam"),
     params:

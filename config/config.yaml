@@ -24,3 +24,4 @@ star:
   genome_index: "reference/star_idx"
 
 trimmer_software: "fastp_pe"
+subsample: "seqtk"

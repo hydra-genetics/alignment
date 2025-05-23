@@ -2,13 +2,15 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
+longread_alignment: false
+
 trimmer_software: "fastp_pe"
 
 default_container: "docker://hydragenetics/common:0.1.1"
 
 reference:
-  fasta: "../integration/reference/WASH7P.fna"
-  fai: "../integration/reference/WASH7P.fna.fai"
+  fasta: "../integration/reference/WASH7P.fasta"
+  fai: "../integration/reference/WASH7P.fasta.fai"
   skip_contigs: # contigs to be skipped during mark duplicates and excluded from merged bam
     - "chrM"
   merge_contigs: # contigs to be merged to a single BAM for mark duplicates
@@ -16,12 +18,12 @@ reference:
     - ".chrUn*"
 
 bwa_mem:
-  amb: "../integration/reference/WASH7P.fna.amb"
-  ann: "../integration/reference/WASH7P.fna.ann"
-  bwt: "../integration/reference/WASH7P.fna.bwt"
+  amb: "../integration/reference/WASH7P.fasta.amb"
+  ann: "../integration/reference/WASH7P.fasta.ann"
+  bwt: "../integration/reference/WASH7P.fasta.bwt"
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  pac: "../integration/reference/WASH7P.fna.pac"
-  sa: "../integration/reference/WASH7P.fna.sa"
+  pac: "../integration/reference/WASH7P.fasta.pac"
+  sa: "../integration/reference/WASH7P.fasta.sa"
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
