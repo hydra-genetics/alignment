@@ -5,10 +5,10 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
-include: "rules/pbmm2.smk"
-include: "rules/minimap2.smk"
 include: "rules/bwa.smk"
 include: "rules/fgbio.smk"
+include: "rules/minimap2.smk"
+include: "rules/pbmm2.smk"
 include: "rules/picard.smk"
 include: "rules/samtools.smk"
 include: "rules/star.smk"
