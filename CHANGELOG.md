@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/hydra-genetics/alignment/compare/v0.6.0...v0.7.0) (2025-05-23)
+
+
+### Features
+
+* add '-' to barcode wildcard constraint ([2c5867b](https://www.github.com/hydra-genetics/alignment/commit/2c5867be17b56de656120124b8a6da3724996f70))
+* add minimap2 ([c911f3d](https://www.github.com/hydra-genetics/alignment/commit/c911f3d4932e31752f060355e5592fc2af5b8090))
+* add minimap2_index rule ([abffb12](https://www.github.com/hydra-genetics/alignment/commit/abffb1205d4465ebe22c03789540867998cd7b32))
+* add option to use subsampled fastq files by specifying seqtk in config ([52e72e3](https://www.github.com/hydra-genetics/alignment/commit/52e72e3ab43dd7f7b6e8d4e7cff252ca96e84f04))
+* add pbmm2 rules ([1781b8b](https://www.github.com/hydra-genetics/alignment/commit/1781b8b976ef6447d0682a0983ddddee53905d40))
+* change unsorted bam file name to work with newer snakemake wrapper ([09eb041](https://www.github.com/hydra-genetics/alignment/commit/09eb04127dc1a3faccfd6e6463f2d58b4bc5ef9a))
+* remove need to sort with samtools when input to merge rules are already sorted ([ac38b9d](https://www.github.com/hydra-genetics/alignment/commit/ac38b9dadd8bd97c415490439a6fd0a6752bcd7e))
+* set SM tag using wildcards for sample and type ([28295b5](https://www.github.com/hydra-genetics/alignment/commit/28295b54f81eaea13de9c68f92c5cd38f488bb58))
+* write pbmm2 and minimap2 index files to a their own directies ([5baef7d](https://www.github.com/hydra-genetics/alignment/commit/5baef7d645fc9806164d5d1f1ac134d6fb6d2881))
+
+
+### Bug Fixes
+
+* **minimap2:** change how the mmi file input path is generated ([38834b2](https://www.github.com/hydra-genetics/alignment/commit/38834b26e66a40a7dbacc7fdcb874dea256a6af6))
+* **pbmm2:** change how the mmi file path is generated ([ff99bad](https://www.github.com/hydra-genetics/alignment/commit/ff99bad9d479e19602056331de541a01cd56c01e))
+* **pbmm2:** set SM tag to {sample}_{type} ([e8411ee](https://www.github.com/hydra-genetics/alignment/commit/e8411ee3926eb6d8f3d890fef3dd269ad15e77d9))
+* point to correct config entry in minimap2 merge rule ([6c8b286](https://www.github.com/hydra-genetics/alignment/commit/6c8b28619d01b30502e51eb0fea9e7533f67d38f))
+
+
+### Documentation
+
+* add long read images for docs ([4840a6a](https://www.github.com/hydra-genetics/alignment/commit/4840a6a5ec3bff295fbba9354949017d03412319))
+* add longread dag image ([7197de3](https://www.github.com/hydra-genetics/alignment/commit/7197de356556d250defec0eef81b9da8b43e7db5))
+* add minimap to softwares.md ([a4464db](https://www.github.com/hydra-genetics/alignment/commit/a4464db05565aec6da71bdc32f7941b643457a76))
+* fix description line ([caa33d1](https://www.github.com/hydra-genetics/alignment/commit/caa33d155434061b8f4ebad7a6fe47ec92314852))
+* fix the output name ([b986637](https://www.github.com/hydra-genetics/alignment/commit/b986637cb6fa89156c95494e777de0abc9dc8fbb))
+* rename image ([697d4fa](https://www.github.com/hydra-genetics/alignment/commit/697d4fad8687aafad667057ff321df91cf0a23c4))
+* Update docs/images/alignment.longread.dot ([467f45a](https://www.github.com/hydra-genetics/alignment/commit/467f45a8086036f80c3ccc87d6999faf53327ab4))
+* update schemas ([6857d33](https://www.github.com/hydra-genetics/alignment/commit/6857d33aa31686f2570cdef5dd2c03f6d6853f2e))
+* update software description ([becda7a](https://www.github.com/hydra-genetics/alignment/commit/becda7a53978dc28fde22d5053e76b81b8214fbc))
+* update the rules schema ([aa34eff](https://www.github.com/hydra-genetics/alignment/commit/aa34eff94c22c7496e87d669fe49a95d62ed4f34))
+* update the rules schema ([91b1351](https://www.github.com/hydra-genetics/alignment/commit/91b1351ac85ed645b4deb973b39aa298da5bf442))
+* update the rules schema ([7f8cdf9](https://www.github.com/hydra-genetics/alignment/commit/7f8cdf9e648cd7df28686797e7ac308a998c3493))
+* updated dag grapghs ([173e1c5](https://www.github.com/hydra-genetics/alignment/commit/173e1c5e51a5a88c6e988717af47786a5f5ca3ae))
+* updated intro text with longread ([f63e28a](https://www.github.com/hydra-genetics/alignment/commit/f63e28ab05d453036a71cfafbd2c25c04fe8c558))
+
 ## [0.6.0](https://www.github.com/hydra-genetics/alignment/compare/v0.5.1...v0.6.0) (2024-04-17)
 
 
