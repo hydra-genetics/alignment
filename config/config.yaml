@@ -2,7 +2,7 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
-default_container: "docker://hydragenetics/common:0.1.9"
+default_container: "docker://hydragenetics/common:3.1.1.2"
 
 reference:
   fasta: "reference/WASH7P.fna"

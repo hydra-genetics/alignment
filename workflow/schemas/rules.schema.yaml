@@ -521,4 +521,16 @@ properties:
             type: string
             description: junction file with split read information useful for interpreting rna data
 
-
+  samtools_subsample:
+    type: object
+    description: input and output parameters for samtools_subsample
+    properties:
+      input:
+        type: string
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: subsampled bam file

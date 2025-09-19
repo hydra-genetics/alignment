@@ -25,6 +25,7 @@ Unmapped `.bam` files specified in the units.tsv under the bam column.
 Aligned, merged and sorted `.bam` files as well as chromosome split `.bam` files for speeding up downstream analysis. UMI-consensus-files get a umi tag added to the bam-filename.
 
 * `alignment/samtools_merge_bam/{sample}_{type}.bam`
+* `alignment/samtools_subsample/{sample}_{type}.bam`
 * `alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam`
 * `alignment/bwa_mem_realign_consensus_reads/{sample}_{type}_{chr}.umi.bam`
 * `alignment/samtools_extract_reads_umi/{sample}_{type}_{chr}.umi.bam`

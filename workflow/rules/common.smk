@@ -222,6 +222,7 @@ def compile_output_list(wildcards):
 
     files = {
         "alignment/samtools_merge_bam": [".bam"],
+        "alignment/samtools_subsample": [".bam"],
         "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
         "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
     }

@@ -25,10 +25,12 @@ digraph snakemake_dag {
 	21[label = "bam_umi", color = "0.0 0.0 0.0", style="dotted"];
 	30[label = "chrN_bam", color = "0.0 0.0 0.0", style="dotted"];
 	31[label = "chrN_bam_umi", color = "0.0 0.0 0.0", style="dotted"];
+	32[label = "samtools_subsample", color = "0.42 0.6 0.85", style="rounded"];
 	0 -> 6
 	15 -> 61
 	5 -> 41
-	2 -> 20
+	32 -> 20
+	2 -> 32
 	10 -> 42
 	8 -> 20
 	3 -> 2

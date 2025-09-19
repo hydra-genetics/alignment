@@ -522,6 +522,34 @@ Sort `.bam` files using samtools sort. Sort on query name.
 
 ---
 
+## [samtools_subsample](https://www.htslib.org/doc/samtools-view.html)
+Output only a proportion of the input alignments, as specified by 0.0 ≤ FLOAT ≤ 1.0, 
+which gives the fraction of templates/pairs to be kept. 
+The proportion is by default calculated from a maximum number of reads to keep
+w.r.t. the total number of reads in the input file.
+The subsampling acts in the same way on all of the alignment records in the same template or read pair,
+so it never keeps a read but not its mate. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_subsample#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_subsample#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_subsample#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_subsample#
+
+---
+
 ## [star](https://github.com/alexdobin/STAR)
 Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a split read aware aligner for RNA-data.
 

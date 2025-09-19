@@ -2,7 +2,7 @@ samples: "samples.tsv"
 units: "units.tsv"
 resources: "resources.yaml"
 
-default_container: "docker://hydragenetics/common:0.1.9"
+default_container: "docker://hydragenetics/common:3.1.1.2"
 
 reference:
   fasta: "reference/WASH7P.fasta"
@@ -38,6 +38,9 @@ picard_mark_duplicates:
 
 samtools_fastq:
   sort: "-m 1G"
+
+samtools_subsample:
+  max_reads: 250
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
