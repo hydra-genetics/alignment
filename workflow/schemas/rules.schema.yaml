@@ -526,7 +526,12 @@ properties:
     description: input and output parameters for samtools_subsample
     properties:
       input:
-        type: string
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: bam file to be subsampled
       output:
         type: object
         description: list of outputs

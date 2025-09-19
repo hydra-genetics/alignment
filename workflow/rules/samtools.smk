@@ -294,7 +294,7 @@ rule samtools_subsample:
     benchmark:
         repeat(
             "alignment/samtools_subsample/{sample}_{type}.output.benchmark.tsv",
-            config.get("samtools_subsample", {}).get("benchmark_repeats", 1)
+            config.get("samtools_subsample", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("samtools_subsample", {}).get("threads", config["default_resources"]["threads"])
     resources:
