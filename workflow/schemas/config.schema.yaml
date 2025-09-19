@@ -481,7 +481,8 @@ properties:
         description: parameters that should be forwarded
       max_reads:
         type: integer
-        description: maximum number of reads to keep. It can be fewer reads if the input file has fewer reads. It can
+        description: |
+          maximum number of reads to keep. It can be fewer reads if the input file has fewer reads. It can
           also be slightly more since the subsampling acts in the same way on all of the alignment records in 
           the same template or read pair, so it never keeps a read but not its mate.
       float_precision:
