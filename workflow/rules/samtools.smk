@@ -286,7 +286,7 @@ rule samtools_subsample:
     output:
         bam=temp("alignment/samtools_subsample/{sample}_{type}.bam"),
     params:
-        extra=config.get("samtools_subsample", {}).get("extra", "--subsample"),
+        extra=config.get("samtools_subsample", {}).get("extra", ""),
         max_reads=config.get("samtools_subsample", {}).get("max_reads", 25000000),
         float_precision=config.get("samtools_subsample", {}).get("float_precision", 3),
     log:
@@ -314,6 +314,6 @@ rule samtools_subsample:
         "if (( $( bc -l <<< \"$frac_reads < 1\" ) )); then "
         "echo \"File has more than {params.max_reads} reads, downsampling to ca. {params.max_reads} reads (fraction: "
         "$frac_reads)\" &>> {log} && "
-        "(samtools view -@ {threads} {params.extra} $frac_reads -b {input.bam} > {output.bam}) &>> {log}; "
+        "(samtools view -@ {threads} --subsample {params.extra} $frac_reads -b {input.bam} > {output.bam}) &>> {log}; "
         "else echo \"File has fewer than {params.max_reads} reads, no subsampling was done.\" &>> {log} && "
         "(samtools view -@ {threads} -b {input.bam} > {output.bam}) &>> {log}; fi"
