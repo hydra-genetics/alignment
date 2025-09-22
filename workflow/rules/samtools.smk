@@ -286,7 +286,7 @@ rule samtools_subsample:
     output:
         bam=temp("alignment/samtools_subsample/{sample}_{type}.bam"),
     params:
-        extra=config.get("samtools_subsample", {}).get("extra", ""),
+        extra=config.get("samtools_subsample", {}).get("extra", "-F2060"),
         max_reads=config.get("samtools_subsample", {}).get("max_reads", 25000000),
         float_precision=config.get("samtools_subsample", {}).get("float_precision", 3),
     log:
@@ -308,12 +308,12 @@ rule samtools_subsample:
     message:
         "{rule}: Output only a proportion of the alignments in {input} based on a maximum number of reads equal to {params.max_reads}"
     shell:
-        "nb_reads=$(samtools view -c {input.bam}) &> {log} && "
+        "nb_reads=$(samtools view -c {params.extra} {input.bam}) &> {log} && "
         "frac_reads=$( bc -l <<< \"scale={params.float_precision}; ({params.max_reads}-1)/${{nb_reads}}\" ) &>> {log} "
         "&& "
         "if (( $( bc -l <<< \"$frac_reads < 1\" ) )); then "
         "echo \"File has more than {params.max_reads} reads, downsampling to ca. {params.max_reads} reads (fraction: "
         "$frac_reads)\" &>> {log} && "
-        "(samtools view -@ {threads} --subsample {params.extra} $frac_reads -b {input.bam} > {output.bam}) &>> {log}; "
+        "(samtools view -@ {threads} --subsample $frac_reads {params.extra} -b {input.bam} > {output.bam}) &>> {log}; "
         "else echo \"File has fewer than {params.max_reads} reads, no subsampling was done.\" &>> {log} && "
         "(samtools view -@ {threads} -b {input.bam} > {output.bam}) &>> {log}; fi"
