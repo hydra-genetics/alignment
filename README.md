@@ -128,10 +128,11 @@ Latest:
 
 The following output files should be targeted via another rule:
 
-| File | Description |
-|---|---|
-| `alignment/samtools_merge_bam/{sample}_{type}.bam` | aligned data which have been duplicate marked |
-| `alignment/star/{sample}_{type}.bam` | aligned rna data |
+| File                                               | Description                                                                 |
+|----------------------------------------------------|-----------------------------------------------------------------------------|
+| `alignment/samtools_merge_bam/{sample}_{type}.bam` | aligned data which have been duplicate marked                               |
+| `alignment/samtools_subsample/{sample}_{type}.bam` | aligned data that were downsampled w.r.t. a maximum number of reads to keep |
+| `alignment/star/{sample}_{type}.bam`               | aligned rna data                                                            |
 
 ## :judge: Rule Graph
 

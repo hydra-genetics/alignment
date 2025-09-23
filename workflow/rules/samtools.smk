@@ -278,3 +278,45 @@ rule samtools_fastq:
         "{rule}: Convert the bam file {input.bam} into a fastq file"
     wrapper:
         "v2.6.0/bio/samtools/fastq/separate"
+
+
+rule samtools_subsample:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+    output:
+        bam=temp("alignment/samtools_subsample/{sample}_{type}.bam"),
+    params:
+        extra_count=config.get("samtools_subsample", {}).get("extra_count", ""),
+        extra_subsample=config.get("samtools_subsample", {}).get("extra_subsample", ""),
+        filter_reads=config.get("samtools_subsample", {}).get("filter_reads", "-F2060"),
+        max_reads=config.get("samtools_subsample", {}).get("max_reads", 25000000),
+        float_precision=config.get("samtools_subsample", {}).get("float_precision", 3),
+    log:
+        "alignment/samtools_subsample/{sample}_{type}.output.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_subsample/{sample}_{type}.output.benchmark.tsv",
+            config.get("samtools_subsample", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("samtools_subsample", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("samtools_subsample", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("samtools_subsample", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("samtools_subsample", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_subsample", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_subsample", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("samtools_subsample", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Output only a proportion of the alignments in {input} based on a maximum number of reads equal to {params.max_reads}"
+    shell:
+        "nb_reads=$(samtools view -c {params.filter_reads} {params.extra_count} {input.bam}) &> {log} && "
+        "frac_reads=$( bc -l <<< \"scale={params.float_precision}; ({params.max_reads}-1)/${{nb_reads}}\" ) &>> {log} "
+        "&& "
+        "if (( $( bc -l <<< \"$frac_reads < 1\" ) )); then "
+        "echo \"File has more than {params.max_reads} reads, downsampling to ca. {params.max_reads} reads (fraction: "
+        "$frac_reads)\" &>> {log} && "
+        "(samtools view -@ {threads} --subsample $frac_reads {params.extra_subsample} -b {input.bam} > {output.bam}) "
+        "&>> {log}; "
+        "else echo \"File has fewer than {params.max_reads} reads, no subsampling was done.\" &>> {log} && "
+        "(samtools view -@ {threads} -b {input.bam} > {output.bam}) &>> {log}; fi"

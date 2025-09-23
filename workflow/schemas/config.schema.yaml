@@ -466,6 +466,29 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  samtools_subsample:
+    type: object
+    description: parameters for samtools_subsample
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      max_reads:
+        type: integer
+        description: |
+          maximum number of reads to keep. It can be fewer reads if the input file has fewer reads. It can
+          also be slightly more since the subsampling acts in the same way on all of the alignment records in 
+          the same template or read pair, so it never keeps a read but not its mate.
+      float_precision:
+        type: integer
+        description: number of significant digits to use in the random fraction in samtools view -s
+
   star:
     type: object
     description: parameters for alignment with star
@@ -494,7 +517,6 @@ properties:
       set input files for alignment software, if "None" is set the files in `units.tsv` will be used
       default is "None"
     pattern: "^(fastp_pe|merged|None)$"
-
 
 required:
   - samples
