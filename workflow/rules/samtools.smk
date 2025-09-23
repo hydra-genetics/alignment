@@ -310,12 +310,13 @@ rule samtools_subsample:
     message:
         "{rule}: Output only a proportion of the alignments in {input} based on a maximum number of reads equal to {params.max_reads}"
     shell:
-        "nb_reads=$(samtools view -c -F2060 {params.count_extra} {input.bam}) &> {log} && "
+        "nb_reads=$(samtools view -c -F2060 {params.extra_count} {input.bam}) &> {log} && "
         "frac_reads=$( bc -l <<< \"scale={params.float_precision}; ({params.max_reads}-1)/${{nb_reads}}\" ) &>> {log} "
         "&& "
         "if (( $( bc -l <<< \"$frac_reads < 1\" ) )); then "
         "echo \"File has more than {params.max_reads} reads, downsampling to ca. {params.max_reads} reads (fraction: "
         "$frac_reads)\" &>> {log} && "
-        "(samtools view -@ {threads} --subsample $frac_reads {params.subsample_extra} -b {input.bam} > {output.bam}) &>> {log}; "
+        "(samtools view -@ {threads} --subsample $frac_reads {params.extra_subsample} -b {input.bam} > {output.bam}) "
+        "&>> {log}; "
         "else echo \"File has fewer than {params.max_reads} reads, no subsampling was done.\" &>> {log} && "
         "(samtools view -@ {threads} -b {input.bam} > {output.bam}) &>> {log}; fi"
