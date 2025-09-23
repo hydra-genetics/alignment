@@ -20,7 +20,7 @@ picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
 samtools_subsample:
-  extra_subsample: "-F2060" # to remove secondary alignments and unmapped reads
+  filter_reads: "-F2060" # to remove secondary alignments and unmapped reads
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"

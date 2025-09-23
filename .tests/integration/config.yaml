@@ -40,8 +40,8 @@ samtools_fastq:
   sort: "-m 1G"
 
 samtools_subsample:
-  max_reads: 250
-  extra_subsample: "-F2060" # to remove secondary alignments and unmapped reads
+  max_reads: 150
+  filter_reads: "-F2060" # to remove secondary alignments and unmapped reads
 
 star:
   container: "docker://hydragenetics/star:2.7.10a"
