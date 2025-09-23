@@ -288,7 +288,7 @@ rule samtools_subsample:
     params:
         extra_count=config.get("samtools_subsample", {}).get("extra_count", ""),
         extra_subsample=config.get("samtools_subsample", {}).get("extra_subsample", ""),
-        filter_reads=config.get("samtools_subsample", {}).get("filter_reads", "-F2060"),
+        filter_reads=config.get("samtools_subsample", {}).get("filter_reads", ""),
         max_reads=config.get("samtools_subsample", {}).get("max_reads", 25000000),
         float_precision=config.get("samtools_subsample", {}).get("float_precision", 3),
     log:
@@ -310,7 +310,7 @@ rule samtools_subsample:
     message:
         "{rule}: Output only a proportion of the alignments in {input} based on a maximum number of reads equal to {params.max_reads}"
     shell:
-        "nb_reads=$(samtools view -c {params.filter_reads} {params.count_extra} {input.bam}) &> {log} && "
+        "nb_reads=$(samtools view -c -F2060 {params.count_extra} {input.bam}) &> {log} && "
         "frac_reads=$( bc -l <<< \"scale={params.float_precision}; ({params.max_reads}-1)/${{nb_reads}}\" ) &>> {log} "
         "&& "
         "if (( $( bc -l <<< \"$frac_reads < 1\" ) )); then "
