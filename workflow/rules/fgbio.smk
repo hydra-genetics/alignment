@@ -137,3 +137,43 @@ rule fgbio_group_reads_by_umi:
         "-f {output.histo} "
         "-s {params.umi_strategy} "
         "{params.extra}) &> {log}"
+
+
+rule fgbio_call_overlapping_consensus_bases:
+    input:
+        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
+        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
+        ref=config.get("reference", {}).get("fasta", ""),
+    output:
+        bam="alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam",
+    params:
+        extra=config.get("fgbio_call_overlapping_consensus_bases", {}).get("extra", ""),
+    log:
+        "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.benchmark.tsv",
+            config.get("fgbio_call_overlapping_consensus_bases", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("fgbio_call_overlapping_consensus_bases", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("fgbio_call_overlapping_consensus_bases", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("fgbio_call_overlapping_consensus_bases", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("fgbio_call_overlapping_consensus_bases", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("fgbio_call_overlapping_consensus_bases", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("fgbio_call_overlapping_consensus_bases", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("fgbio_call_overlapping_consensus_bases", {}).get("container", config["default_container"])
+    message:
+        "{rule}: call overlapping consensus bases on {input.bam}"
+    shell:
+        'sh -c "'
+        "fgbio CallOverlappingConsensusBases "
+        "--input {input.bam} "
+        "--output {output.bam} "
+        "--ref {input.ref} "
+        '{params.extra}" >& {log}'

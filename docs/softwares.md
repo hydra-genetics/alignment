@@ -47,7 +47,7 @@ Merge `.bam` files from the same sample using samtools merge.
 ---
 
 ## [bwa_mem_realign_consensus_reads](https://github.com/lh3/bwa)
-Realign after consensus read creation by fgbio_call_and_filter_consensus_reads and generate a `.bam` file.
+Realign after consensus read creation by fgbio_call_overlapping_consensus_bases and generate a `.bam` file.
 
 ### :snake: Rule
 
@@ -112,6 +112,29 @@ Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__fgbio_group_reads_by_umi#
+
+---
+
+## [fgbio_call_overlapping_consensus_bases](http://fulcrumgenomics.github.io/fgbio/tools/latest/CallOverlappingConsensusBases.html)
+Call consensus bases from overlapping reads.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fgbio__fgbio_call_overlapping_consensus_bases#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fgbio__fgbio_call_overlapping_consensus_bases#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fgbio_call_overlapping_consensus_bases#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fgbio_call_overlapping_consensus_bases#
 
 ---
 
@@ -542,4 +565,5 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__star#
+
 

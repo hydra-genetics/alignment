@@ -89,6 +89,25 @@ properties:
             type: string
             description: unmapped `bam` file with consensus reads that are hard filtered
 
+  fgbio_call_overlapping_consensus_bases:
+    type: object
+    description: input and output parameters for fgbio_call_overlapping_consensus_bases
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input sorted `bam` file with consensus reads
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: output `bam` file with overlapping consensus bases
+
   fgbio_copy_umi_from_read_name:
     type: object
     description: input and output parameters for fgbio_copy_umi_from_read_name
@@ -520,5 +539,6 @@ properties:
           sj:
             type: string
             description: junction file with split read information useful for interpreting rna data
+
 
 

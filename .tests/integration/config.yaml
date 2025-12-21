@@ -27,6 +27,9 @@ bwa_mem_realign_consensus_reads:
 fgbio_call_and_filter_consensus_reads:
   container: "docker://hydragenetics/fgbio:2.1.0"
 
+fgbio_call_overlapping_consensus_bases:
+  container: "docker://hydragenetics/fgbio:2.1.0"
+
 fgbio_copy_umi_from_read_name:
   container: "docker://hydragenetics/fgbio:2.1.0"
 

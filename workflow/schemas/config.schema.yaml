@@ -163,6 +163,19 @@ properties:
       min_input_base_quality_filter:
         type: integer
         description: mask bases with N if under min base quality in consensus creation in FilterConsensusReads
+  fgbio_call_overlapping_consensus_bases:
+    type: object
+    description: parameters for fgbio_call_overlapping_consensus_bases
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   fgbio_copy_umi_from_read_name:
     type: object
@@ -494,6 +507,10 @@ properties:
       set input files for alignment software, if "None" is set the files in `units.tsv` will be used
       default is "None"
     pattern: "^(fastp_pe|merged|None)$"
+
+
+
+
 
 
 required:
