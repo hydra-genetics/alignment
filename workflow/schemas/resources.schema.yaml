@@ -553,8 +553,5 @@ properties:
           NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
 
-
-
-
 required:
   - default_resources

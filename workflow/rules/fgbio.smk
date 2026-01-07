@@ -147,6 +147,8 @@ rule fgbio_call_overlapping_consensus_bases:
     output:
         bam="alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam",
     params:
+        agreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("agreement_strategy", "Consensus"),
+        disagreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("disagreement_strategy", "Consensus"),
         extra=config.get("fgbio_call_overlapping_consensus_bases", {}).get("extra", ""),
     log:
         "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.log",
@@ -176,4 +178,6 @@ rule fgbio_call_overlapping_consensus_bases:
         "--input {input.bam} "
         "--output {output.bam} "
         "--ref {input.ref} "
+        "--agreement-strategy {params.agreement_strategy} "
+        "--disagreement-strategy {params.disagreement_strategy} "
         '{params.extra}" >& {log}'
