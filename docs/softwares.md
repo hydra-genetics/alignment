@@ -545,6 +545,29 @@ Sort `.bam` files using samtools sort. Sort on query name.
 
 ---
 
+## [samtools_filter_reads](http://www.htslib.org/doc/samtools-view.html)
+Filter `.bam` files using samtools view.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_filter_reads#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_filter_reads#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_filter_reads#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_filter_reads#
+
+---
+
 ## [star](https://github.com/alexdobin/STAR)
 Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a split read aware aligner for RNA-data.
 

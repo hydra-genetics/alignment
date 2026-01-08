@@ -486,6 +486,20 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  samtools_filter_reads:
+    type: object
+    description: parameters for filtering bam files using samtools view
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   star:
     type: object
     description: parameters for alignment with star
