@@ -145,7 +145,7 @@ rule fgbio_call_overlapping_consensus_bases:
         bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        bam="alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam",
+        bam=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam"),
     params:
         agreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("agreement_strategy", "Consensus"),
         disagreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("disagreement_strategy", "Consensus"),

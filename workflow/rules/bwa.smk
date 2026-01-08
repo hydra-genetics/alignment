@@ -86,7 +86,7 @@ rule bwa_mem_merge:
 
 rule bwa_mem_realign_consensus_reads:
     input:
-        bam="alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam",
+        bam="alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped_bam",
     output:
         bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi_unsorted.bam"),
     params:
