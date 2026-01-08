@@ -282,11 +282,11 @@ rule samtools_fastq:
 
 rule samtools_filter_reads:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}_unsorted.bam",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
     output:
         bam=temp("alignment/samtools_filter_reads/{sample}_{type}.bam"),
     params:
-        extra=config.get("samtools_filter_reads", {}).get("extra", "-f 2 -G 2"),
+        extra=config.get("samtools_filter_reads", {}).get("extra", "-f 2"),
     log:
         "alignment/samtools_filter_reads/{sample}_{type}.bam.log",
     benchmark:
