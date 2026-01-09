@@ -47,7 +47,7 @@ Merge `.bam` files from the same sample using samtools merge.
 ---
 
 ## [bwa_mem_realign_consensus_reads](https://github.com/lh3/bwa)
-Realign after consensus read creation by fgbio_call_overlapping_consensus_bases and generate a `.bam` file.
+Realign after consensus read creation by fgbio_call_and_filter_consensus_reads and generate a `.bam` file.
 
 ### :snake: Rule
 
