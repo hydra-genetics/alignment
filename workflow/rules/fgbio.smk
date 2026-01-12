@@ -146,6 +146,7 @@ rule fgbio_call_overlapping_consensus_bases:
         ref=config.get("reference", {}).get("fasta", ""),
     output:
         bam=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam"),
+        metrics=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.metrics.txt"),
     params:
         agreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("agreement_strategy", "Consensus"),
         disagreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("disagreement_strategy", "Consensus"),
@@ -178,6 +179,7 @@ rule fgbio_call_overlapping_consensus_bases:
         "fgbio CallOverlappingConsensusBases "
         "--input /dev/stdin "
         "--output {output.bam} "
+        "--metrics {output.metrics} "
         "--ref {input.ref} "
         "--agreement-strategy {params.agreement_strategy} "
         "--disagreement-strategy {params.disagreement_strategy} "

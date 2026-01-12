@@ -107,6 +107,9 @@ properties:
           bam:
             type: string
             description: output `bam` file with overlapping consensus bases
+          metrics:
+            type: string
+            description: output `metrics` file with overlapping consensus bases statistics
 
   fgbio_copy_umi_from_read_name:
     type: object
