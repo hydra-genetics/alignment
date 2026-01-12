@@ -150,6 +150,7 @@ rule fgbio_call_overlapping_consensus_bases:
         agreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("agreement_strategy", "Consensus"),
         disagreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("disagreement_strategy", "Consensus"),
         extra=config.get("fgbio_call_overlapping_consensus_bases", {}).get("extra", ""),
+        jvm_args=config.get("fgbio_call_overlapping_consensus_bases", {}).get("jvm_args", "-Xmx6g"),
     log:
         "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam.log",
     benchmark:
@@ -174,7 +175,7 @@ rule fgbio_call_overlapping_consensus_bases:
         "{rule}: call overlapping consensus bases on {input.bam}"
     shell:
         'sh -c "'
-        "fgbio CallOverlappingConsensusBases "
+        "fgbio {params.jvm_args} CallOverlappingConsensusBases "
         "--input {input.bam} "
         "--output {output.bam} "
         "--metrics {output.metrics} "
