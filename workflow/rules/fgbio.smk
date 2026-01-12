@@ -142,7 +142,6 @@ rule fgbio_group_reads_by_umi:
 rule fgbio_call_overlapping_consensus_bases:
     input:
         bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
-        bai="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.bai",
         ref=config.get("reference", {}).get("fasta", ""),
     output:
         bam=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam"),
@@ -175,9 +174,8 @@ rule fgbio_call_overlapping_consensus_bases:
         "{rule}: call overlapping consensus bases on {input.bam}"
     shell:
         'sh -c "'
-        "samtools sort -n -u {input.bam} | "
         "fgbio CallOverlappingConsensusBases "
-        "--input /dev/stdin "
+        "--input {input.bam} "
         "--output {output.bam} "
         "--metrics {output.metrics} "
         "--ref {input.ref} "

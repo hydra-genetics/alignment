@@ -99,17 +99,20 @@ properties:
         properties:
           bam:
             type: string
-            description: input sorted `bam` file with consensus reads
+            description: input query sorted `bam` file
+          ref:
+            type: string
+            description: genome reference file
       output:
         type: object
         description: list of outputs
         properties:
           bam:
             type: string
-            description: output `bam` file with overlapping consensus bases
+            description: output `bam` file with corrected overlapping consensus bases
           metrics:
             type: string
-            description: output `metrics` file with overlapping consensus bases statistics
+            description: output `metrics` file with statistics of the overlapping consensus bases correction
 
   fgbio_copy_umi_from_read_name:
     type: object
