@@ -151,10 +151,10 @@ rule fgbio_call_overlapping_consensus_bases:
         disagreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("disagreement_strategy", "Consensus"),
         extra=config.get("fgbio_call_overlapping_consensus_bases", {}).get("extra", ""),
     log:
-        "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.log",
+        "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam.log",
     benchmark:
         repeat(
-            "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.bam.benchmark.tsv",
+            "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam.benchmark.tsv",
             config.get("fgbio_call_overlapping_consensus_bases", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("fgbio_call_overlapping_consensus_bases", {}).get("threads", config["default_resources"]["threads"])
@@ -174,8 +174,9 @@ rule fgbio_call_overlapping_consensus_bases:
         "{rule}: call overlapping consensus bases on {input.bam}"
     shell:
         'sh -c "'
+        "samtools sort -n -u {input.bam} | "
         "fgbio CallOverlappingConsensusBases "
-        "--input {input.bam} "
+        "--input /dev/stdin "
         "--output {output.bam} "
         "--ref {input.ref} "
         "--agreement-strategy {params.agreement_strategy} "
