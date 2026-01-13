@@ -177,12 +177,18 @@ properties:
       agreement_strategy:
         type: string
         description: set agreement strategy for fgbio_call_overlapping_consensus_bases
+      clobber_max_qual:
+        type: string
+        description: set max quality score for fgbio_call_overlapping_consensus_bases
       disagreement_strategy:
         type: string
         description: set disagreement strategy for fgbio_call_overlapping_consensus_bases
       extra:
         type: string
         description: parameters that should be forwarded
+      extra_set_nm_and_uq_tags:
+        type: string
+        description: parameters that should be forwarded to fgbio SetNmAndUqTags
       jvm_args:
         type: string
         description: set jvm args for fgbio_call_overlapping_consensus_bases

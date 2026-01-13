@@ -148,8 +148,10 @@ rule fgbio_call_overlapping_consensus_bases:
         metrics=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.metrics.txt"),
     params:
         agreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("agreement_strategy", "Consensus"),
+        clobber_max_qual=config.get("fgbio_call_overlapping_consensus_bases", {}).get("clobber_max_qual", "60"),
         disagreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("disagreement_strategy", "Consensus"),
         extra=config.get("fgbio_call_overlapping_consensus_bases", {}).get("extra", ""),
+        extra_set_nm_and_uq_tags=config.get("fgbio_call_overlapping_consensus_bases", {}).get("extra_set_nm_and_uq_tags", ""),
         jvm_args=config.get("fgbio_call_overlapping_consensus_bases", {}).get("jvm_args", "-Xmx6g"),
     log:
         "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam.log",
@@ -177,9 +179,15 @@ rule fgbio_call_overlapping_consensus_bases:
         'sh -c "'
         "fgbio {params.jvm_args} CallOverlappingConsensusBases "
         "--input {input.bam} "
-        "--output {output.bam} "
+        "--output /dev/stdout "
         "--metrics {output.metrics} "
         "--ref {input.ref} "
         "--agreement-strategy {params.agreement_strategy} "
         "--disagreement-strategy {params.disagreement_strategy} "
-        '{params.extra}" >& {log}'
+        "{params.extra} | "
+        "fgbio {params.jvm_args} SetNmAndUqTags "
+        "-i /dev/stdin "
+        "-o {output.bam} "
+        "-r {input.ref} "
+        "--clobber-max-qual {params.clobber_max_qual} "
+        '{params.extra_set_nm_and_uq_tags}" >& {log}'
