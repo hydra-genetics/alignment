@@ -91,7 +91,6 @@ rule bwa_mem_realign_consensus_reads:
         bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi_unsorted.bam"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
-        extra_sort=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_sort", ""),
         extra_zipper_bam=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_zipper_bam", ""),
         reference=config.get("reference", {}).get("fasta", ""),
     log:

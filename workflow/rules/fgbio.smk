@@ -33,7 +33,7 @@ rule fgbio_copy_umi_from_read_name:
         'sh -c "'
         "(samtools view "
         "-h "
-        "-f 0x800 "
+        "-F 0x900 "
         "{input.bam} "
         "| samblaster "
         "--addMateTags "
