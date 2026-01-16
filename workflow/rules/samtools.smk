@@ -217,7 +217,7 @@ rule samtools_sort:
     message:
         "{rule}: sort bam file {input.bam} using samtools"
     wrapper:
-        "v1.3.2/bio/samtools/sort"
+        "v3.13.8/wrappers/samtools/sort"
 
 
 rule samtools_sort_umi:
@@ -246,7 +246,7 @@ rule samtools_sort_umi:
     message:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
-        "v1.3.2/bio/samtools/sort"
+        "v3.13.8/wrappers/samtools/sort"
 
 
 rule samtools_fastq:
