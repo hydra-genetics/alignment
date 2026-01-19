@@ -131,4 +131,3 @@ rule bwa_mem_realign_consensus_reads:
         "--tags-to-revcomp ac bc "
         " -o {output.bam} "
         '{params.extra_zipper_bam} " >& {log}'
-
