@@ -127,7 +127,8 @@ rule bwa_mem_realign_consensus_reads:
         "| fgbio -Xmx4g --compression 1 ZipperBams "
         "--unmapped {input.bam} "
         "--ref {params.reference} "
-        "--tags-to-reverse Consensus "
-        "--tags-to-revcomp Consensus "
+        "--tags-to-reverse cd ce ad ae bd be aq bq  "
+        "--tags-to-revcomp ac bc "
         " -o {output.bam} "
         '{params.extra_zipper_bam} " >& {log}'
+
