@@ -123,11 +123,11 @@ rule bwa_mem_realign_consensus_reads:
         "-Y "
         "{params.reference} "
         "{params.extra_bwa_mem} - "
+        "| samtools view -h | grep -v '^@PG' "
         "| fgbio -Xmx4g --compression 1 ZipperBams "
         "--unmapped {input.bam} "
         "--ref {params.reference} "
         "--tags-to-reverse Consensus "
         "--tags-to-revcomp Consensus "
-        "--suppress-pg-tags true "
         " -o {output.bam} "
         '{params.extra_zipper_bam} " >& {log}'
