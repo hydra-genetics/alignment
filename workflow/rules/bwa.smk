@@ -124,6 +124,7 @@ rule bwa_mem_realign_consensus_reads:
         "{params.reference} "
         "{params.extra_bwa_mem} - "
         "| samtools view -h | grep -v '^@PG' "
+        "| samtools sort -n -@ {threads} -T {output.bam}.tmp - "
         "| fgbio -Xmx4g --compression 1 ZipperBams "
         "--unmapped {input.bam} "
         "--ref {params.reference} "
