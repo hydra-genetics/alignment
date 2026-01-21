@@ -114,8 +114,8 @@ rule bwa_mem_realign_consensus_reads:
     message:
         "{rule}: realign unmappend consensus reads found in {input.bam}"
     shell:
-        'sh -c " '
-        'UNIQUE_ID=$$(basename {output.bam})_$$$$; '
+        'bash -c " '
+        'UNIQUE_ID=`basename {output.bam}`_$$$$; '
         'TEMP_BAM=/tmp/$${{UNIQUE_ID}}.unmapped.clean.bam; '
         'SORT_PREFIX=/tmp/$${{UNIQUE_ID}}.sort_tmp; '
         'trap \"rm -f $${{TEMP_BAM}} $${{SORT_PREFIX}}.*\" EXIT; '
@@ -133,5 +133,3 @@ rule bwa_mem_realign_consensus_reads:
         '--tags-to-revcomp ac bc '
         '-o {output.bam} '
         '{params.extra_zipper_bam} " >& {log}'
-
-
