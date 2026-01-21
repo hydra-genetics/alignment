@@ -114,23 +114,24 @@ rule bwa_mem_realign_consensus_reads:
     message:
         "{rule}: realign unmappend consensus reads found in {input.bam}"
     shell:
-        'sh -c "'
-        "UNIQUE_ID=$(basename {output.bam})_$$; "
-        "TEMP_BAM=/tmp/${{UNIQUE_ID}}.unmapped.clean.bam; "
-        "SORT_PREFIX=/tmp/${{UNIQUE_ID}}.sort_tmp; "
-        'trap "rm -f \$TEMP_BAM \$SORT_PREFIX.*" EXIT;'
-        "fgbio SortSam -i {input.bam} -s QueryName -o /dev/stdout "
-        "| samtools view -h | grep -v '^\@PG' "
-        "| samtools view -b > \$TEMP_BAM; "
-        "samtools fastq {input.bam} "
-        "| bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - "
-        "| samtools view -h | grep -v '^\@PG' "
-        "| samtools sort -n -@ {threads} -T \$SORT_PREFIX - "
-        "| fgbio -Xmx4g -Djava.io.tmpdir=/tmp --compression 1 ZipperBams "
-        "--unmapped \$TEMP_BAM "
-        "--ref {params.reference} "
-        "--tags-to-reverse cd ce ad ae bd be aq bq "
-        "--tags-to-revcomp ac bc "
-        "-o {output.bam} "
-        "{params.extra_zipper_bam} "
-        '&& rm /tmp/$(basename {output.bam}).unmapped.clean.bam" >& {log}'
+    'sh -c " '
+    'UNIQUE_ID=$$(basename {output.bam})_$$$$; '
+    'TEMP_BAM=/tmp/$${{UNIQUE_ID}}.unmapped.clean.bam; '
+    'SORT_PREFIX=/tmp/$${{UNIQUE_ID}}.sort_tmp; '
+    'trap \"rm -f $${{TEMP_BAM}} $${{SORT_PREFIX}}.*\" EXIT; '
+    'fgbio SortSam -i {input.bam} -s QueryName -o /dev/stdout '
+    '| samtools view -h | grep -v \'^\@PG\' '
+    '| samtools view -b > $${{TEMP_BAM}}; '
+    'samtools fastq {input.bam} '
+    '| bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - '
+    '| samtools view -h | grep -v \'^\@PG\' '
+    '| samtools sort -n -@ {threads} -T $${{SORT_PREFIX}} - '
+    '| fgbio -Xmx4g -Djava.io.tmpdir=/tmp --compression 1 ZipperBams '
+    '--unmapped $${{TEMP_BAM}} '
+    '--ref {params.reference} '
+    '--tags-to-reverse cd ce ad ae bd be aq bq '
+    '--tags-to-revcomp ac bc '
+    '-o {output.bam} '
+    '{params.extra_zipper_bam} " >& {log}'
+
+
