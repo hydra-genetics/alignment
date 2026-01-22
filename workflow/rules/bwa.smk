@@ -120,7 +120,7 @@ rule bwa_mem_realign_consensus_reads:
         'SORT_PREFIX=/tmp/$${{UNIQUE_ID}}.sort_tmp; '
         'function cleanup {{ rm -f $${{TEMP_BAM}} $${{SORT_PREFIX}}.*; }}; '
         'trap cleanup EXIT; '
-        'fgbio SortSam -i {input.bam} -s QueryName -o /dev/stdout '
+        'fgbio SortBam -i {input.bam} -s QueryName -o /dev/stdout '
         '| samtools view -h | grep -v \'^\@PG\' '
         '| samtools view -b > $${{TEMP_BAM}}; '
         'samtools fastq {input.bam} '
