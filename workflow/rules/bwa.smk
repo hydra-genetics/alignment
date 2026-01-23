@@ -127,7 +127,7 @@ rule bwa_mem_realign_consensus_reads:
         # 1. Sortera unmapped BAM till en temporär fil först (undviker pipe-korruption)
         # Vi stänger av Intel-accelerationen här med -D-flaggorna
         'fgbio -Xmx8g -Duse_jdk_inflater=true -Duse_jdk_deflater=true SortBam '
-        '  -i {input.bam} -s QueryName --max-records-in-ram 1000000 -o $${{RAW_UNMAPPED}}; '
+        '  -i {input.bam} -s Queryname --max-records-in-ram 1000000 -o $${{RAW_UNMAPPED}}; '
         ' '
         # 2. Tvätta bort @PG-taggarna från den sparade filen
         'samtools view -h $${{RAW_UNMAPPED}} | grep -v \'^\@PG\' | samtools view -b > $${{TEMP_BAM}}; '
@@ -137,8 +137,8 @@ rule bwa_mem_realign_consensus_reads:
         '| bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - '
         '| samtools view -h | grep -v \'^\@PG\' '
         '| samtools sort -n -@ {threads} -m 2G -T $${{SORT_PREFIX}} - '
-        '| fgbio -Xmx8g -Duse_jdk_inflater=true -Duse_jdk_deflater=true -Djava.io.tmpdir=/tmp '
-        '  ZipperBams --compression 1 '
+        '| fgbio -Xmx8g -Duse_jdk_inflater=true -Duse_jdk_deflater=true -Djava.io.tmpdir=/tmp --compression 1 '
+        '  ZipperBams '
         '  --unmapped $${{TEMP_BAM}} '
         '  --ref {params.reference} '
         '  --tags-to-reverse cd ce ad ae bd be aq bq '
