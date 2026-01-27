@@ -115,33 +115,32 @@ rule bwa_mem_realign_consensus_reads:
         "{rule}: realign unmappend consensus reads found in {input.bam}"
     shell:
         'bash -c " '
-        'UNIQUE_ID=`basename {output.bam}`_$$$$; '
-        'TEMP_BAM=/tmp/$${{UNIQUE_ID}}.unmapped.clean.bam; '
-        'RAW_UNMAPPED=/tmp/$${{UNIQUE_ID}}.raw.bam; '
-        'SORT_PREFIX=/tmp/$${{UNIQUE_ID}}.sort_tmp; '
+        'set -e; ' # Avbryt vid minsta fel
+        # Skapa variabler i BASH för att undvika Snakemake-krockar
+        'ID=sample_{sample}_$$$$; '
+        'TDIR=alignment/tmp_$$ID; '
+        'mkdir -p $$TDIR; '
+        'RAW_UNMAPPED=$$TDIR/raw_unmapped.bam; '
+        'CLEAN_UNMAPPED=$$TDIR/clean_unmapped.bam; '
+        'ST_PREFIX=$$TDIR/sort_tmp; '
         ' '
-        # Funktion för att städa upp ALLA temporära filer
-        'function cleanup {{ rm -f $${{TEMP_BAM}} $${{RAW_UNMAPPED}} $${{SORT_PREFIX}}.*; }}; '
-        'trap cleanup EXIT; '
+        # 1. Sortera unmapped (fgbio)
+        'fgbio -Xmx8g SortBam -i {input.bam} -s Queryname -o $$RAW_UNMAPPED; '
+        'sleep 5; ' # Kritisk för nätverks-SSD/NFS
         ' '
-        # 1. Sortera unmapped BAM till en temporär fil först (undviker pipe-korruption)
-        # Vi stänger av Intel-accelerationen här med -D-flaggorna
-        'fgbio -Xmx8g -Duse_jdk_inflater=true -Duse_jdk_deflater=true SortBam '
-        '  -i {input.bam} -s Queryname --max-records-in-ram 1000000 -o $${{RAW_UNMAPPED}}; '
+        # 2. Tvätta bort @PG
+        'samtools view -h $$RAW_UNMAPPED | grep -v \'^@PG\' | samtools view -b > $$CLEAN_UNMAPPED; '
+        'sleep 5; '
         ' '
-        # 2. Tvätta bort @PG-taggarna från den sparade filen
-        'samtools view -h $${{RAW_UNMAPPED}} | grep -v \'^\@PG\' | samtools view -b > $${{TEMP_BAM}}; '
+        # 3. Huvudpipen - Vi använder -m dynamiskt
+        'samtools fastq -n {input.bam} | '
+        'bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - | '
+        'samtools sort -n -@ {threads} -m 4G -T $$ST_PREFIX | ' # 4G är säkert på både 6GB och 8GB-noder
+        'fgbio -Xmx8g ZipperBams '
+        '--unmapped $$CLEAN_UNMAPPED '
+        '--ref {params.reference} '
+        '--tags-to-reverse cd ce ad ae bd be aq bq '
+        '--tags-to-revcomp ac bc '
+        '-o {output.bam}; '
         ' '
-        # 3. Kör huvudpipen (BWA -> ZipperBams)
-        'samtools fastq {input.bam} '
-        '| bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - '
-        '| samtools view -h | grep -v \'^\@PG\' '
-        '| samtools sort -n -@ {threads} -m 2G -T $${{SORT_PREFIX}} - '
-        '| fgbio -Xmx8g -Duse_jdk_inflater=true -Duse_jdk_deflater=true -Djava.io.tmpdir=/tmp --compression 1 '
-        '  ZipperBams '
-        '  --unmapped $${{TEMP_BAM}} '
-        '  --ref {params.reference} '
-        '  --tags-to-reverse cd ce ad ae bd be aq bq '
-        '  --tags-to-revcomp ac bc '
-        '  -o {output.bam} '
-        '  {params.extra_zipper_bam} " >& {log}'
+        'rm -rf $$TDIR; " >& {log}'
