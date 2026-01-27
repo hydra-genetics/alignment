@@ -121,6 +121,7 @@ rule bwa_mem_realign_consensus_reads:
         '''
         set -e
         mkdir -p "{params.tmp_dir}"
+        trap 'rm -rf "{params.tmp_dir}"' EXIT
         
         # 1. Sortera unmapped
         fgbio -Xmx16g SortBam -i {input.bam} -s Queryname -o "{params.raw_unmapped}"
@@ -146,7 +147,4 @@ rule bwa_mem_realign_consensus_reads:
             --tags-to-reverse cd ce ad ae bd be aq bq \
             --tags-to-revcomp ac bc \
             -o {output.bam}
-            
-        # Städa bara om vi nått hela vägen hit
-        rm -rf "{params.tmp_dir}"
-        '''
+        ''' + "&> {log}"
