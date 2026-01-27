@@ -93,6 +93,10 @@ rule bwa_mem_realign_consensus_reads:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
         extra_zipper_bam=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_zipper_bam", ""),
         reference=config.get("reference", {}).get("fasta", ""),
+        tmp_dir = "alignment/tmp_realign_{sample}_{type}",
+        raw_unmapped = "alignment/tmp_realign_{sample}_{type}/raw.bam",
+        clean_unmapped = "alignment/tmp_realign_{sample}_{type}/clean.bam",
+        sort_prefix = "alignment/tmp_realign_{sample}_{type}/st_sort",
     log:
         "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.log",
     benchmark:
@@ -114,33 +118,35 @@ rule bwa_mem_realign_consensus_reads:
     message:
         "{rule}: realign unmappend consensus reads found in {input.bam}"
     shell:
-        'bash -c " '
-        'set -e; ' # Avbryt vid minsta fel
-        # Skapa variabler i BASH för att undvika Snakemake-krockar
-        'ID=unmapped_{wildcards.sample}_{wildcards.type}_$$$$; '
-        'TDIR=alignment/tmp_$$ID; '
-        'mkdir -p $$TDIR; '
-        'RAW_UNMAPPED=$$TDIR/raw_unmapped.bam; '
-        'CLEAN_UNMAPPED=$$TDIR/clean_unmapped.bam; '
-        'ST_PREFIX=$$TDIR/sort_tmp; '
-        ' '
-        # 1. Sortera unmapped (fgbio)
-        'fgbio -Xmx8g SortBam -i {input.bam} -s Queryname -o $$RAW_UNMAPPED; '
-        'sleep 5; ' # Kritisk för nätverks-SSD/NFS
-        ' '
-        # 2. Tvätta bort @PG
-        'samtools view -h $$RAW_UNMAPPED | grep -v \'^@PG\' | samtools view -b > $$CLEAN_UNMAPPED; '
-        'sleep 5; '
-        ' '
-        # 3. Huvudpipen - Vi använder -m dynamiskt
-        'samtools fastq -n {input.bam} | '
-        'bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - | '
-        'samtools sort -n -@ {threads} -m 4G -T $$ST_PREFIX | ' # 4G är säkert på både 6GB och 8GB-noder
-        'fgbio -Xmx8g ZipperBams '
-        '--unmapped $$CLEAN_UNMAPPED '
-        '--ref {params.reference} '
-        '--tags-to-reverse cd ce ad ae bd be aq bq '
-        '--tags-to-revcomp ac bc '
-        '-o {output.bam}; '
-        ' '
-        'rm -rf $$TDIR; " >& {log}'
+        '''
+        set -e
+        mkdir -p "{params.tmp_dir}"
+        
+        # 1. Sortera unmapped
+        fgbio -Xmx16g SortBam -i {input.bam} -s Queryname -o "{params.raw_unmapped}"
+        
+        # 2. Tvinga nätverksdisken att skriva klart allt (VIKTIGT!)
+        sync "{params.raw_unmapped}"
+        sleep 10
+        
+        # 3. Tvätta bort @PG
+        samtools view -h "{params.raw_unmapped}" | grep -v '^@PG' | samtools view -b > "{params.clean_unmapped}"
+        
+        # Synka igen
+        sync "{params.clean_unmapped}"
+        sleep 5
+        
+        # 4. Huvudpipen
+        samtools fastq -n {input.bam} | \
+        bwa mem -t {threads} -p -K 150000000 -Y {params.reference} - | \
+        samtools sort -n -@ {threads} -m 4G -T "{params.sort_prefix}" | \
+        fgbio -Xmx16g ZipperBams \
+            --unmapped "{params.clean_unmapped}" \
+            --ref {params.reference} \
+            --tags-to-reverse cd ce ad ae bd be aq bq \
+            --tags-to-revcomp ac bc \
+            -o {output.bam}
+            
+        # Städa bara om vi nått hela vägen hit
+        rm -rf "{params.tmp_dir}"
+        '''
