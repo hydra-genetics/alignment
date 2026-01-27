@@ -117,7 +117,7 @@ rule bwa_mem_realign_consensus_reads:
         'bash -c " '
         'set -e; ' # Avbryt vid minsta fel
         # Skapa variabler i BASH för att undvika Snakemake-krockar
-        'ID=sample_{sample}_$$$$; '
+        'ID=unmapped_{wildcards.sample}_{wildcards.type}_$$$$; '
         'TDIR=alignment/tmp_$$ID; '
         'mkdir -p $$TDIR; '
         'RAW_UNMAPPED=$$TDIR/raw_unmapped.bam; '
