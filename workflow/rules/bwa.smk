@@ -118,33 +118,27 @@ rule bwa_mem_realign_consensus_reads:
     message:
         "{rule}: realign unmappend consensus reads found in {input.bam}"
     shell:
-        '''
-        set -e
-        mkdir -p "{params.tmp_dir}"
-        trap 'rm -rf "{params.tmp_dir}"' EXIT
+        'sh -c "'
+        "set -e; "
+        "mkdir -p {params.tmp_dir}; "
+        "trap 'rm -rf {params.tmp_dir}' EXIT; "
         
         # 1. Sortera unmapped
-        fgbio -Xmx16g SortBam -i {input.bam} -s Queryname -o "{params.raw_unmapped}"
+        "fgbio -Xmx16g SortBam -i {input.bam} -s Queryname -o {params.raw_unmapped}; "
+        "sync {params.raw_unmapped}; sleep 10; "
         
-        # 2. Tvinga nätverksdisken att skriva klart allt (VIKTIGT!)
-        sync "{params.raw_unmapped}"
-        sleep 10
+        # 2. Tvätta bort @PG
+        "samtools view -h {params.raw_unmapped} | grep -v '^@PG' | samtools view -b > {params.clean_unmapped}; "
+        "sync {params.clean_unmapped}; sleep 5; "
         
-        # 3. Tvätta bort @PG
-        samtools view -h "{params.raw_unmapped}" | grep -v '^@PG' | samtools view -b > "{params.clean_unmapped}"
-        
-        # Synka igen
-        sync "{params.clean_unmapped}"
-        sleep 5
-        
-        # 4. Huvudpipen
-        samtools fastq -n {input.bam} | \
-        bwa mem -t {threads} -p -K 150000000 -Y {params.reference} - | \
-        samtools sort -n -@ {threads} -m 4G -T "{params.sort_prefix}" | \
-        fgbio -Xmx16g ZipperBams \
-            --unmapped "{params.clean_unmapped}" \
-            --ref {params.reference} \
-            --tags-to-reverse cd ce ad ae bd be aq bq \
-            --tags-to-revcomp ac bc \
-            -o {output.bam}
-        ''' + "&> {log}"
+        # 3. Huvudpipen
+        "samtools fastq -n {input.bam} | "
+        "bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - | "
+        "samtools sort -n --no-PG -@ {threads} -m 4G -T {params.sort_prefix} | "
+        "fgbio -Xmx16g ZipperBams "
+        "--unmapped {params.clean_unmapped} "
+        "--ref {params.reference} "
+        "--tags-to-reverse cd ce ad ae bd be aq bq "
+        "--tags-to-revcomp ac bc "
+        "-o {output.bam}"
+        '" >& {log}'
