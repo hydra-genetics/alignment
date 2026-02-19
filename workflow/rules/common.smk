@@ -220,13 +220,17 @@ def compile_output_list(wildcards):
         for suffix in files[prefix]
     ]
 
-    files = {
-        "alignment/samtools_merge_bam": [".bam"],
-        "alignment/samtools_filter_reads": [".bam"],
-        "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
-        "alignment/fgbio_call_overlapping_consensus_bases": [".umi.bam"],
-        "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
-    }
+    if config.get("deduplication") == "umi":
+        files = {
+            "alignment/bwa_mem_realign_consensus_reads": [".umi.bam"],
+            "alignment/fgbio_call_overlapping_consensus_bases": [".umi.bam"],
+            "alignment/samtools_fastq": [".fastq1.umi.fastq.gz", ".fastq2.umi.fastq.gz"],
+        }
+    else:
+        files = {
+            "alignment/samtools_merge_bam": [".bam"],
+            "alignment/samtools_filter_reads": [".bam"],
+        }
     output_files += [
         f"{prefix}/{sample}_{unit_type}{suffix}"
         for prefix in files.keys()

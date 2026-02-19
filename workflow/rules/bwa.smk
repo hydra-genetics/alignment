@@ -91,12 +91,9 @@ rule bwa_mem_realign_consensus_reads:
         bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi_unsorted.bam"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
-        extra_zipper_bam=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_zipper_bam", ""),
         reference=config.get("reference", {}).get("fasta", ""),
         tmp_dir = "alignment/tmp_realign_{sample}_{type}",
-        raw_unmapped = "alignment/tmp_realign_{sample}_{type}/raw.bam",
-        clean_unmapped = "alignment/tmp_realign_{sample}_{type}/clean.bam",
-        sort_prefix = "alignment/tmp_realign_{sample}_{type}/st_sort",
+        fgbio_sorted_unmapped = "alignment/tmp_realign_{sample}_{type}/fgbio_query_sorted.bam",
     log:
         "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.log",
     benchmark:
@@ -123,20 +120,15 @@ rule bwa_mem_realign_consensus_reads:
         "mkdir -p {params.tmp_dir}; "
         "trap 'rm -rf {params.tmp_dir}' EXIT; "
         
-        # 1. Sortera unmapped
-        "fgbio -Xmx16g SortBam -i {input.bam} -s Queryname -o {params.raw_unmapped}; "
-        "sync {params.raw_unmapped}; sleep 10; "
+        # 1. Sort the input unmapped BAM with fgbio to set the correct collating order
+        "fgbio -Xmx16g SortBam -i {input.bam} -s Queryname -o {params.fgbio_sorted_unmapped}; "
         
-        # 2. Tvätta bort @PG
-        "samtools view -h {params.raw_unmapped} | grep -v '^@PG' | samtools view -b > {params.clean_unmapped}; "
-        "sync {params.clean_unmapped}; sleep 5; "
-        
-        # 3. Huvudpipen
-        "samtools fastq -n {input.bam} | "
+        # 2. Realign and Zip in a single stream
+        "samtools fastq -n {params.fgbio_sorted_unmapped} | "
         "bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - | "
-        "samtools sort -n --no-PG -@ {threads} -m 4G -T {params.sort_prefix} | "
+        "fgbio -Xmx16g SortBam -i /dev/stdin -s Queryname -o /dev/stdout | "
         "fgbio -Xmx16g ZipperBams "
-        "--unmapped {params.clean_unmapped} "
+        "--unmapped {params.fgbio_sorted_unmapped} "
         "--ref {params.reference} "
         "--tags-to-reverse cd ce ad ae bd be aq bq "
         "--tags-to-revcomp ac bc "
