@@ -115,6 +115,29 @@ Group and sort reads based on umi using fgbio in preparation for fgbio_call_and_
 
 ---
 
+## [fgbio_call_overlapping_consensus_bases](http://fulcrumgenomics.github.io/fgbio/tools/latest/CallOverlappingConsensusBases.html)
+Call consensus bases from overlapping reads.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__fgbio__fgbio_call_overlapping_consensus_bases#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__fgbio__fgbio_call_overlapping_consensus_bases#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__fgbio_call_overlapping_consensus_bases#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__fgbio_call_overlapping_consensus_bases#
+
+---
+
 ## [fgbio_copy_umi_from_read_name](http://fulcrumgenomics.github.io/fgbio/tools/latest/CopyUmiFromReadName.html)
 Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in preparation for fgbio_group_reads_by_umi
 
@@ -522,6 +545,29 @@ Sort `.bam` files using samtools sort. Sort on query name.
 
 ---
 
+## [samtools_filter_reads](http://www.htslib.org/doc/samtools-view.html)
+Filter `.bam` files using samtools view.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__samtools__samtools_filter_reads#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__samtools__samtools_filter_reads#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__samtools_filter_reads#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__samtools_filter_reads#
+
+---
+
 ## [star](https://github.com/alexdobin/STAR)
 Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a split read aware aligner for RNA-data.
 
@@ -542,4 +588,5 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__star#
+
 

@@ -33,7 +33,7 @@ rule fgbio_copy_umi_from_read_name:
         'sh -c "'
         "(samtools view "
         "-h "
-        "-f 0x2 "
+        "-F 0x900 "
         "{input.bam} "
         "| samblaster "
         "--addMateTags "
@@ -137,3 +137,49 @@ rule fgbio_group_reads_by_umi:
         "-f {output.histo} "
         "-s {params.umi_strategy} "
         "{params.extra}) &> {log}"
+
+
+rule fgbio_call_overlapping_consensus_bases:
+    input:
+        bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
+        ref=config.get("reference", {}).get("fasta", ""),
+    output:
+        bam=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam"),
+        metrics=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.metrics.txt"),
+    params:
+        agreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("agreement_strategy", "Consensus"),
+        disagreement_strategy=config.get("fgbio_call_overlapping_consensus_bases", {}).get("disagreement_strategy", "Consensus"),
+        extra=config.get("fgbio_call_overlapping_consensus_bases", {}).get("extra", ""),
+        jvm_args=config.get("fgbio_call_overlapping_consensus_bases", {}).get("jvm_args", "-Xmx6g"),
+    log:
+        "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam.log",
+    benchmark:
+        repeat(
+            "alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam.benchmark.tsv",
+            config.get("fgbio_call_overlapping_consensus_bases", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("fgbio_call_overlapping_consensus_bases", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("fgbio_call_overlapping_consensus_bases", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("fgbio_call_overlapping_consensus_bases", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("fgbio_call_overlapping_consensus_bases", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("fgbio_call_overlapping_consensus_bases", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("fgbio_call_overlapping_consensus_bases", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("fgbio_call_overlapping_consensus_bases", {}).get("container", config["default_container"])
+    message:
+        "{rule}: call overlapping consensus bases on {input.bam}"
+    shell:
+        'sh -c "'
+        "fgbio {params.jvm_args} CallOverlappingConsensusBases "
+        "--input {input.bam} "
+        "--output {output.bam} "
+        "--metrics {output.metrics} "
+        "--ref {input.ref} "
+        "--agreement-strategy {params.agreement_strategy} "
+        "--disagreement-strategy {params.disagreement_strategy} "
+        '{params.extra}" >& {log}'

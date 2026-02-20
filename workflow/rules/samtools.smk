@@ -217,7 +217,7 @@ rule samtools_sort:
     message:
         "{rule}: sort bam file {input.bam} using samtools"
     wrapper:
-        "v1.3.2/bio/samtools/sort"
+        "v2.0.0/bio/samtools/sort"
 
 
 rule samtools_sort_umi:
@@ -246,7 +246,7 @@ rule samtools_sort_umi:
     message:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
-        "v1.3.2/bio/samtools/sort"
+        "v2.0.0/bio/samtools/sort"
 
 
 rule samtools_fastq:
@@ -278,3 +278,32 @@ rule samtools_fastq:
         "{rule}: Convert the bam file {input.bam} into a fastq file"
     wrapper:
         "v2.6.0/bio/samtools/fastq/separate"
+
+
+rule samtools_filter_reads:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+    output:
+        bam=temp("alignment/samtools_filter_reads/{sample}_{type}.bam"),
+    params:
+        extra=config.get("samtools_filter_reads", {}).get("extra", "-f 2"),
+    log:
+        "alignment/samtools_filter_reads/{sample}_{type}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/samtools_filter_reads/{sample}_{type}.bam.benchmark.tsv",
+            config.get("samtools_filter_reads", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("samtools_filter_reads", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("samtools_filter_reads", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("samtools_filter_reads", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("samtools_filter_reads", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("samtools_filter_reads", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("samtools_filter_reads", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("samtools_filter_reads", {}).get("container", config["default_container"])
+    message:
+        "{rule}: filter reads in {input.bam} with {params.extra}"
+    shell:
+        "(samtools view -@ {threads} {params.extra} -b {input.bam} > {output.bam}) &> {log}"
