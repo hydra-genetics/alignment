@@ -164,6 +164,29 @@ properties:
         type: integer
         description: mask bases with N if under min base quality in consensus creation in FilterConsensusReads
 
+  fgbio_call_overlapping_consensus_bases:
+    type: object
+    description: parameters for fgbio_call_overlapping_consensus_bases
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      agreement_strategy:
+        type: string
+        description: set agreement strategy for fgbio_call_overlapping_consensus_bases
+      disagreement_strategy:
+        type: string
+        description: set disagreement strategy for fgbio_call_overlapping_consensus_bases
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      jvm_args:
+        type: string
+        description: set jvm args for fgbio_call_overlapping_consensus_bases
+
   fgbio_copy_umi_from_read_name:
     type: object
     description: parameters for fgbio_copy_umi_from_read_name
@@ -455,6 +478,20 @@ properties:
   samtools_sort_umi:
     type: object
     description: parameters for sorting bam files on query names
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  samtools_filter_reads:
+    type: object
+    description: parameters for filtering bam files using samtools view
     properties:
       benchmark_repeats:
         type: integer

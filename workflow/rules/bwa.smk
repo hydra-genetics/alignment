@@ -91,9 +91,9 @@ rule bwa_mem_realign_consensus_reads:
         bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi_unsorted.bam"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
-        extra_sort=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_sort", ""),
-        extra_zipper_bam=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_zipper_bam", ""),
         reference=config.get("reference", {}).get("fasta", ""),
+        tmp_dir="alignment/tmp_realign_{sample}_{type}",
+        fgbio_sorted_unmapped="alignment/tmp_realign_{sample}_{type}/fgbio_query_sorted.bam",
     log:
         "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.log",
     benchmark:
@@ -116,18 +116,19 @@ rule bwa_mem_realign_consensus_reads:
         "{rule}: realign unmappend consensus reads found in {input.bam}"
     shell:
         'sh -c "'
-        "samtools fastq {input.bam} "
-        "| bwa mem "
-        "-t {threads} "
-        "-p "
-        "-K 150000000 "
-        "-Y "
-        "{params.reference} "
-        "{params.extra_bwa_mem} - "
-        "| fgbio -Xmx4g --compression 1 --async-io ZipperBams "
-        "--unmapped {input.bam} "
+        "set -e; "
+        "mkdir -p {params.tmp_dir}; "
+        "trap 'rm -rf {params.tmp_dir}' EXIT; "
+
+        "fgbio -Xmx16g SortBam -i {input.bam} -s Queryname -o {params.fgbio_sorted_unmapped}; "
+
+        "samtools fastq -n {params.fgbio_sorted_unmapped} | "
+        "bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - | "
+        "fgbio -Xmx16g SortBam -i /dev/stdin -s Queryname -o /dev/stdout | "
+        "fgbio -Xmx16g ZipperBams "
+        "--unmapped {params.fgbio_sorted_unmapped} "
         "--ref {params.reference} "
-        "--tags-to-reverse Consensus "
-        "--tags-to-revcomp Consensus "
-        " -o {output.bam} "
-        '{params.extra_zipper_bam} " >& {log}'
+        "--tags-to-reverse cd ce ad ae bd be aq bq "
+        "--tags-to-revcomp ac bc "
+        "-o {output.bam}"
+        '" >& {log}'
