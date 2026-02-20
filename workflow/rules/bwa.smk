@@ -92,8 +92,8 @@ rule bwa_mem_realign_consensus_reads:
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
         reference=config.get("reference", {}).get("fasta", ""),
-        tmp_dir = "alignment/tmp_realign_{sample}_{type}",
-        fgbio_sorted_unmapped = "alignment/tmp_realign_{sample}_{type}/fgbio_query_sorted.bam",
+        tmp_dir="alignment/tmp_realign_{sample}_{type}",
+        fgbio_sorted_unmapped="alignment/tmp_realign_{sample}_{type}/fgbio_query_sorted.bam",
     log:
         "alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam.log",
     benchmark:
@@ -119,11 +119,9 @@ rule bwa_mem_realign_consensus_reads:
         "set -e; "
         "mkdir -p {params.tmp_dir}; "
         "trap 'rm -rf {params.tmp_dir}' EXIT; "
-        
-        # 1. Sort the input unmapped BAM with fgbio to set the correct collating order
+
         "fgbio -Xmx16g SortBam -i {input.bam} -s Queryname -o {params.fgbio_sorted_unmapped}; "
-        
-        # 2. Realign and Zip in a single stream
+
         "samtools fastq -n {params.fgbio_sorted_unmapped} | "
         "bwa mem -t {threads} -p -K 150000000 -Y {params.reference} {params.extra_bwa_mem} - | "
         "fgbio -Xmx16g SortBam -i /dev/stdin -s Queryname -o /dev/stdout | "
