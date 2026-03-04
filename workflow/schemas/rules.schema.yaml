@@ -575,7 +575,7 @@ properties:
         properties:
           ubam:
             type: string
-            description: unmapped bam file
+            description: unmapped bam file for one processing unit
           ref:
             type: string
             description: reference genome file
@@ -585,7 +585,28 @@ properties:
         properties:
           bam:
             type: string
-            description: aligned and sorted bam file
+            description: aligned and sorted bam file for one processing unit
+
+  vacmap_merge:
+    type: object
+    description: input and output parameters for vacmap_merge
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bams:
+            type: string
+            description: |
+              bam files from the same sample (and the same sample type)
+              a list of bam files is obtained using the information in the `units.tsv` file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: a sorted merged bam file
 
 
 

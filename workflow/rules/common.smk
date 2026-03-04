@@ -98,7 +98,7 @@ def generate_read_group(wildcards):
     )
 
 
-def get_minimap2_query(wildcards):
+def get_ubam_query(wildcards):
     unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
     bam_file = unit["bam"]
 
@@ -220,7 +220,7 @@ def compile_output_list(wildcards):
         for suffix in files[prefix]
     ]
     files = {
-        "alignment/vacmap_align": [".sorted.bam"],
+        "alignment/vacmap_align": [".bam"],
     }
     output_files += [
         f"{prefix}/{sample}_{unit_type}{suffix}"
@@ -291,5 +291,3 @@ def vacmap_ubam_metadata(wildcards, input):
     return metadata
 
 
-def get_ubam_input(wildcards):
-    return units.loc[(wildcards.sample, wildcards.type), "bam"].tolist()

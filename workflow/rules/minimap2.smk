@@ -38,7 +38,7 @@ rule minimap2_index:
 
 rule minimap2_align:
     input:
-        query=lambda wildcards: get_minimap2_query(wildcards),
+        query=lambda wildcards: get_ubam_query(wildcards),
         target=expand(
             "alignment/minimap2_index/{ref}.{preset}.mmi",
             ref=os.path.basename(config.get("reference", {}).get("fasta", "")),

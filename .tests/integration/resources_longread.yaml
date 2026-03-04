@@ -11,4 +11,7 @@ minimap2:
 vacmap_align:
   threads: 2
 
+vacmap_merge:
+  threads: 1
+
 
