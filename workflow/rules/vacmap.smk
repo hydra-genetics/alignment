@@ -6,6 +6,7 @@ rule vacmap_align:
         temp("alignment/vacmap_align/{sample}_{type}_{processing_unit}_{barcode}.sorted.bam"),
     params:
         mode=config.get("vacmap_align", {}).get("mode", "L"),
+        read_group=lambda wildcards, input: generate_longread_group(wildcards, input, tool="vacmap"),
         extra=config.get("vacmap_align", {}).get("extra", ""),
     log:
         "alignment/vacmap_align/{sample}_{type}_{processing_unit}_{barcode}.sorted.bam.log",
@@ -26,7 +27,7 @@ rule vacmap_align:
     message:
         "{rule}: align {input.ubam} with vacmap"
     shell:
-        "vacmap -ref {input.ref} -read {input.ubam} -mode {params.mode} -o {output} -t {threads} {params.extra} 2> {log}"
+        "vacmap -ref {input.ref} -read {input.ubam} -mode {params.mode} -o {output} -t {threads} {params.read_group} {params.extra} 2> {log}"
 
 
 rule vacmap_merge:

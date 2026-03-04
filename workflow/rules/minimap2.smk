@@ -50,7 +50,7 @@ rule minimap2_align:
         extra=lambda wildcards, input: "%s %s -x %s"
         % (
             config.get("minimap2_align", {}).get("extra", ""),
-            config.get("minimap2_align", {}).get("read_group", generate_minimap2_read_group(wildcards, input)),
+            config.get("minimap2_align", {}).get("read_group", generate_longread_group(wildcards, input)),
             config.get("minimap2_align", {}).get("preset", ""),
         ),
         sorting=config.get("minimap2_align", {}).get("sort_order", "coordinate"),
