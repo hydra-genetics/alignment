@@ -1,7 +1,7 @@
 rule vacmap_align:
     input:
         ubam=get_ubam_input,
-        ref=config.get("reference", {}).get("fasta"),
+        ref=config.get("reference", {}).get("fasta", ""),
     output:
         "alignment/vacmap_align/{sample}_{type}.sorted.bam",
     params:
@@ -26,4 +26,4 @@ rule vacmap_align:
     message:
         "{rule}: align {input.ubam} with vacmap"
     shell:
-        "vacmap -ref {input.ref} -read {input.ubam} -mode {params.mode} -o {output} -t {threads} {params.extra}"
+        "vacmap -ref {input.ref} -read {input.ubam} -mode {params.mode} -o {output} -t {threads} {params.extra} 2> {log}"
