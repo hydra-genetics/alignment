@@ -590,3 +590,48 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 #RESOURCESSCHEMA__star#
 
 
+---
+
+## [vacmap_align](https://github.com/micahvista/VACmap)
+Align PacBio long read sequencing data stored in an unmapped `.bam` file to a reference genome. Each processing unit is aligned separately and the output is coordinate sorted (vacmap sorts when the output filename contains `sorted`). Read group information (`ID`, `SM`, `PL`, `PM`) is derived from the uBAM header and `units.tsv`.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__vacmap__vacmap_align#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__vacmap__vacmap_align#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__vacmap_align#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__vacmap_align#
+
+---
+
+## [vacmap_merge](http://www.htslib.org/doc/samtools-merge.html)
+Merge per-unit vacmap `.bam` files from the same sample using samtools merge.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__vacmap__vacmap_merge#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__vacmap__vacmap_merge#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__vacmap_merge#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__vacmap_merge#

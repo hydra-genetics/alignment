@@ -62,4 +62,15 @@ digraph snakemake_dag {
 	5 -> 7
 	7 -> 6
 	6 -> 0
+	8	 [color="0.38 0.6 0.85",
+		height=0.5,
+		label=vacmap_align,
+		width=1.1];
+	9	 [color="0.48 0.6 0.85",
+		height=0.5,
+		label=vacmap_merge,
+		width=1.4306];
+	10 -> 8
+	8 -> 9
+	9 -> 0
 }
