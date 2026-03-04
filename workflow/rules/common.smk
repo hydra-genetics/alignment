@@ -269,17 +269,15 @@ def compile_output_list(wildcards):
 
     return output_files
 
+
 # TODO: make it similar to generate_read_group() above
 def vacmap_ubam_metadata(wildcards, input):
     """
     Extracts RG ID from uBAM and returns a dictionary.
     """
     # Initialize with wildcards as defaults
-    metadata = {
-        "id": wildcards.sample,
-        "sm": f"{wildcards.sample}_{wildcards.type}"
-    }
-    
+    metadata = {"id": wildcards.sample, "sm": f"{wildcards.sample}_{wildcards.type}"}
+
     try:
         with pysam.AlignmentFile(input.ubam, "rb", check_sq=False) as bam:
             header = bam.header
@@ -289,7 +287,7 @@ def vacmap_ubam_metadata(wildcards, input):
     except Exception as e:
         # Fallback to wildcard-based ID if pysam fails or file is missing
         pass
-        
+
     return metadata
 
 

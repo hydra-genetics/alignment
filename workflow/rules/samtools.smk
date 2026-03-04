@@ -162,9 +162,11 @@ rule samtools_index:
 rule samtools_merge_bam:
     input:
         bams=get_chrom_bams,
-        non_chr_bams="alignment/picard_mark_duplicates/{sample}_{type}_non_chr.bam"
-        if config.get("reference", {}).get("merge_contigs", None) is not None
-        else [],
+        non_chr_bams=(
+            "alignment/picard_mark_duplicates/{sample}_{type}_non_chr.bam"
+            if config.get("reference", {}).get("merge_contigs", None) is not None
+            else []
+        ),
     output:
         bam=temp("alignment/samtools_merge_bam/{sample}_{type}_unsorted.bam"),
     params:
