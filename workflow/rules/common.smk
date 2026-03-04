@@ -271,7 +271,3 @@ def compile_output_list(wildcards):
     ]
 
     return output_files
-
-
-
-
