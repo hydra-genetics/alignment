@@ -1,9 +1,15 @@
+__author__ = "Andrei Guliaev"
+__copyright__ = "Copyright 2026, Andrei Guliaev"
+__email__ = "andrei.guliaev@scilifelab.uu.se"
+__license__ = "GPL-3"
+
+
 rule vacmap_align:
     input:
         ubam=lambda wildcards: get_ubam_query(wildcards),
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        temp("alignment/vacmap_align/{sample}_{type}_{processing_unit}_{barcode}.sorted.bam"),
+        bam=temp("alignment/vacmap_align/{sample}_{type}_{processing_unit}_{barcode}.sorted.bam"),
     params:
         mode=config.get("vacmap_align", {}).get("mode", "L"),
         read_group=lambda wildcards, input: generate_longread_group(wildcards, input, tool="vacmap"),
