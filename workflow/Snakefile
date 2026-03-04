@@ -12,6 +12,7 @@ include: "rules/pbmm2.smk"
 include: "rules/picard.smk"
 include: "rules/samtools.smk"
 include: "rules/star.smk"
+include: "rules/vacmap.smk"
 
 
 ruleorder: bwa_mem > samtools_sort

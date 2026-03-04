@@ -532,6 +532,26 @@ properties:
       default is "None"
     pattern: "^(fastp_pe|merged|None)$"
 
+  vacmap_align:
+    type: object
+    description: parameters for alignment with vacmap
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: |
+          parameters that should be forwarded
+      mode:
+        type: string
+        description: mapping mode
+        pattern: "^(L|H|S|R|asm)$"
+    required:
+      - mode
 
 required:
   - samples

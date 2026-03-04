@@ -219,6 +219,19 @@ def compile_output_list(wildcards):
         if unit_type in ["N", "T"]
         for suffix in files[prefix]
     ]
+    files = {
+        "alignment/vacmap_align": [".sorted.bam"],
+    }
+    output_files += [
+        f"{prefix}/{sample}_{unit_type}{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for platform in units.loc[(sample,)].platform
+        if platform == "PACBIO"
+        for unit_type in get_unit_types(units, sample)
+        if unit_type in ["N", "T"]
+        for suffix in files[prefix]
+    ]
 
     if config.get("deduplication") == "umi":
         files = {
@@ -255,3 +268,30 @@ def compile_output_list(wildcards):
     ]
 
     return output_files
+
+# TODO: make it similar to generate_read_group() above
+def vacmap_ubam_metadata(wildcards, input):
+    """
+    Extracts RG ID from uBAM and returns a dictionary.
+    """
+    # Initialize with wildcards as defaults
+    metadata = {
+        "id": wildcards.sample,
+        "sm": f"{wildcards.sample}_{wildcards.type}"
+    }
+    
+    try:
+        with pysam.AlignmentFile(input.ubam, "rb", check_sq=False) as bam:
+            header = bam.header
+            if "RG" in header and len(header["RG"]) > 0:
+                # Use the ID from the first read group in the uBAM
+                metadata["id"] = header["RG"][0].get("ID", wildcards.sample)
+    except Exception as e:
+        # Fallback to wildcard-based ID if pysam fails or file is missing
+        pass
+        
+    return metadata
+
+
+def get_ubam_input(wildcards):
+    return units.loc[(wildcards.sample, wildcards.type), "bam"].tolist()

@@ -8,4 +8,7 @@ default_resources:
 minimap2:
   threads: 2
 
+vacmap_align:
+  threads: 2
+
 
