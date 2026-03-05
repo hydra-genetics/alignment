@@ -98,7 +98,7 @@ def generate_read_group(wildcards):
     )
 
 
-def get_minimap2_query(wildcards):
+def get_ubam_query(wildcards):
     unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
     bam_file = unit["bam"]
 
@@ -112,39 +112,42 @@ def get_reference_path(wildcards):
     return
 
 
-def generate_minimap2_read_group(wildcards, input):
+def generate_longread_group(wildcards, input, tool="minimap2"):
     """
-    Extracts the read group line from a bam file using pysam.
+    Generates a read group string for the specified alignment tool from a uBAM header.
 
     Args:
-        input: Path to the bam file.
+        wildcards: Snakemake wildcards (sample, type, processing_unit, barcode).
+        input: Snakemake input object with query (minimap2) or ubam (vacmap) attribute.
+        tool: Alignment tool, either "minimap2" (default) or "vacmap".
 
     Returns:
-        str: The read group line (e.g. @RG\\tID:group1\\tLB:library1\\tPU:unit1).
-            If no read group is found, an empty string is returned.
+        str: Read group string formatted for the specified tool.
+            minimap2: "-R '@RG\\tID:...\\tSM:sample_type\\t...'"
+            vacmap:   "--rg_id id --rg_sm sample_type --rg_pl platform --rg_pm machine"
+            Returns empty string if no read group found (minimap2 only).
     """
+    bam_file = input.ubam if tool == "vacmap" else input.query
+    rg_id = wildcards.sample
+    rg = {}
 
-    with pysam.AlignmentFile(input.query, "rb", check_sq=False) as bam:
-        # Get the header dictionary
+    with pysam.AlignmentFile(bam_file, "rb", check_sq=False) as bam:
         header = bam.header
-        # Check if Read Groups are present
-        if "RG" in header:
-            # Access the first read group (assuming single RG in the bam)
-            read_group = header["RG"][0]
-            rg_tags = []
-            for key, val in read_group.items():
-                if key == "SM":
-                    continue
-                else:
-                    rg_tags.append(f"{key}:{val}")
+        if "RG" in header and len(header["RG"]) > 0:
+            rg = header["RG"][0]
+            rg_id = rg.get("ID", wildcards.sample)
 
-            rg_tags.append(f"SM:{wildcards.sample}_{wildcards.type}")  # set SM to values from units.tsv
+    if tool == "minimap2":
+        if rg:
+            rg_tags = [f"{k}:{v}" for k, v in rg.items() if k != "SM"]
+            rg_tags.append(f"SM:{wildcards.sample}_{wildcards.type}")
+            return "-R '@RG\\t" + "\\t".join(rg_tags) + "'"
+        return ""
 
-            rg_line = "-R '@RG\\t" + "\\t".join(rg_tags) + "'"
-
-            return rg_line
-        else:
-            return ""
+    # vacmap format: separate flags per RG field
+    unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
+    sm = f"{wildcards.sample}_{wildcards.type}"
+    return f"--rg_id {rg_id} --rg_sm {sm} --rg_pl {unit['platform']} --rg_pm {unit['machine']}"
 
 
 def get_chr_from_re(contig_patterns):
@@ -215,6 +218,19 @@ def compile_output_list(wildcards):
         for sample in get_samples(samples)
         for platform in units.loc[(sample,)].platform
         if platform in ["ONT", "PACBIO"]
+        for unit_type in get_unit_types(units, sample)
+        if unit_type in ["N", "T"]
+        for suffix in files[prefix]
+    ]
+    files = {
+        "alignment/vacmap_align": [".bam"],
+    }
+    output_files += [
+        f"{prefix}/{sample}_{unit_type}{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for platform in units.loc[(sample,)].platform
+        if platform == "PACBIO"
         for unit_type in get_unit_types(units, sample)
         if unit_type in ["N", "T"]
         for suffix in files[prefix]

@@ -32,3 +32,4 @@ Aligned, merged and sorted `.bam` files as well as chromosome split `.bam` files
 * `alignment/star/{sample}_{type}.SJ.out.tab`
 * `alignment/minimap2_align/{sample}_{type}.bam`
 * `alignment/pbmm2_align/{sample}_{type}.bam`
+* `alignment/vacmap_align/{sample}_{type}.bam`

@@ -38,7 +38,7 @@ rule minimap2_index:
 
 rule minimap2_align:
     input:
-        query=lambda wildcards: get_minimap2_query(wildcards),
+        query=lambda wildcards: get_ubam_query(wildcards),
         target=expand(
             "alignment/minimap2_index/{ref}.{preset}.mmi",
             ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
@@ -50,7 +50,7 @@ rule minimap2_align:
         extra=lambda wildcards, input: "%s %s -x %s"
         % (
             config.get("minimap2_align", {}).get("extra", ""),
-            config.get("minimap2_align", {}).get("read_group", generate_minimap2_read_group(wildcards, input)),
+            config.get("minimap2_align", {}).get("read_group", generate_longread_group(wildcards, input)),
             config.get("minimap2_align", {}).get("preset", ""),
         ),
         sorting=config.get("minimap2_align", {}).get("sort_order", "coordinate"),
