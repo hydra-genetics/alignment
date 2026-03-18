@@ -1,0 +1,173 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+    paths:
+      - "workflow/**"
+      - "config/**"
+      - ".tests/**"
+      - "requirements*.txt"
+      - ".github/workflows/**"
+      - ".pre-commit-config.yaml"
+  pull_request:
+    branches:
+      - develop
+      - master
+    paths:
+      - "workflow/**"
+      - "config/**"
+      - ".tests/**"
+      - "requirements*.txt"
+      - ".github/workflows/**"
+      - ".pre-commit-config.yaml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint workflow
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Linting
+        working-directory: .tests/integration
+        run: snakemake --lint -n -s ../../workflow/Snakefile --configfile config.yaml
+
+  snakefmt:
+    name: Snakefmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_SNAKEMAKE_SNAKEFMT: true
+          OUTPUT_FOLDER: .github/linters/report
+
+  dry-run:
+    name: Snakemake dry run
+    needs: [lint, snakefmt]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Snakemake dry run
+        working-directory: .tests/integration
+        run: snakemake -n -s ../../workflow/Snakefile --configfile config.yaml
+      - name: Snakemake dry run fastp_pe config
+        working-directory: .tests/integration
+        run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_fastp_pe.yaml
+      - name: Snakemake dry run longread config
+        working-directory: .tests/integration
+        run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_longread.yaml
+
+  compatibility:
+    name: Run compatibility test
+    needs: [dry-run]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v5.2
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Snakemake dry run
+        working-directory: .tests/compatibility
+        run: snakemake -n -s Snakefile --show-failed-logs --configfiles config.yaml
+      - name: Snakemake dry run fastp_pe config
+        working-directory: .tests/compatibility
+        run: snakemake -n -s Snakefile --show-failed-logs --configfiles config.yaml config_fastp_pe.yaml
+
+  integration:
+    name: Integration test
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: [compatibility]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: true
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Install Apptainer
+        uses: eWaterCycle/setup-apptainer@v2
+        with:
+          apptainer-version: 1.4.5
+      - name: Cache SIMG images
+        id: cache-simg
+        uses: actions/cache@v4
+        with:
+          path: ~/singularity_containers
+          key: ${{ runner.os }}-simg-${{ hashFiles('config/**/*.yaml', '.tests/integration/*.yaml', 'workflow/Snakefile') }}
+          restore-keys: |
+            ${{ runner.os }}-simg
+      - name: Create container cache directory
+        run: mkdir -p ~/singularity_containers
+      - name: Integration test - Illumina
+        working-directory: .tests/integration
+        run: |
+          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs \
+            --configfiles config.yaml config_fastp_pe.yaml \
+            --use-singularity \
+            --singularity-prefix ~/singularity_containers/ \
+            --singularity-args " --cleanenv --bind /home/runner "
+      - name: Integration test - longread
+        working-directory: .tests/integration
+        run: |
+          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs \
+            --configfiles config.yaml config_longread.yaml \
+            --use-singularity \
+            --singularity-prefix ~/singularity_containers/ \
+            --singularity-args " --cleanenv --bind /home/runner "
