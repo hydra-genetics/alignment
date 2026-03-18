@@ -10,6 +10,8 @@ on:
       - "mkdocs.yml"
       - "requirements*.txt"
       - ".github/workflows/**"
+      - "workflow/rules/**"
+      - "workflow/schemas/**"
   pull_request:
     branches:
      - develop
@@ -19,6 +21,8 @@ on:
       - "mkdocs.yml"
       - "requirements*.txt"
       - ".github/workflows/**"
+      - "workflow/rules/**"
+      - "workflow/schemas/**"
   workflow_dispatch:
 
 concurrency:
