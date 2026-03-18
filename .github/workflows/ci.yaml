@@ -76,11 +76,9 @@ jobs:
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
-            requirements.test.txt
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install -r requirements.test.txt
       - name: Snakemake dry run
         working-directory: .tests/integration
         run: snakemake -n -s ../../workflow/Snakefile --configfile config.yaml
@@ -107,11 +105,9 @@ jobs:
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
-            requirements.test.txt
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install -r requirements.test.txt
       - name: Snakemake dry run
         working-directory: .tests/compatibility
         run: snakemake -n -s Snakefile --show-failed-logs --configfiles config.yaml
@@ -142,11 +138,9 @@ jobs:
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
-            requirements.test.txt
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install -r requirements.test.txt
       - name: Install Apptainer
         uses: eWaterCycle/setup-apptainer@v2
         with:
