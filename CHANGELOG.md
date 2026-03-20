@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/hydra-genetics/alignment/compare/v0.7.0...v0.8.0) (2026-03-20)
+
+
+### Features
+
+* add fgbio_call_overlapping_consensus_bases to improve sequence … ([#168](https://github.com/hydra-genetics/alignment/issues/168)) ([#169](https://github.com/hydra-genetics/alignment/issues/169)) ([aba0e28](https://github.com/hydra-genetics/alignment/commit/aba0e28a609fdc97d0e334733272ca216ef2a3f3))
+
 ## [0.7.0](https://www.github.com/hydra-genetics/alignment/compare/v0.6.0...v0.7.0) (2025-05-23)
 
 
