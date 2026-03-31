@@ -101,4 +101,4 @@ rule pbmm2_merge:
     message:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
-        "v3.9.0/bio/samtools/merge"
+        "v9.4.1/bio/samtools/merge"

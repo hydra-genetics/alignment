@@ -65,4 +65,4 @@ rule vacmap_merge:
     message:
         "{rule}: merge {input.bams} using samtools merge"
     wrapper:
-        "v3.9.0/bio/samtools/merge"
+        "v9.4.1/bio/samtools/merge"
