@@ -156,7 +156,7 @@ rule samtools_index:
     message:
         "{rule}: create index for {input.bam}"
     wrapper:
-        "v1.1.0/bio/samtools/index"
+        "v9.4.1/bio/samtools/index"
 
 
 rule samtools_merge_bam:
@@ -219,7 +219,7 @@ rule samtools_sort:
     message:
         "{rule}: sort bam file {input.bam} using samtools"
     wrapper:
-        "v2.0.0/bio/samtools/sort"
+        "v9.4.1/bio/samtools/sort"
 
 
 rule samtools_sort_umi:
@@ -248,7 +248,7 @@ rule samtools_sort_umi:
     message:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
-        "v2.0.0/bio/samtools/sort"
+        "v9.4.1/bio/samtools/sort"
 
 
 rule samtools_fastq:
@@ -279,7 +279,7 @@ rule samtools_fastq:
     message:
         "{rule}: Convert the bam file {input.bam} into a fastq file"
     wrapper:
-        "v2.6.0/bio/samtools/fastq/separate"
+        "v9.4.1/bio/samtools/fastq/separate"
 
 
 rule samtools_filter_reads:

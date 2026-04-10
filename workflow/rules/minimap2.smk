@@ -33,7 +33,7 @@ rule minimap2_index:
     message:
         "{rule}: index {input.target} with minimap2"
     wrapper:
-        "v4.3.0/bio/minimap2/index"
+        "v9.4.1/bio/minimap2/index"
 
 
 rule minimap2_align:
@@ -74,7 +74,7 @@ rule minimap2_align:
     message:
         "{rule}: run minimap2 to align reads from {input.query} to {input.target}"
     wrapper:
-        "v4.3.0/bio/minimap2/aligner"
+        "v9.4.1/bio/minimap2/aligner"
 
 
 rule minimap2_merge:

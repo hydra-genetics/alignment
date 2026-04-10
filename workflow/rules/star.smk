@@ -31,4 +31,4 @@ rule star:
     message:
         "{rule}: align with star, creating {output.bam}"
     wrapper:
-        "v1.3.2/bio/star/align"
+        "v9.4.1/bio/star/align"

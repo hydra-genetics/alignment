@@ -31,7 +31,7 @@ rule picard_mark_duplicates:
     message:
         "{rule}: mark duplicates in {input} using picard"
     wrapper:
-        "v1.25.0/bio/picard/markduplicates"
+        "v9.4.1/bio/picard/markduplicates"
 
 
 rule picard_mark_duplicates_non_chr:
@@ -63,4 +63,4 @@ rule picard_mark_duplicates_non_chr:
     message:
         "{rule}: mark duplicates in {input.bams} using picard"
     wrapper:
-        "v1.25.0/bio/picard/markduplicates"
+        "v9.4.1/bio/picard/markduplicates"

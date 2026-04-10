@@ -49,7 +49,7 @@ rule bwa_mem:
     message:
         "{rule}: align fastq files {input.reads} using bwa mem against {input.idx[2]}"
     wrapper:
-        "v1.3.1/bio/bwa/mem"
+        "v9.4.1/bio/bwa/mem"
 
 
 rule bwa_mem_merge:

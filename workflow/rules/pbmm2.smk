@@ -32,7 +32,7 @@ rule pbmm2_index:
     message:
         "{rule}: index {input.reference} with pbmm2"
     wrapper:
-        "v3.9.0/bio/pbmm2/index"
+        "v9.4.1/bio/pbmm2/index"
 
 
 rule pbmm2_align:
@@ -69,7 +69,7 @@ rule pbmm2_align:
     message:
         "{rule}: Align reads in {input.query} against {input.reference}"
     wrapper:
-        "v4.3.0/bio/pbmm2/align"
+        "v9.4.1/bio/pbmm2/align"
 
 
 rule pbmm2_merge:
