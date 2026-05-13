@@ -170,7 +170,7 @@ rule samtools_merge_bam:
     output:
         bam=temp("alignment/samtools_merge_bam/{sample}_{type}_unsorted.bam"),
     params:
-        extra=config.get("samtools_merge_bam", {}).get("extra", ""),
+        extra=config.get("samtools_merge_bam", {}).get("extra", "-c -p"),
     log:
         "alignment/samtools_merge_bam/{sample}_{type}_unsorted.bam.log",
     benchmark:
