@@ -19,7 +19,7 @@ from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
 
 
-min_version("7.8.0")
+min_version("9.0.0")
 
 ### Set and validate config file
 
@@ -54,9 +54,9 @@ wildcard_constraints:
     chr="[^_]+",
     flowcell="[A-Z0-9-]+",
     lane="L[0-9]+",
-    sample="|".join(get_samples(samples)),
+    sample="|".join(re.escape(s) for s in get_samples(samples)),
     type="N|T|R",
-    file="^alignment/.+",
+    file="alignment/.+",
 
 
 ### Functions
