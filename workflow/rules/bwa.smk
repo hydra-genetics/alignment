@@ -49,7 +49,7 @@ rule bwa_mem:
     message:
         "{rule}: align fastq files {input.reads} using bwa mem against {input.idx[2]}"
     wrapper:
-        "v1.3.1/bio/bwa/mem"
+        "v9.8.0/bio/bwa/mem"
 
 
 rule bwa_mem2:
@@ -106,7 +106,7 @@ rule bwa_mem_merge:
     output:
         bam=temp("alignment/bwa_mem/{sample}_{type}_unsorted.bam"),
     params:
-        config.get("bwa_mem_merge", {}).get("extra", ""),
+        extra=config.get("bwa_mem_merge", {}).get("extra", ""),
     log:
         "alignment/bwa_mem/{sample}_{type}_unsorted.bam.log",
     benchmark:
@@ -126,7 +126,7 @@ rule bwa_mem_merge:
     message:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
-        "v1.1.0/bio/samtools/merge"
+        "v9.8.0/bio/samtools/merge"
 
 
 rule bwa_mem_realign_consensus_reads:
