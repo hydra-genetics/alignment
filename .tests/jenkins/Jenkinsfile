@@ -20,17 +20,17 @@ pipeline {
       steps {
         sshagent(['jenkins']) {
           sh '''#!/bin/bash
-               virtualenv venv -p python3.8
+               virtualenv venv -p python3.12
                source venv/bin/activate
                pip install -r requirements.txt
+               pip install snakemake-executor-plugin-slurm
                ln -s /data/test_data/gms560/prealignment prealignment
                cp .tests/jenkins/units.tsv units.tsv
                cp .tests/jenkins/samples.develop.tsv samples.tsv
                cp .tests/jenkins/resources.yaml resources.yaml
                cp .tests/jenkins/test_input.develop.tsv test_input.tsv
                module load singularity
-               module load slurm-drmaa
-               snakemake -s workflow/Snakefile --show-failed-logs --use-singularity --profile .tests/jenkins/profiles/slurm --notemp --configfile .tests/jenkins/config.yaml
+               snakemake -s workflow/Snakefile --show-failed-logs --software-deployment-method apptainer --profile .tests/jenkins/profiles/slurm --notemp --configfile .tests/jenkins/config.yaml
 
                git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
                module load nextflow
@@ -48,17 +48,17 @@ pipeline {
       steps {
         sshagent(['jenkins']) {
           sh '''#!/bin/bash
-               virtualenv venv -p python3.8
+               virtualenv venv -p python3.12
                source venv/bin/activate
                pip install -r requirements.txt
+               pip install snakemake-executor-plugin-slurm
                ln -s /data/test_data/gms560/prealignment prealignment
                cp .tests/jenkins/units.tsv units.tsv
                cp .tests/jenkins/samples.master.tsv samples.tsv
                cp .tests/jenkins/resources.yaml resources.yaml
                cp .tests/jenkins/test_input.master.tsv test_input.tsv
                module load singularity
-               module load slurm-drmaa
-               snakemake -s workflow/Snakefile --show-failed-logs --use-singularity --profile .tests/jenkins/profiles/slurm --notemp --configfile .tests/jenkins/config.yaml
+               snakemake -s workflow/Snakefile --show-failed-logs --software-deployment-method apptainer --profile .tests/jenkins/profiles/slurm --notemp --configfile .tests/jenkins/config.yaml
 
                git clone https://github.com/clinical-genomics-uppsala/validation_workflow.git
                module load nextflow
