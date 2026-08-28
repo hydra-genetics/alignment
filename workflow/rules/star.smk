@@ -10,11 +10,11 @@ rule star:
         fq2="prealignment/merged/{sample}_{type}_fastq2.fastq.gz",
         idx=config.get("star", {}).get("genome_index", ""),
     output:
-        bam=temp("alignment/star/{sample}_{type}.bam"),
+        aln=temp("alignment/star/{sample}_{type}.bam"),
         sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
     params:
         extra=config.get("star", {}).get("extra", "--outSAMtype BAM SortedByCoordinate"),
-        idx="{input.idx}",
+        idx=lambda wildcards, input: input.idx,
     log:
         "alignment/star/{sample}_{type}.bam.log",
     benchmark:
@@ -29,6 +29,6 @@ rule star:
     container:
         config.get("star", {}).get("container", config["default_container"])
     message:
-        "{rule}: align with star, creating {output.bam}"
+        "{rule}: align with star, creating {output.aln}"
     wrapper:
-        "v1.3.2/bio/star/align"
+        "v9.8.0/bio/star/align"

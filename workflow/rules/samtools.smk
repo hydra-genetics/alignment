@@ -156,7 +156,7 @@ rule samtools_index:
     message:
         "{rule}: create index for {input.bam}"
     wrapper:
-        "v1.1.0/bio/samtools/index"
+        "v9.8.0/bio/samtools/index"
 
 
 rule samtools_merge_bam:
@@ -190,7 +190,7 @@ rule samtools_merge_bam:
     message:
         "{rule}: merge chr bam files, creating {output}"
     wrapper:
-        "v1.1.0/bio/samtools/merge"
+        "v9.8.0/bio/samtools/merge"
 
 
 rule samtools_sort:
@@ -198,6 +198,11 @@ rule samtools_sort:
         bam="{file}_unsorted.bam",
     output:
         bam=temp("{file}.bam"),
+    wildcard_constraints:
+        # Prevent samtools_sort from matching its own _unsorted input, which would
+        # otherwise let Snakemake 9's stricter periodic-wildcard check recurse
+        # ({file}.bam <- {file}_unsorted.bam <- {file}_unsorted_unsorted.bam ...).
+        file="alignment/.+(?<!_unsorted)",
     params:
         extra=config.get("samtools_sort", {}).get("extra", ""),
     log:
@@ -219,7 +224,7 @@ rule samtools_sort:
     message:
         "{rule}: sort bam file {input.bam} using samtools"
     wrapper:
-        "v2.0.0/bio/samtools/sort"
+        "v9.8.0/bio/samtools/sort"
 
 
 rule samtools_sort_umi:
@@ -248,7 +253,7 @@ rule samtools_sort_umi:
     message:
         "{rule}: sort bam file {input} using samtools"
     wrapper:
-        "v2.0.0/bio/samtools/sort"
+        "v9.8.0/bio/samtools/sort"
 
 
 rule samtools_fastq:
@@ -258,7 +263,11 @@ rule samtools_fastq:
         fastq1="alignment/samtools_fastq/{sample}_{type}.fastq1.umi.fastq.gz",
         fastq2="alignment/samtools_fastq/{sample}_{type}.fastq2.umi.fastq.gz",
     params:
-        sort=config.get("samtools_fastq", {}).get("sort", "-m 4G"),
+        # v9.8.0 wrapper switched from `samtools sort` to `samtools collate` and reads a
+        # `collate` param (the old `sort` param, incl. its `-m 4G` default, is no longer read
+        # and `-m` is not a valid collate flag). TODO: verify this does not change the output
+        # FASTQs (read grouping/order) compared to the previous sort-based wrapper.
+        collate=config.get("samtools_fastq", {}).get("collate", ""),
         fastq=config.get("samtools_fastq", {}).get("fastq", "-n"),
     log:
         "alignment/samtools_fastq/{sample}_{type}.output.log",
@@ -279,7 +288,7 @@ rule samtools_fastq:
     message:
         "{rule}: Convert the bam file {input.bam} into a fastq file"
     wrapper:
-        "v2.6.0/bio/samtools/fastq/separate"
+        "v9.8.0/bio/samtools/fastq/separate"
 
 
 rule samtools_filter_reads:

@@ -35,10 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python 3.8
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: requirements.txt
       - name: Install dependencies
@@ -56,12 +56,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        uses: super-linter/super-linter@v7
         env:
           VALIDATE_ALL_CODEBASE: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_SNAKEMAKE_SNAKEFMT: true
-          OUTPUT_FOLDER: .github/linters/report
 
   dry-run:
     name: Snakemake dry run
@@ -69,10 +68,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python 3.8
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
@@ -98,10 +97,10 @@ jobs:
         id: branch-name
         uses: tj-actions/branch-names@v5.2
       - uses: actions/checkout@v4
-      - name: Set up Python 3.8
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
@@ -131,10 +130,10 @@ jobs:
           large-packages: false
           docker-images: true
       - uses: actions/checkout@v4
-      - name: Set up Python 3.8
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
@@ -145,14 +144,14 @@ jobs:
         uses: eWaterCycle/setup-apptainer@v2
         with:
           apptainer-version: 1.4.5
-      - name: Cache SIMG images
-        id: cache-simg
+      - name: Cache apptainer images
+        id: cache-apptainer
         uses: actions/cache@v4
         with:
           path: ~/singularity_containers
-          key: ${{ runner.os }}-simg-${{ hashFiles('config/**/*.yaml', '.tests/integration/*.yaml', 'workflow/Snakefile') }}
+          key: ${{ runner.os }}-apptainer-${{ hashFiles('config/**/*.yaml', '.tests/integration/*.yaml', 'workflow/Snakefile') }}
           restore-keys: |
-            ${{ runner.os }}-simg
+            ${{ runner.os }}-apptainer
       - name: Create container cache directory
         run: mkdir -p ~/singularity_containers
       - name: Integration test - Illumina
@@ -160,14 +159,14 @@ jobs:
         run: |
           snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs \
             --configfiles config.yaml config_fastp_pe.yaml \
-            --use-singularity \
-            --singularity-prefix ~/singularity_containers/ \
-            --singularity-args " --cleanenv --bind /home/runner "
+            --software-deployment-method apptainer \
+            --apptainer-prefix ~/singularity_containers/ \
+            --apptainer-args "--cleanenv --bind /home/runner"
       - name: Integration test - longread
         working-directory: .tests/integration
         run: |
           snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs \
             --configfiles config.yaml config_longread.yaml \
-            --use-singularity \
-            --singularity-prefix ~/singularity_containers/ \
-            --singularity-args " --cleanenv --bind /home/runner "
+            --software-deployment-method apptainer \
+            --apptainer-prefix ~/singularity_containers/ \
+            --apptainer-args "--cleanenv --bind /home/runner"
