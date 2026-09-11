@@ -10,13 +10,7 @@ import math
 rule bwa_mem:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
-        idx=[
-            config.get("bwa_mem", {}).get("amb", ""),
-            config.get("bwa_mem", {}).get("ann", ""),
-            config.get("bwa_mem", {}).get("bwt", ""),
-            config.get("bwa_mem", {}).get("pac", ""),
-            config.get("bwa_mem", {}).get("sa", ""),
-        ],
+        idx=lambda wildcards: [get_config_value("bwa_mem", ext) for ext in ("amb", "ann", "bwt", "pac", "sa")],
     output:
         bam=temp("alignment/bwa_mem/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam"),
     params:
@@ -91,7 +85,7 @@ rule bwa_mem_realign_consensus_reads:
         bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi_unsorted.bam"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
-        reference=config.get("reference", {}).get("fasta", ""),
+        reference=lambda wildcards: get_config_value("reference", "fasta"),
         tmp_dir="alignment/tmp_realign_{sample}_{type}",
         fgbio_sorted_unmapped="alignment/tmp_realign_{sample}_{type}/fgbio_query_sorted.bam",
     log:

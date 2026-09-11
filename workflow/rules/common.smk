@@ -10,6 +10,7 @@ import re
 import sys
 import os
 import yaml
+from snakemake.exceptions import WorkflowError
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
@@ -105,11 +106,29 @@ def get_ubam_query(wildcards):
     return bam_file
 
 
-def get_reference_path(wildcards):
-    ref_path = (config.get("reference", {}).get("fasta", ""),)
-    fasta = os.path.basename(ref_path)
+def get_config_value(*keys):
+    """
+    Fetch a required value from the config, failing with a message that names the
+    missing entry.
 
-    return
+    Defaulting to "" is not usable here: an empty string reaches Snakemake either as
+    a rule input, where it aborts with a MissingInputException that lists no file, or
+    as a params value, where it silently produces a malformed shell command. Call this
+    from an input/params function so the check stays lazy -- a workflow that never uses
+    the rule does not have to configure it.
+    """
+    value = config
+    for i, key in enumerate(keys):
+        if not isinstance(value, dict) or key not in value:
+            missing = ":".join(keys[: i + 1])
+            raise WorkflowError(f"alignment: missing config entry '{missing}', required by the rule being run")
+        value = value[key]
+
+    name = ":".join(keys)
+    if not isinstance(value, str) or not value.strip():
+        raise WorkflowError(f"alignment: config entry '{name}' must be a non-empty string, got {repr(value)}")
+
+    return value
 
 
 def generate_longread_group(wildcards, input, tool="minimap2"):
@@ -152,7 +171,7 @@ def generate_longread_group(wildcards, input, tool="minimap2"):
 
 def get_chr_from_re(contig_patterns):
     contigs = []
-    ref_fasta = config.get("reference", {}).get("fasta", "")
+    ref_fasta = get_config_value("reference", "fasta")
     all_contigs = extract_chr(f"{ref_fasta}.fai", filter_out=[])
     for pattern in contig_patterns:
         for contig in all_contigs:
@@ -182,7 +201,7 @@ def get_chrom_bams(wildcards):
     else:
         skip_contigs = get_chr_from_re(contig_patterns)
 
-    ref_fasta = config.get("reference", {}).get("fasta", "")
+    ref_fasta = get_config_value("reference", "fasta")
     chroms = extract_chr(f"{ref_fasta}.fai", filter_out=skip_contigs)
 
     bam_list = [f"alignment/picard_mark_duplicates/{wildcards.sample}_{wildcards.type}_{chr}.bam" for chr in chroms]
@@ -191,7 +210,7 @@ def get_chrom_bams(wildcards):
 
 
 def get_contig_list(wildcards):
-    contig_patterns = config.get("reference", {}).get("merge_contigs", "")
+    contig_patterns = config.get("reference", {}).get("merge_contigs", [])
     contigs = get_chr_from_re(contig_patterns)
 
     return contigs
@@ -199,7 +218,7 @@ def get_contig_list(wildcards):
 
 def set_minimap2_preset(wildcards):
     extra = config.get("minimap2_align", {}).get("extra", "")
-    preset = config.get("minimap2_align", {}).get("preset", "")
+    preset = get_config_value("minimap2_align", "preset")
     preset_extra = f"-x {preset} {extra}"
 
     return preset_extra
