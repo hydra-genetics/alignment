@@ -61,7 +61,7 @@ rule fgbio_call_and_filter_consensus_reads:
         min_input_base_quality_filter=config.get("fgbio_call_and_filter_consensus_reads", {}).get(
             "min_input_base_quality_filter", "45"
         ),
-        reference=config.get("reference", {}).get("fasta", ""),
+        reference=lambda wildcards: get_config_value("reference", "fasta"),
     log:
         "alignment/fgbio_call_and_filter_consensus_reads/{sample}_{type}.umi.unmapped.bam.log",
     benchmark:
@@ -142,7 +142,7 @@ rule fgbio_group_reads_by_umi:
 rule fgbio_call_overlapping_consensus_bases:
     input:
         bam="alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi.bam",
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         bam=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.bam"),
         metrics=temp("alignment/fgbio_call_overlapping_consensus_bases/{sample}_{type}.umi.metrics.txt"),
