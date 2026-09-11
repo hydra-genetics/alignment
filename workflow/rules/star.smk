@@ -8,7 +8,7 @@ rule star:
     input:
         fq1="prealignment/merged/{sample}_{type}_fastq1.fastq.gz",
         fq2="prealignment/merged/{sample}_{type}_fastq2.fastq.gz",
-        idx=config.get("star", {}).get("genome_index", ""),
+        idx=lambda wildcards: get_config_value("star", "genome_index"),
     output:
         aln=temp("alignment/star/{sample}_{type}.bam"),
         sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
