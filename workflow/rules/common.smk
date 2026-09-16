@@ -10,10 +10,10 @@ import re
 import sys
 import os
 import yaml
-from snakemake.exceptions import WorkflowError
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.config import config_accessor
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.units import *
@@ -106,29 +106,7 @@ def get_ubam_query(wildcards):
     return bam_file
 
 
-def get_config_value(*keys):
-    """
-    Fetch a required value from the config, failing with a message that names the
-    missing entry.
-
-    Defaulting to "" is not usable here: an empty string reaches Snakemake either as
-    a rule input, where it aborts with a MissingInputException that lists no file, or
-    as a params value, where it silently produces a malformed shell command. Call this
-    from an input/params function so the check stays lazy -- a workflow that never uses
-    the rule does not have to configure it.
-    """
-    value = config
-    for i, key in enumerate(keys):
-        if not isinstance(value, dict) or key not in value:
-            missing = ":".join(keys[: i + 1])
-            raise WorkflowError(f"alignment: missing config entry '{missing}', required by the rule being run")
-        value = value[key]
-
-    name = ":".join(keys)
-    if not isinstance(value, str) or not value.strip():
-        raise WorkflowError(f"alignment: config entry '{name}' must be a non-empty string, got {repr(value)}")
-
-    return value
+get_config_value = config_accessor(config, module="alignment")
 
 
 def generate_longread_group(wildcards, input, tool="minimap2"):
