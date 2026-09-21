@@ -22,8 +22,6 @@ rule bwa_mem:
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
         sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),
-        sort_extra="-@ %s"
-        % str(config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
     log:
         "alignment/bwa_mem/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam.log",
     benchmark:
@@ -49,13 +47,7 @@ rule bwa_mem:
 rule bwa_mem2:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
-        idx=[
-            config.get("bwa_mem2", {}).get("0123", ""),
-            config.get("bwa_mem2", {}).get("amb", ""),
-            config.get("bwa_mem2", {}).get("ann", ""),
-            config.get("bwa_mem2", {}).get("bwt", ""),
-            config.get("bwa_mem2", {}).get("pac", ""),
-        ],
+        idx=lambda wildcards: [get_config_value("bwa_mem", ext) for ext in ("0123", "amb", "ann", "bwt", "pac")],
     output:
         bam=temp("alignment/bwa_mem2/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam"),
     params:
@@ -88,7 +80,7 @@ rule bwa_mem2:
     message:
         "{rule}: align fastq files {input.reads} using bwa-mem2 mem against {input.idx[0]}"
     wrapper:
-        "v1.3.1/bio/bwa-mem2/mem"
+        "v9.8.0/bio/bwa-mem2/mem"
 
 
 rule bwa_mem_merge:
