@@ -10,13 +10,7 @@ import math
 rule bwa_mem:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
-        idx=[
-            config.get("bwa_mem", {}).get("amb", ""),
-            config.get("bwa_mem", {}).get("ann", ""),
-            config.get("bwa_mem", {}).get("bwt", ""),
-            config.get("bwa_mem", {}).get("pac", ""),
-            config.get("bwa_mem", {}).get("sa", ""),
-        ],
+        idx=lambda wildcards: [get_config_value("bwa_mem", ext) for ext in ("amb", "ann", "bwt", "pac", "sa")],
     output:
         bam=temp("alignment/bwa_mem/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam"),
     params:
@@ -28,8 +22,6 @@ rule bwa_mem:
         ),
         sorting=config.get("bwa_mem", {}).get("sort", "samtools"),
         sort_order=config.get("bwa_mem", {}).get("sort_order", "coordinate"),
-        sort_extra="-@ %s"
-        % str(config.get("bwa_mem", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
     log:
         "alignment/bwa_mem/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam.log",
     benchmark:
@@ -49,7 +41,7 @@ rule bwa_mem:
     message:
         "{rule}: align fastq files {input.reads} using bwa mem against {input.idx[2]}"
     wrapper:
-        "v1.3.1/bio/bwa/mem"
+        "v9.8.0/bio/bwa/mem"
 
 
 rule bwa_mem_merge:
@@ -61,7 +53,7 @@ rule bwa_mem_merge:
     output:
         bam=temp("alignment/bwa_mem/{sample}_{type}_unsorted.bam"),
     params:
-        config.get("bwa_mem_merge", {}).get("extra", ""),
+        extra=config.get("bwa_mem_merge", {}).get("extra", ""),
     log:
         "alignment/bwa_mem/{sample}_{type}_unsorted.bam.log",
     benchmark:
@@ -81,7 +73,7 @@ rule bwa_mem_merge:
     message:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
-        "v1.1.0/bio/samtools/merge"
+        "v9.8.0/bio/samtools/merge"
 
 
 rule bwa_mem_realign_consensus_reads:
@@ -91,7 +83,7 @@ rule bwa_mem_realign_consensus_reads:
         bam=temp("alignment/bwa_mem_realign_consensus_reads/{sample}_{type}.umi_unsorted.bam"),
     params:
         extra_bwa_mem=config.get("bwa_mem_realign_consensus_reads", {}).get("extra_bwa_mem", ""),
-        reference=config.get("reference", {}).get("fasta", ""),
+        reference=lambda wildcards: get_config_value("reference", "fasta"),
         tmp_dir="alignment/tmp_realign_{sample}_{type}",
         fgbio_sorted_unmapped="alignment/tmp_realign_{sample}_{type}/fgbio_query_sorted.bam",
     log:

@@ -13,13 +13,14 @@ import yaml
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.config import config_accessor
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.misc import extract_chr
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.samples import *
 
 
-min_version("7.8.0")
+min_version("9.0.0")
 
 ### Set and validate config file
 
@@ -54,9 +55,9 @@ wildcard_constraints:
     chr="[^_]+",
     flowcell="[A-Z0-9-]+",
     lane="L[0-9]+",
-    sample="|".join(get_samples(samples)),
+    sample="|".join(re.escape(s) for s in get_samples(samples)),
     type="N|T|R",
-    file="^alignment/.+",
+    file="alignment/.+",
 
 
 ### Functions
@@ -105,11 +106,7 @@ def get_ubam_query(wildcards):
     return bam_file
 
 
-def get_reference_path(wildcards):
-    ref_path = (config.get("reference", {}).get("fasta", ""),)
-    fasta = os.path.basename(ref_path)
-
-    return
+get_config_value = config_accessor(config, module="alignment")
 
 
 def generate_longread_group(wildcards, input, tool="minimap2"):
@@ -152,7 +149,7 @@ def generate_longread_group(wildcards, input, tool="minimap2"):
 
 def get_chr_from_re(contig_patterns):
     contigs = []
-    ref_fasta = config.get("reference", {}).get("fasta", "")
+    ref_fasta = get_config_value("reference", "fasta")
     all_contigs = extract_chr(f"{ref_fasta}.fai", filter_out=[])
     for pattern in contig_patterns:
         for contig in all_contigs:
@@ -182,7 +179,7 @@ def get_chrom_bams(wildcards):
     else:
         skip_contigs = get_chr_from_re(contig_patterns)
 
-    ref_fasta = config.get("reference", {}).get("fasta", "")
+    ref_fasta = get_config_value("reference", "fasta")
     chroms = extract_chr(f"{ref_fasta}.fai", filter_out=skip_contigs)
 
     bam_list = [f"alignment/picard_mark_duplicates/{wildcards.sample}_{wildcards.type}_{chr}.bam" for chr in chroms]
@@ -191,7 +188,7 @@ def get_chrom_bams(wildcards):
 
 
 def get_contig_list(wildcards):
-    contig_patterns = config.get("reference", {}).get("merge_contigs", "")
+    contig_patterns = config.get("reference", {}).get("merge_contigs", [])
     contigs = get_chr_from_re(contig_patterns)
 
     return contigs
@@ -199,7 +196,7 @@ def get_contig_list(wildcards):
 
 def set_minimap2_preset(wildcards):
     extra = config.get("minimap2_align", {}).get("extra", "")
-    preset = config.get("minimap2_align", {}).get("preset", "")
+    preset = get_config_value("minimap2_align", "preset")
     preset_extra = f"-x {preset} {extra}"
 
     return preset_extra
