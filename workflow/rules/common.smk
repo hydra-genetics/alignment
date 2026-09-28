@@ -89,7 +89,7 @@ def get_deduplication_option(wildcards):
         return ""
 
 
-def generate_read_group(wildcards):
+def generate_read_group_bwa(wildcards):
     return "-R '@RG\\tID:{}\\tSM:{}\\tPL:{}\\tPU:{}\\tLB:{}' -v 1 ".format(
         "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
         "{}_{}".format(wildcards.sample, wildcards.type),
@@ -98,6 +98,15 @@ def generate_read_group(wildcards):
         "{}_{}".format(wildcards.sample, wildcards.type),
     )
 
+
+def generate_read_group_star(wildcards):
+    return "--outSAMattrRGline 'ID:{} SM:{} PL:{} PU:{} LB:{}'".format(
+        "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
+        "{}_{}".format(wildcards.sample, wildcards.type),
+        get_unit_platform(units, wildcards),
+        "{}.{}.{}".format(wildcards.flowcell, wildcards.lane, wildcards.barcode),
+        "{}_{}".format(wildcards.sample, wildcards.type),
+    )
 
 def get_ubam_query(wildcards):
     unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
