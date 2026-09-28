@@ -13,7 +13,7 @@ rule star:
         aln=temp("alignment/star/{sample}_{type}.bam"),
         sj=temp("alignment/star/{sample}_{type}.SJ.out.tab"),
     params:
-        extra=lambda wildcards: "%s %s" % (config.get("star", {}).get("extra", "--outSAMtype BAM SortedByCoordinate"), "--outSAMattrRGline %s " % generate_read_group(wildcards)),
+        extra=lambda wildcards: "%s %s" % (config.get("star", {}).get("extra", "--outSAMtype BAM SortedByCoordinate"), generate_read_group_start(wildcards)),
         idx=lambda wildcards, input: input.idx,
     log:
         "alignment/star/{sample}_{type}.bam.log",
