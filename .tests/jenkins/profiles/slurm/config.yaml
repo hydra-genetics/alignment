@@ -1,4 +1,11 @@
+executor: slurm
 jobs: 100
-drmaa: " -t {resources.time} -n {resources.threads} --mem={resources.mem_mb} --partition={resources.partition} "
-default-resources: [threads=1, time="01:00:00", partition="core", mem_mb="1024", mem_per_cpu="3074"]
-singularity-args: "-e --cleanenv -B /projects -B /data -B /beegfs-storage -B /scratch -B /beegfs-storage/temp:/tmp"
+latency-wait: 60
+# The SLURM executor plugin reads slurm_partition / runtime / mem_mb / threads. It does NOT read
+# the hydra-genetics per-rule `time` and `partition` resources, so runtime has to cover the
+# longest rule (bwa_mem asks for 8 h in .tests/jenkins/resources.yaml).
+default-resources:
+  - slurm_partition="core"
+  - runtime="8h"
+  - mem_mb=1024
+apptainer-args: "-e --cleanenv -B /projects -B /data -B /beegfs-storage -B /scratch -B /beegfs-storage/temp:/tmp"

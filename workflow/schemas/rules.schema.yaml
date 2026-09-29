@@ -1,4 +1,4 @@
-$schema: "http://json-schema.org/draft-04/schema#"
+$schema: "https://json-schema.org/draft/2020-12/schema"
 description: snakemake rule input and output files description file
 type: object
 properties:
@@ -558,7 +558,7 @@ properties:
         type: object
         description: list of outputs
         properties:
-          bam:
+          aln:
             type: string
             description: aligned bam file
           sj:

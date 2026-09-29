@@ -7,7 +7,7 @@ __license__ = "GPL-3"
 rule vacmap_align:
     input:
         ubam=lambda wildcards: get_ubam_query(wildcards),
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         bam=temp("alignment/vacmap_align/{sample}_{type}_{processing_unit}_{barcode}.sorted.bam"),
     params:
@@ -65,4 +65,4 @@ rule vacmap_merge:
     message:
         "{rule}: merge {input.bams} using samtools merge"
     wrapper:
-        "v3.9.0/bio/samtools/merge"
+        "v9.8.0/bio/samtools/merge"
