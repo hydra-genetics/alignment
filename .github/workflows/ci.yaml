@@ -88,6 +88,9 @@ jobs:
       - name: Snakemake dry run longread config
         working-directory: .tests/integration
         run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_longread.yaml
+      - name: Snakemake dry run bwa_mem2 config
+        working-directory: .tests/integration
+        run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_fastp_pe.yaml config_bwa_mem2.yaml
 
   compatibility:
     name: Run compatibility test
@@ -163,6 +166,15 @@ jobs:
             --use-singularity \
             --singularity-prefix ~/singularity_containers/ \
             --singularity-args " --cleanenv --bind /home/runner "
+      - name: Integration test - Illumina bwa_mem2
+        working-directory: .tests/integration
+        run: |
+          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs \
+            --configfiles config.yaml config_fastp_pe.yaml config_bwa_mem2.yaml \
+            --use-singularity \
+            --singularity-prefix ~/singularity_containers/ \
+            --singularity-args " --cleanenv --bind /home/runner " \
+            --forceall
       - name: Integration test - longread
         working-directory: .tests/integration
         run: |

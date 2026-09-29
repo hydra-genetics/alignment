@@ -13,6 +13,7 @@ digraph snakemake_dag {
 	51[label = "samtools_extract_reads_umi", color = "0.13 0.6 0.85", style="rounded"];
 	5[label = "bwa_mem_merge", color = "0.18 0.6 0.85", style="rounded"];
 	6[label = "bwa_mem", color = "0.39 0.6 0.85", style="rounded"];
+	7[label = "bwa_mem2", color = "0.39 0.6 0.85", style="dashed"];
 	8[label = "picard_mark_duplicates_non_chr", color = "0.63 0.6 0.85", style="rounded"];
 	9[label = "samtools_extract_reads_non_chr", color = "0.35 0.6 0.85", style="rounded"];
 	10[label = "bwa_mem_realign_consensus_reads", color = "0.42 0.6 0.85", style="rounded"];
@@ -26,6 +27,7 @@ digraph snakemake_dag {
 	30[label = "chrN_bam", color = "0.0 0.0 0.0", style="dotted"];
 	31[label = "chrN_bam_umi", color = "0.0 0.0 0.0", style="dotted"];
 	0 -> 6
+	0 -> 7 [style="dashed"]
 	15 -> 61
 	5 -> 41
 	2 -> 20
@@ -38,6 +40,7 @@ digraph snakemake_dag {
 	4 -> 3
 	41 -> 4
 	6 -> 5
+	7 -> 5 [style="dashed"]
 	9 -> 8
 	41 -> 9
 	11 -> 10

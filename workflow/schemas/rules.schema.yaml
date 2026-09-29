@@ -30,6 +30,34 @@ properties:
               NOTE: if the fastq files are divided into different lanes for the same sample,
               they will be aligned separately
 
+  bwa_mem2:
+    type: object
+    description: input and output parameters for bwa_mem2
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          reads:
+            type: string
+            description: |
+              fastq files from the same sample.
+              fastq files obtained by get_fastq_file defined in [`common.smk`](https://github.com/hydra-genetics/prealignment/blob/develop/workflow/rules/common.smk)
+          idx:
+            type: string
+            description: |
+              bwa-mem2 index files (.0123, .amb, .ann, .bwt.2bit.64, .pac), location are defined in the `config.yaml`
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: |
+              aligned bam file.
+              NOTE: if the fastq files are divided into different lanes for the same sample,
+              they will be aligned separately
+
   bwa_mem_merge:
     type: object
     description: input and output parameters for bwa_mem

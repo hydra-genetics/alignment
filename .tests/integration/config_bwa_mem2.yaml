@@ -1,0 +1,9 @@
+short_read_aligner: "bwa_mem2"
+
+bwa_mem2:
+  "0123": "reference/WASH7P.fasta.0123"
+  amb: "reference/WASH7P.fasta.amb"
+  ann: "reference/WASH7P.fasta.ann"
+  bwt: "reference/WASH7P.fasta.bwt.2bit.64"
+  container: "docker://hydragenetics/bwa_mem2:2.3"
+  pac: "reference/WASH7P.fasta.pac"
