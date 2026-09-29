@@ -99,14 +99,14 @@ def generate_read_group_bwa(wildcards):
     )
 
 
-def generate_read_group_star(wildcards):
-    return "--outSAMattrRGline 'ID:{} SM:{} PL:{} PU:{} LB:{}'".format(
-        "{}_{}.{}.{}".format(wildcards.sample, wildcards.type, wildcards.lane, wildcards.barcode),
-        "{}_{}".format(wildcards.sample, wildcards.type),
-        get_unit_platform(units, wildcards),
-        "{}.{}.{}".format(wildcards.flowcell, wildcards.lane, wildcards.barcode),
-        "{}_{}".format(wildcards.sample, wildcards.type),
-    )
+def generate_star_read_group(wildcards):
+    rg_id = "{}_{}".format(wildcards.sample, wildcards.type)
+    rg_sm = "{}_{}".format(wildcards.sample, wildcards.type)
+    rg_pl = "Illumina"
+    rg_pu = "{}_{}".format(wildcards.sample, wildcards.type)
+    rg_lb = "{}_{}".format(wildcards.sample, wildcards.type)
+    return f"--outSAMattrRGline ID:{rg_id}\tSM:{rg_sm}\tPL:{rg_pl}\tPU:{rg_pu}\tLB:{rg_lb}"
+
 
 def get_ubam_query(wildcards):
     unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
