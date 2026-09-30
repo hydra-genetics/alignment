@@ -80,6 +80,14 @@ elif config.get("trimmer_software", "None") == "None":
     ]
 
 
+def get_short_read_aligner():
+    aligner = config.get("short_read_aligner", "bwa_mem")
+    if aligner not in ["bwa_mem", "bwa_mem2"]:
+        raise ValueError(f"Unsupported short_read_aligner '{aligner}', must be one of: bwa_mem, bwa_mem2")
+
+    return aligner
+
+
 def get_deduplication_option(wildcards):
     sample = get_sample(samples, wildcards)
     if sample.get("deduplication", "") == "umi":

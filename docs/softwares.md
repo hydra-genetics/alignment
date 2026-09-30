@@ -23,6 +23,31 @@ Align `.fastq` files to a reference genome and generate a `.bam` file.
 
 ---
 
+## [bwa_mem2](https://github.com/bwa-mem2/bwa-mem2)
+Align `.fastq` files to a reference genome using bwa-mem2 and generate a `.bam` file. bwa-mem2 is a faster drop-in
+replacement for bwa mem that produces identical alignments. It requires its own index (`.0123`, `.bwt.2bit.64`, `.amb`, `.ann`, `.pac`),
+created with `bwa-mem2 index`. Select it instead of bwa_mem by setting `short_read_aligner: "bwa_mem2"` in the `config.yaml`.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__bwa__bwa_mem2#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__bwa__bwa_mem2#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__bwa_mem2#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__bwa_mem2#
+
+---
+
 ## [bwa_mem_merge](http://www.htslib.org/doc/samtools-merge.html)
 Merge `.bam` files from the same sample using samtools merge.
 
