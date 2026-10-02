@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.9.0](https://github.com/hydra-genetics/alignment/compare/v0.8.0...v0.9.0) (2026-10-02)
+
+
+### Features
+
+* added bwa-mem2 and a config switch short_read_aligner to choose aligner ([#184](https://github.com/hydra-genetics/alignment/issues/184)) ([8ab769b](https://github.com/hydra-genetics/alignment/commit/8ab769bfb72d5f62ef9591b9475a4bf921690984))
+* use -c -p in  default extra params for samtools merge ([ae90332](https://github.com/hydra-genetics/alignment/commit/ae9033256bf692bde99d4b6690083cfe1de84666))
+* use -c -p in  default extra params for samtools merge ([ae79e46](https://github.com/hydra-genetics/alignment/commit/ae79e469eaca5ba61a397cbded7a4172cdebcd77))
+
 ## [0.8.0](https://github.com/hydra-genetics/alignment/compare/v0.7.0...v0.8.0) (2026-03-20)
 
 
