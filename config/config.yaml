@@ -4,6 +4,8 @@ resources: "resources.yaml"
 
 default_container: "docker://hydragenetics/common:0.1.9"
 
+short_read_aligner: "bwa_mem" # bwa_mem or bwa_mem2
+
 reference:
   fasta: "reference/WASH7P.fna"
   fai: "reference/WASH7P.fna.fai"
@@ -15,6 +17,14 @@ bwa_mem:
   bwt: "reference/WASH7P.fna.bwt"
   pac: "reference/WASH7P.fna.pac"
   sa: "reference/WASH7P.fna.sa"
+
+bwa_mem2:
+  container: "docker://hydragenetics/bwa_mem2:2.3"
+  "0123": "reference/WASH7P.fna.0123"
+  amb: "reference/WASH7P.fna.amb"
+  ann: "reference/WASH7P.fna.ann"
+  bwt: "reference/WASH7P.fna.bwt.2bit.64"
+  pac: "reference/WASH7P.fna.pac"
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"

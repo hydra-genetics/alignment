@@ -12,9 +12,9 @@ include: "rules/pbmm2.smk"
 include: "rules/picard.smk"
 include: "rules/samtools.smk"
 include: "rules/star.smk"
+include: "rules/vacmap.smk"
 
 
-ruleorder: bwa_mem > samtools_sort
 ruleorder: fgbio_copy_umi_from_read_name > samtools_sort
 ruleorder: fgbio_group_reads_by_umi > samtools_sort
 ruleorder: picard_mark_duplicates > samtools_sort

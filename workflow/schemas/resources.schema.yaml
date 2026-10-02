@@ -55,6 +55,32 @@ properties:
           RECOMMENDATION: use multiple threads for decreased run time.
           NOTE: if multiple threads is used the memory must also be increased (mem_mb)
 
+  bwa_mem2:
+    type: object
+    description: resource definitions for bwa_mem2
+    properties:
+      mem_mb:
+        type: integer
+        description: |
+          memory in MB used per cpu
+          NOTE: bwa-mem2 uses more memory than bwa mem (index is ~5x larger).
+      mem_per_cpu:
+        type: integer
+        description: |
+          memory used per cpu
+          NOTE: bwa-mem2 uses more memory than bwa mem (index is ~5x larger).
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+          RECOMMENDATION: use multiple threads for decreased run time.
+
   bwa_mem_merge:
     type: object
     description: resource definitions for merging bwa bam files
@@ -571,6 +597,47 @@ properties:
           number of threads to be available
           RECOMMENDATION: use multiple threads for decreased run time.
           NOTE: if multiple threads is used the memory must also be increased (mem_mb)
+
+  vacmap_align:
+    type: object
+    description: resource definitions for vacmap alignment
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description:  |
+          number of threads to be available
+
+  vacmap_merge:
+    type: object
+    description: resource definitions for vacmap_merge
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      time:
+        type: string
+        description: max execution time
+      threads:
+        type: integer
+        description: number of threads to be available
 
 
 required:

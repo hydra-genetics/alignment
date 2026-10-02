@@ -52,10 +52,55 @@ rule bwa_mem:
         "v1.3.1/bio/bwa/mem"
 
 
+rule bwa_mem2:
+    input:
+        reads=lambda wildcards: alignment_input(wildcards),
+        idx=[
+            config.get("bwa_mem2", {}).get("0123", ""),
+            config.get("bwa_mem2", {}).get("amb", ""),
+            config.get("bwa_mem2", {}).get("ann", ""),
+            config.get("bwa_mem2", {}).get("bwt", ""),
+            config.get("bwa_mem2", {}).get("pac", ""),
+        ],
+    output:
+        bam=temp("alignment/bwa_mem2/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam"),
+    params:
+        extra=lambda wildcards: "%s %s %s"
+        % (
+            config.get("bwa_mem2", {}).get("extra", ""),
+            config.get("bwa_mem2", {}).get("read_group", generate_read_group(wildcards)),
+            get_deduplication_option(wildcards),
+        ),
+        sort=config.get("bwa_mem2", {}).get("sort", "samtools"),
+        sort_order=config.get("bwa_mem2", {}).get("sort_order", "coordinate"),
+        sort_extra="-@ %s"
+        % str(config.get("bwa_mem2", config["default_resources"]).get("threads", config["default_resources"]["threads"])),
+    log:
+        "alignment/bwa_mem2/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam.log",
+    benchmark:
+        repeat(
+            "alignment/bwa_mem2/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam.benchmark.tsv",
+            config.get("bwa_mem2", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("bwa_mem2", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("bwa_mem2", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("bwa_mem2", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("bwa_mem2", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("bwa_mem2", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("bwa_mem2", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("bwa_mem2", {}).get("container", config["default_container"])
+    message:
+        "{rule}: align fastq files {input.reads} using bwa-mem2 mem against {input.idx[0]}"
+    wrapper:
+        "v1.3.1/bio/bwa-mem2/mem"
+
+
 rule bwa_mem_merge:
     input:
         bams=lambda wildcards: [
-            "alignment/bwa_mem/{sample}_{type}_%s_%s_%s.bam" % (u.flowcell, u.lane, u.barcode)
+            "alignment/%s/{sample}_{type}_%s_%s_%s.bam" % (get_short_read_aligner(), u.flowcell, u.lane, u.barcode)
             for u in get_units(units, wildcards)
         ],
     output:

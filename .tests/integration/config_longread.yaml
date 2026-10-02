@@ -26,3 +26,7 @@ pbmm2_align:
 
 pbmm2_index:
   container: "docker://hydragenetics/pbmm2:1.10"
+
+vacmap_align:
+  mode: "L"
+  container: "docker://hydragenetics/vacmap:1.0.0"
