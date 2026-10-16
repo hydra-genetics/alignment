@@ -47,7 +47,7 @@ rule bwa_mem:
 rule bwa_mem2:
     input:
         reads=lambda wildcards: alignment_input(wildcards),
-        idx=lambda wildcards: [get_config_value("bwa_mem", ext) for ext in ("0123", "amb", "ann", "bwt", "pac")],
+        idx=lambda wildcards: [get_config_value("bwa_mem2", ext) for ext in ("0123", "amb", "ann", "bwt", "pac")],
     output:
         bam=temp("alignment/bwa_mem2/{sample}_{type}_{flowcell}_{lane}_{barcode}.bam"),
     params:
