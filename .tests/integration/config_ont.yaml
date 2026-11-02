@@ -1,0 +1,12 @@
+samples: "samples_ont.tsv"
+units: "units_ont.tsv"
+resources: "resources.yaml"
+
+default_container: "docker://hydragenetics/common:1.14.0"
+
+reference:
+  fasta: "reference/TP53.fasta" # chr17:7660001-7700000 (GRCh38), renamed chr17_TP53
+  fai: "reference/TP53.fasta.fai"
+
+dorado_align:
+  container: "docker://hydragenetics/dorado:2.0.0"

@@ -98,6 +98,28 @@ properties:
             type: string
             description: realigned and sorted `bam` file based on umi consensus reads
 
+  dorado_align:
+    type: object
+    description: input and output parameters for dorado_align
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          query:
+            type: string
+            description: unaligned bam (or fastq) file with basecalled ONT reads, taken from the `bam` column of units.tsv
+          reference:
+            type: string
+            description: reference genome fasta (or minimap2 `.mmi` index) to align against, set by `reference/fasta` in the config
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: unsorted bam file with aligned reads (read groups and methylation tags from the input are kept)
+
   fgbio_call_and_filter_consensus_reads:
     type: object
     description: input and output parameters for fgbio_call_and_filter_consensus_reads

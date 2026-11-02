@@ -94,6 +94,29 @@ Realign after consensus read creation by fgbio_call_and_filter_consensus_reads a
 
 ---
 
+## [dorado_align](https://github.com/nanoporetech/dorado)
+Align basecalled Oxford Nanopore (ONT) reads stored in a `bam` file to a reference genome with `dorado aligner` (minimap2-based), to produce a `bam` with aligned reads.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__dorado__dorado_align#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__dorado__dorado_align#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__dorado_align#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__dorado_align#
+
+---
+
 ## [fgbio_call_and_filter_consensus_reads](http://fulcrumgenomics.github.io/fgbio/tools/latest/)
 Call and filter consensus reads based on umis using fgbio (CallDuplexConsensusReads followed by FilterConsensusReads)
 

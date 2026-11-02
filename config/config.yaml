@@ -26,6 +26,9 @@ bwa_mem2:
   bwt: "reference/WASH7P.fna.bwt.2bit.64"
   pac: "reference/WASH7P.fna.pac"
 
+dorado_align:
+  container: "docker://hydragenetics/dorado:2.0.0"
+
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 

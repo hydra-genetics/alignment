@@ -73,4 +73,10 @@ digraph snakemake_dag {
 	10 -> 8
 	8 -> 9
 	9 -> 0
+	11	[color="0.28 0.6 0.85",
+		height=0.5,
+		label=dorado_align,
+		width=1.1];
+	10 -> 11
+	11 -> 0
 }
