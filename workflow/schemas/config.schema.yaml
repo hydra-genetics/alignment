@@ -177,6 +177,20 @@ properties:
         type: string
         description: parameters that should be forwarded to fgbios ZipperBam
 
+  dorado_align:
+    type: object
+    description: parameters for dorado_align
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to dorado aligner (e.g. `--mm2-opts "-x lr:hq"`; do not set --threads here, this is set from {threads})
+
   fgbio_call_and_filter_consensus_reads:
     type: object
     description: parameters for fgbio_call_and_filter_consensus_reads
