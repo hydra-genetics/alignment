@@ -90,7 +90,7 @@ jobs:
         run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_longread.yaml
       - name: Snakemake dry run ONT dorado config
         working-directory: .tests/integration
-        run: snakemake alignment/dorado_align/HD829_T_AYJ757_NNNN.bam -n -s ../../workflow/Snakefile --configfiles config.yaml config_ont.yaml
+        run: snakemake alignment/dorado_align/HD829_T_AYJ757_NNNN.bam alignment/dorado_align/HD829_T_AYJ757_NNNN.bam.bai -n -s ../../workflow/Snakefile --configfiles config.yaml config_ont.yaml
       - name: Snakemake dry run bwa_mem2 config
         working-directory: .tests/integration
         run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_fastp_pe.yaml config_bwa_mem2.yaml
@@ -189,7 +189,7 @@ jobs:
       - name: Integration test - ONT dorado
         working-directory: .tests/integration
         run: |
-          snakemake alignment/dorado_align/HD829_T_AYJ757_NNNN.bam \
+          snakemake alignment/dorado_align/HD829_T_AYJ757_NNNN.bam alignment/dorado_align/HD829_T_AYJ757_NNNN.bam.bai \
             -s ../../workflow/Snakefile -j 4 --show-failed-logs \
             --use-singularity \
             --singularity-prefix ~/singularity_containers/ \

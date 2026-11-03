@@ -118,7 +118,7 @@ properties:
         properties:
           bam:
             type: string
-            description: unsorted bam file with aligned reads (read groups and methylation tags from the input are kept)
+            description: unsorted bam file with aligned reads (read groups and methylation tags from the input are kept), sorted and indexed downstream by samtools_sort and samtools_index
 
   fgbio_call_and_filter_consensus_reads:
     type: object

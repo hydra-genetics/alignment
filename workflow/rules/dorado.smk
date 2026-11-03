@@ -9,14 +9,14 @@ rule dorado_align:
         query=lambda wildcards: get_ubam_query(wildcards),
         reference=config.get("reference", {}).get("fasta", ""),
     output:
-        bam=temp("alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
+        bam=temp("alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}_unsorted.bam"),
     params:
         extra=config.get("dorado_align", {}).get("extra", ""),
     log:
-        "alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.bam.log",
+        "alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}_unsorted.bam.log",
     benchmark:
         repeat(
-            "alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.bam.benchmark.tsv",
+            "alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}_unsorted.bam.benchmark.tsv",
             config.get("dorado_align", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("dorado_align", {}).get("threads", config["default_resources"]["threads"])
