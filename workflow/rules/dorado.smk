@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule dorado_align:
     input:
-        query=lambda wildcards: get_ubam_query(wildcards),
+        query=dorado_align_input,
         reference=config.get("reference", {}).get("fasta", ""),
     output:
         bam=temp("alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}_unsorted.bam"),

@@ -108,7 +108,7 @@ properties:
         properties:
           query:
             type: string
-            description: unaligned bam (or fastq) file with basecalled ONT reads, taken from the `bam` column of units.tsv
+            description: unaligned bam file with basecalled ONT reads, taken from the `bam` column of units.tsv, or the filtered unaligned bam from the prealignment module if `filter_ont` is true
           reference:
             type: string
             description: reference genome fasta (or minimap2 `.mmi` index) to align against, set by `reference/fasta` in the config

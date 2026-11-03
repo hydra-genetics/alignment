@@ -283,6 +283,13 @@ properties:
         type: string
         description: umi strategy for how the umis should be grouped (paired for duplex umis)
 
+  filter_ont:
+    type: boolean
+    description: |
+      if true, dorado_align aligns the filtered unaligned bam from the prealignment module
+      (`prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam`);
+      if false (default), it aligns the unaligned bam given in the `bam` column of units.tsv
+
   minimap2_align:
     type: object
     description: parameters for minimap2_align

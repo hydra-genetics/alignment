@@ -97,6 +97,8 @@ Realign after consensus read creation by fgbio_call_and_filter_consensus_reads a
 ## [dorado_align](https://github.com/nanoporetech/dorado)
 Align basecalled Oxford Nanopore (ONT) reads stored in a `bam` file to a reference genome with `dorado aligner` (minimap2-based), to produce an unsorted `bam` with aligned reads. The `bam` is then sorted by [samtools sort](#samtools-sort) and indexed by [samtools index](#samtools-index).
 
+By default, the input is the unaligned `bam` given in the `bam` column of `units.tsv`. Set `filter_ont: true` in `config.yaml` to align the filtered unaligned `bam` from the prealignment module instead (`prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam`).
+
 ### :snake: Rule
 
 #SNAKEMAKE_RULE_SOURCE__dorado__dorado_align#
