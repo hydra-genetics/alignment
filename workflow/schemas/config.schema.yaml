@@ -283,6 +283,17 @@ properties:
         type: string
         description: umi strategy for how the umis should be grouped (paired for duplex umis)
 
+  filter_ont:
+    type: string
+    description: |
+      set the input reads for dorado_align, i.e. which prealignment filtering software was used for ONT reads:
+      "chopper" uses the filtered unaligned bam `prealignment/chopper/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam`,
+      "filtlong" uses the filtered fastq `prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.fastq.gz`
+      (expected to be converted from the unaligned bam with `samtools fastq -T` so that the bam tags are kept in the read headers),
+      "None" uses the unaligned bam given in the `bam` column of `units.tsv`.
+      default is "None"
+    pattern: "^(chopper|filtlong|None)$"
+
   minimap2_align:
     type: object
     description: parameters for minimap2_align
