@@ -29,7 +29,7 @@ bwa_mem2:
 dorado_align:
   container: "docker://hydragenetics/dorado:2.0.0"
 
-filter_ont: false # true: dorado_align uses prealignment/filtlong/*.filtered.bam instead of the units.tsv bam
+filter_ont: "None" # ONT reads to align with dorado_align: "None" (units.tsv bam), "chopper" or "filtlong" (filtered prealignment output)
 
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"

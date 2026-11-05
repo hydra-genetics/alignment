@@ -79,9 +79,11 @@ elif config.get("trimmer_software", "None") == "None":
         get_fastq_file(units, wildcards, "fastq2"),
     ]
 
-if config.get("filter_ont", False):
-    dorado_align_input = lambda wildcards: "prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam"
-else:
+if config.get("filter_ont", "None") == "chopper":
+    dorado_align_input = lambda wildcards: "prealignment/chopper/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam"
+elif config.get("filter_ont", "None") == "filtlong":
+    dorado_align_input = lambda wildcards: "prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.fastq.gz"
+elif config.get("filter_ont", "None") == "None":
     dorado_align_input = lambda wildcards: get_ubam_query(wildcards)
 
 
