@@ -79,13 +79,6 @@ elif config.get("trimmer_software", "None") == "None":
         get_fastq_file(units, wildcards, "fastq2"),
     ]
 
-if config.get("filter_ont", "None") == "chopper":
-    dorado_align_input = lambda wildcards: "prealignment/chopper/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam"
-elif config.get("filter_ont", "None") == "filtlong":
-    dorado_align_input = lambda wildcards: "prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.fastq.gz"
-elif config.get("filter_ont", "None") == "None":
-    dorado_align_input = lambda wildcards: get_ubam_query(wildcards)
-
 
 def get_short_read_aligner():
     aligner = config.get("short_read_aligner", "bwa_mem")
@@ -120,6 +113,33 @@ def get_ubam_query(wildcards):
     return bam_file
 
 
+def get_ont_query(wildcards):
+    """
+    Returns the reads to align for a long-read unit, following `filter_ont` for ONT units.
+
+    Args:
+        wildcards: Snakemake wildcards (sample, type, processing_unit, barcode).
+
+    Returns:
+        str: For ONT units, the unaligned bam from units.tsv ("None"), the chopper-filtered
+            unaligned bam ("chopper") or the filtlong-filtered fastq ("filtlong"). For other
+            platforms, always the unaligned bam from units.tsv.
+    """
+    unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
+    if unit["platform"] != "ONT":
+        return get_ubam_query(wildcards)
+
+    unit_name = f"{wildcards.sample}_{wildcards.type}_{wildcards.processing_unit}_{wildcards.barcode}"
+    filter_ont = config.get("filter_ont", "None")
+    if filter_ont == "chopper":
+        return f"prealignment/chopper/{unit_name}.filtered.bam"
+    if filter_ont == "filtlong":
+        return f"prealignment/filtlong/{unit_name}.filtered.fastq.gz"
+    if filter_ont == "None":
+        return get_ubam_query(wildcards)
+    raise ValueError(f"Unknown filter_ont value: {filter_ont!r}; expected 'chopper', 'filtlong' or 'None'")
+
+
 def get_reference_path(wildcards):
     ref_path = (config.get("reference", {}).get("fasta", ""),)
     fasta = os.path.basename(ref_path)
@@ -131,9 +151,12 @@ def generate_longread_group(wildcards, input, tool="minimap2"):
     """
     Generates a read group string for the specified alignment tool from a uBAM header.
 
+    The read group is always read from the unaligned bam in units.tsv, not from the aligner's
+    input, which can be a filtered fastq without a header (see get_ont_query).
+
     Args:
         wildcards: Snakemake wildcards (sample, type, processing_unit, barcode).
-        input: Snakemake input object with query (minimap2) or ubam (vacmap) attribute.
+        input: Snakemake input object (unused, kept for compatibility).
         tool: Alignment tool, either "minimap2" (default) or "vacmap".
 
     Returns:
@@ -142,7 +165,7 @@ def generate_longread_group(wildcards, input, tool="minimap2"):
             vacmap:   "--rg_id id --rg_sm sample_type --rg_pl platform --rg_pm machine"
             Returns empty string if no read group found (minimap2 only).
     """
-    bam_file = input.ubam if tool == "vacmap" else input.query
+    bam_file = get_ubam_query(wildcards)
     rg_id = wildcards.sample
     rg = {}
 
