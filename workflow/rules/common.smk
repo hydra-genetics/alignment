@@ -239,20 +239,21 @@ def compile_output_list(wildcards):
     platform = units.platform.iloc[0]
     output_files = []
     files = {
-        "alignment/minimap2_align": [".bam"],
-        "alignment/pbmm2_align": [".bam"],
+        "alignment/dorado_align": [".bam"],
     }
     output_files += [
         f"{prefix}/{sample}_{unit_type}{suffix}"
         for prefix in files.keys()
         for sample in get_samples(samples)
         for platform in units.loc[(sample,)].platform
-        if platform in ["ONT", "PACBIO"]
+        if platform == "ONT"
         for unit_type in get_unit_types(units, sample)
         if unit_type in ["N", "T"]
         for suffix in files[prefix]
     ]
     files = {
+        "alignment/minimap2_align": [".bam"],
+        "alignment/pbmm2_align": [".bam"],
         "alignment/vacmap_align": [".bam"],
     }
     output_files += [

@@ -95,7 +95,9 @@ Realign after consensus read creation by fgbio_call_and_filter_consensus_reads a
 ---
 
 ## [dorado_align](https://github.com/nanoporetech/dorado)
-Align basecalled Oxford Nanopore (ONT) reads stored in a `bam` file to a reference genome with `dorado aligner` (minimap2-based), to produce an unsorted `bam` with aligned reads. The read group header lines are then restored by [dorado_reheader](#dorado_reheader), and the `bam` is sorted by [samtools sort](#samtools-sort) and indexed by [samtools index](#samtools-index).
+Align basecalled Oxford Nanopore (ONT) reads stored in a `bam` file to a reference genome with `dorado aligner` (minimap2-based), to produce an unsorted `bam` with aligned reads. The read group header lines are then restored by [dorado_reheader](#dorado_reheader), the `bam` is sorted by [samtools sort](#samtools-sort), and the sorted `bam` files of all processing units of a sample are merged by [dorado_merge](#dorado_merge) into `alignment/dorado_align/{sample}_{type}.bam`.
+
+ONT units (`platform` `ONT` in `units.tsv`) are aligned with dorado only; minimap2, pbmm2 and vacmap outputs are requested for PacBio units.
 
 The input reads are selected with `filter_ont` in `config.yaml`:
 
@@ -132,6 +134,29 @@ The filtlong `fastq` is expected to be converted from the unaligned `bam` with `
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__dorado_align#
+
+---
+
+## [dorado_merge](http://www.htslib.org/doc/samtools-merge.html)
+Merge the coordinate-sorted `bam` files of all processing units of a sample, from [dorado_align](#dorado_align), [dorado_reheader](#dorado_reheader) and [samtools sort](#samtools-sort), into one `bam` per sample, using samtools merge.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__dorado__dorado_merge#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__dorado__dorado_merge#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__dorado_merge#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__dorado_merge#
 
 ---
 
