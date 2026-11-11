@@ -97,7 +97,7 @@ Realign after consensus read creation by fgbio_call_and_filter_consensus_reads a
 ## [dorado_align](https://github.com/nanoporetech/dorado)
 Align basecalled Oxford Nanopore (ONT) reads stored in a `bam` file to a reference genome with `dorado aligner` (minimap2-based), to produce an unsorted `bam` with aligned reads. The read group header lines are then restored by [dorado_reheader](#dorado_reheader), and the `bam` is sorted by [samtools sort](#samtools-sort) and indexed by [samtools index](#samtools-index).
 
-The input reads of ONT units are selected with `filter_ont` in `config.yaml`. The same setting applies to [minimap2_align](#minimap2_align):
+The input reads are selected with `filter_ont` in `config.yaml`:
 
 | `filter_ont` | Input reads |
 |---|---|
@@ -252,8 +252,6 @@ Copies the UMI at the end of the BAM’s read name to the RX tag using fgbio in 
 
 ## [minimap2_align](https://github.com/lh3/minimap2)
 Align long read sequencing data stored in a `bam`file to a reference genome to produce a `bam` with aligned reads.
-
-For ONT units, `filter_ont` selects the filtered reads from chopper or filtlong instead, as described for [dorado_align](#dorado_align), including the warning about modified base tags. With the filtlong `fastq`, `-y` is added so that the tags in the read headers are copied to the aligned `bam`. The read group is always taken from the unaligned `bam` in `units.tsv`.
 
 ### :snake: Rule
 

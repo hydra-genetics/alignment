@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule dorado_align:
     input:
-        query=get_ont_query,
+        query=get_dorado_align_input,
         reference=config.get("reference", {}).get("fasta", ""),
     output:
         bam=temp("alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.dorado.bam"),

@@ -300,12 +300,11 @@ properties:
   filter_ont:
     type: string
     description: |
-      set the input reads of ONT units for dorado_align and minimap2_align, i.e. which prealignment filtering software was used:
+      set the input reads for dorado_align, i.e. which prealignment filtering software was used for ONT reads:
       "chopper" uses the filtered unaligned bam `prealignment/chopper/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam`,
       "filtlong" uses the filtered fastq `prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.fastq.gz`
       (expected to be converted from the unaligned bam with `samtools fastq -T` so that the bam tags are kept in the read headers),
       "None" uses the unaligned bam given in the `bam` column of `units.tsv`.
-      Units of other platforms always use the unaligned bam in `units.tsv`.
       For reads with modified base tags (MM/ML), do not trim or split reads with filtlong (`--trim`, `--split`), and only
       trim with chopper (`--trim-approach`, `--trim-poly-tails`) together with `--update-mods`: otherwise the MM/ML tags
       of the shortened reads no longer match their sequence.

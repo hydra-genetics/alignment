@@ -113,22 +113,17 @@ def get_ubam_query(wildcards):
     return bam_file
 
 
-def get_ont_query(wildcards):
+def get_dorado_align_input(wildcards):
     """
-    Returns the reads to align for a long-read unit, following `filter_ont` for ONT units.
+    Returns the ONT reads to align with dorado_align, following `filter_ont`.
 
     Args:
         wildcards: Snakemake wildcards (sample, type, processing_unit, barcode).
 
     Returns:
-        str: For ONT units, the unaligned bam from units.tsv ("None"), the chopper-filtered
-            unaligned bam ("chopper") or the filtlong-filtered fastq ("filtlong"). For other
-            platforms, always the unaligned bam from units.tsv.
+        str: The unaligned bam from units.tsv ("None"), the chopper-filtered unaligned bam
+            ("chopper") or the filtlong-filtered fastq ("filtlong").
     """
-    unit = units.loc[(wildcards.sample, wildcards.type, wildcards.processing_unit, wildcards.barcode)]
-    if unit["platform"] != "ONT":
-        return get_ubam_query(wildcards)
-
     unit_name = f"{wildcards.sample}_{wildcards.type}_{wildcards.processing_unit}_{wildcards.barcode}"
     filter_ont = config.get("filter_ont", "None")
     if filter_ont == "chopper":
@@ -151,12 +146,9 @@ def generate_longread_group(wildcards, input, tool="minimap2"):
     """
     Generates a read group string for the specified alignment tool from a uBAM header.
 
-    The read group is always read from the unaligned bam in units.tsv, not from the aligner's
-    input, which can be a filtered fastq without a header (see get_ont_query).
-
     Args:
         wildcards: Snakemake wildcards (sample, type, processing_unit, barcode).
-        input: Snakemake input object (unused, kept for compatibility).
+        input: Snakemake input object with query (minimap2) or ubam (vacmap) attribute.
         tool: Alignment tool, either "minimap2" (default) or "vacmap".
 
     Returns:
@@ -165,7 +157,7 @@ def generate_longread_group(wildcards, input, tool="minimap2"):
             vacmap:   "--rg_id id --rg_sm sample_type --rg_pl platform --rg_pm machine"
             Returns empty string if no read group found (minimap2 only).
     """
-    bam_file = get_ubam_query(wildcards)
+    bam_file = input.ubam if tool == "vacmap" else input.query
     rg_id = wildcards.sample
     rg = {}
 
