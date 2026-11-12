@@ -6,15 +6,18 @@ __license__ = "GPL-3"
 
 rule pbmm2_index:
     input:
-        reference=config.get("reference", {}).get("fasta", ""),
+        reference=lambda wildcards: get_config_value("reference", "fasta"),
     output:
+        # Output paths must resolve at parse time, so these cannot use get_config_value:
+        # a workflow that never aligns long reads must still be able to parse this rule.
+        # `reference:fasta` and `pbmm2_align:preset` are enforced by config.schema.yaml instead.
         mmi=expand(
             "alignment/pbmm2_index/{ref}.{preset}.mmi",
             ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
             preset=config.get("pbmm2_align", {}).get("preset", ""),
         ),
     params:
-        preset=config.get("pbmm2_align", {}).get("preset", ""),
+        preset=lambda wildcards: get_config_value("pbmm2_align", "preset"),
         extra=config.get("pbmm2_index", {}).get("extra", ""),
     log:
         "alignment/pbmm2_index/pbmm2_index.log",
@@ -32,21 +35,21 @@ rule pbmm2_index:
     message:
         "{rule}: index {input.reference} with pbmm2"
     wrapper:
-        "v3.9.0/bio/pbmm2/index"
+        "v9.8.0/bio/pbmm2/index"
 
 
 rule pbmm2_align:
     input:
         query=lambda wildcards: get_ubam_query(wildcards),
-        reference=expand(
+        reference=lambda wildcards: expand(
             "alignment/pbmm2_index/{ref}.{preset}.mmi",
-            ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
-            preset=config.get("pbmm2_align", {}).get("preset", ""),
+            ref=os.path.basename(get_config_value("reference", "fasta")),
+            preset=get_config_value("pbmm2_align", "preset"),
         ),
     output:
         bam=temp("alignment/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
     params:
-        preset=config.get("pbmm2_align", {}).get("preset", ""),
+        preset=lambda wildcards: get_config_value("pbmm2_align", "preset"),
         sample=lambda wildcards: f"{wildcards.sample}_{wildcards.type}",
         loglevel="INFO",
         extra=" --sort %s " % (config.get("pbmm2_align", {}).get("extra", "")),
@@ -69,7 +72,7 @@ rule pbmm2_align:
     message:
         "{rule}: Align reads in {input.query} against {input.reference}"
     wrapper:
-        "v4.3.0/bio/pbmm2/align"
+        "v9.8.0/bio/pbmm2/align"
 
 
 rule pbmm2_merge:
@@ -101,4 +104,4 @@ rule pbmm2_merge:
     message:
         "{rule}: merge bam file {input} using samtools"
     wrapper:
-        "v3.9.0/bio/samtools/merge"
+        "v9.8.0/bio/samtools/merge"

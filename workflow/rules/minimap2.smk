@@ -6,8 +6,11 @@ __license__ = "GPL-3"
 
 rule minimap2_index:
     input:
-        target=config.get("reference", {}).get("fasta", ""),
+        target=lambda wildcards: get_config_value("reference", "fasta"),
     output:
+        # Output paths must resolve at parse time, so these cannot use get_config_value:
+        # a workflow that never aligns long reads must still be able to parse this rule.
+        # `reference:fasta` and `minimap2_align:preset` are enforced by config.schema.yaml instead.
         mmi=expand(
             "alignment/minimap2_index/{ref}.{preset}.mmi",
             ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
@@ -33,16 +36,16 @@ rule minimap2_index:
     message:
         "{rule}: index {input.target} with minimap2"
     wrapper:
-        "v4.3.0/bio/minimap2/index"
+        "v9.8.0/bio/minimap2/index"
 
 
 rule minimap2_align:
     input:
         query=lambda wildcards: get_ubam_query(wildcards),
-        target=expand(
+        target=lambda wildcards: expand(
             "alignment/minimap2_index/{ref}.{preset}.mmi",
-            ref=os.path.basename(config.get("reference", {}).get("fasta", "")),
-            preset=config.get("minimap2_align", {}).get("preset", ""),
+            ref=os.path.basename(get_config_value("reference", "fasta")),
+            preset=get_config_value("minimap2_align", "preset"),
         ),
     output:
         bam=temp("alignment/minimap2_align/{sample}_{type}_{processing_unit}_{barcode}.bam"),
@@ -51,7 +54,7 @@ rule minimap2_align:
         % (
             config.get("minimap2_align", {}).get("extra", ""),
             config.get("minimap2_align", {}).get("read_group", generate_longread_group(wildcards, input)),
-            config.get("minimap2_align", {}).get("preset", ""),
+            get_config_value("minimap2_align", "preset"),
         ),
         sorting=config.get("minimap2_align", {}).get("sort_order", "coordinate"),
         sort_extra=config.get("minimap2_align", {}).get("sort_extra", ""),
@@ -74,7 +77,7 @@ rule minimap2_align:
     message:
         "{rule}: run minimap2 to align reads from {input.query} to {input.target}"
     wrapper:
-        "v4.3.0/bio/minimap2/aligner"
+        "v9.8.0/bio/minimap2/aligner"
 
 
 rule minimap2_merge:
@@ -106,4 +109,4 @@ rule minimap2_merge:
     message:
         "{rule}: merge {input.bams} using samtools merge"
     wrapper:
-        "v3.9.0/bio/samtools/merge"
+        "v9.8.0/bio/samtools/merge"
