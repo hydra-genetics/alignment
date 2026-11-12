@@ -91,6 +91,12 @@ jobs:
       - name: Snakemake dry run ONT dorado config
         working-directory: .tests/integration
         run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_ont.yaml
+      - name: Snakemake dry run ONT dorado config with chopper
+        working-directory: .tests/integration
+        run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_ont.yaml config_ont_chopper.yaml
+      - name: Snakemake dry run ONT dorado config with filtlong
+        working-directory: .tests/integration
+        run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_ont.yaml config_ont_filtlong.yaml
       - name: Snakemake dry run bwa_mem2 config
         working-directory: .tests/integration
         run: snakemake -n -s ../../workflow/Snakefile --configfiles config.yaml config_fastp_pe.yaml config_bwa_mem2.yaml
@@ -120,6 +126,12 @@ jobs:
       - name: Snakemake dry run fastp_pe config
         working-directory: .tests/compatibility
         run: snakemake -n -s Snakefile --show-failed-logs --configfiles config.yaml config_fastp_pe.yaml
+      - name: Snakemake dry run ONT config with chopper
+        working-directory: .tests/compatibility
+        run: snakemake alignment/dorado_align/HD829_T.bam -n -s Snakefile --show-failed-logs --configfiles config.yaml config_ont.yaml config_ont_chopper.yaml
+      - name: Snakemake dry run ONT config with filtlong
+        working-directory: .tests/compatibility
+        run: snakemake alignment/dorado_align/HD829_T.bam -n -s Snakefile --show-failed-logs --configfiles config.yaml config_ont.yaml config_ont_filtlong.yaml
 
   integration:
     name: Integration test
@@ -194,3 +206,21 @@ jobs:
             --use-singularity \
             --singularity-prefix ~/singularity_containers/ \
             --singularity-args " --cleanenv --bind /home/runner "
+      - name: Integration test - ONT dorado with chopper
+        working-directory: .tests/integration
+        run: |
+          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs \
+            --configfiles config.yaml config_ont.yaml config_ont_chopper.yaml \
+            --use-singularity \
+            --singularity-prefix ~/singularity_containers/ \
+            --singularity-args " --cleanenv --bind /home/runner " \
+            --forceall
+      - name: Integration test - ONT dorado with filtlong
+        working-directory: .tests/integration
+        run: |
+          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs \
+            --configfiles config.yaml config_ont.yaml config_ont_filtlong.yaml \
+            --use-singularity \
+            --singularity-prefix ~/singularity_containers/ \
+            --singularity-args " --cleanenv --bind /home/runner " \
+            --forceall

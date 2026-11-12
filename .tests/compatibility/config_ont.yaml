@@ -1,0 +1,31 @@
+samples: "samples_ont.tsv"
+units: "units_ont.tsv"
+
+reference:
+  fasta: "../integration/reference/TP53.fasta" # chr17:7660001-7700000 (GRCh38), renamed chr17_TP53
+  fai: "../integration/reference/TP53.fasta.fai"
+
+# prealignment: ONT trimming and filtering (settings from the prealignment ONT integration test)
+chopper:
+  container: "docker://hydragenetics/chopper:0.15.0"
+  quality: 10
+  minlength: 50
+  maxlength: 30000
+
+dorado_trim:
+  container: "docker://hydragenetics/dorado:2.0.0"
+  sequencing_kit: "SQK-NBD114-24"
+
+filtlong:
+  container: "docker://hydragenetics/filtlong:0.2.1"
+  extra: "--min_mean_q 30 --keep_percent 75"
+
+samtools_compress_fastq:
+  container: "docker://hydragenetics/samtools:1.21"
+
+samtools_fastq:
+  container: "docker://hydragenetics/samtools:1.21"
+
+# alignment
+dorado_align:
+  container: "docker://hydragenetics/dorado:2.0.0"
