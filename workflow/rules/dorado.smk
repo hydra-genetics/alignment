@@ -9,14 +9,14 @@ rule dorado_align:
         query=get_dorado_align_input,
         reference=config.get("reference", {}).get("fasta", ""),
     output:
-        bam=temp("alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.dorado.bam"),
+        bam=temp("alignment/dorado_align/{sample}_{type}.dorado.bam"),
     params:
         extra=config.get("dorado_align", {}).get("extra", ""),
     log:
-        "alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.dorado.bam.log",
+        "alignment/dorado_align/{sample}_{type}.dorado.bam.log",
     benchmark:
         repeat(
-            "alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.dorado.bam.benchmark.tsv",
+            "alignment/dorado_align/{sample}_{type}.dorado.bam.benchmark.tsv",
             config.get("dorado_align", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("dorado_align", {}).get("threads", config["default_resources"]["threads"])
@@ -42,17 +42,17 @@ rule dorado_align:
 
 rule dorado_reheader:
     input:
-        bam="alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.dorado.bam",
-        ubam=get_ubam_query,
+        bam="alignment/dorado_align/{sample}_{type}.dorado.bam",
+        ubam=get_dorado_ubam,
     output:
-        bam=temp("alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}_unsorted.bam"),
+        bam=temp("alignment/dorado_align/{sample}_{type}_unsorted.bam"),
     params:
         extra=config.get("dorado_reheader", {}).get("extra", ""),
     log:
-        "alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}_unsorted.bam.log",
+        "alignment/dorado_align/{sample}_{type}_unsorted.bam.log",
     benchmark:
         repeat(
-            "alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}_unsorted.bam.benchmark.tsv",
+            "alignment/dorado_align/{sample}_{type}_unsorted.bam.benchmark.tsv",
             config.get("dorado_reheader", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("dorado_reheader", {}).get("threads", config["default_resources"]["threads"])
@@ -80,35 +80,3 @@ rule dorado_reheader:
         "else cp {input.bam} {output.bam}; fi && "
         "rm -f {output.bam}.rg.sam {output.bam}.header.sam) "
         "2> {log}"
-
-
-rule dorado_merge:
-    input:
-        bams=lambda wildcards: [
-            "alignment/dorado_align/{sample}_{type}_%s_%s.bam" % (u.processing_unit, u.barcode)
-            for u in get_units(units, wildcards)
-        ],
-    output:
-        bam=temp("alignment/dorado_align/{sample}_{type}.bam"),
-    params:
-        extra=config.get("dorado_merge", {}).get("extra", ""),
-    log:
-        "alignment/dorado_align/{sample}_{type}.bam.log",
-    benchmark:
-        repeat(
-            "alignment/dorado_align/{sample}_{type}.bam.benchmark.tsv",
-            config.get("dorado_merge", {}).get("benchmark_repeats", 1),
-        )
-    threads: config.get("dorado_merge", {}).get("threads", config["default_resources"]["threads"])
-    resources:
-        mem_mb=config.get("dorado_merge", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("dorado_merge", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("dorado_merge", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("dorado_merge", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("dorado_merge", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("dorado_merge", {}).get("container", config["default_container"])
-    message:
-        "{rule}: merge the sorted bam files of each processing unit, {input.bams}, using samtools merge"
-    wrapper:
-        "v3.9.0/bio/samtools/merge"

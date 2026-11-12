@@ -120,25 +120,6 @@ properties:
             type: string
             description: unsorted bam file with aligned reads, as written by dorado aligner. With a fastq input ("filtlong"), dorado rebuilds the `@RG` header lines and sets PU, PM, DT and LB to unknown; dorado_reheader restores them
 
-  dorado_merge:
-    type: object
-    description: input and output parameters for dorado_merge
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          bams:
-            type: string
-            description: coordinate-sorted bam files with aligned reads, one per processing unit of the sample (`alignment/dorado_align/{sample}_{type}_{processing_unit}_{barcode}.bam`, from samtools_sort)
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          bam:
-            type: string
-            description: coordinate-sorted bam file with the aligned ONT reads of all processing units of the sample
-
   dorado_reheader:
     type: object
     description: input and output parameters for dorado_reheader
@@ -159,7 +140,7 @@ properties:
         properties:
           bam:
             type: string
-            description: unsorted bam file with aligned reads and the original `@RG` header lines of the unaligned bam (other header lines are kept as written by dorado; the header is unchanged if the unaligned bam has no `@RG` lines). It is sorted downstream by samtools_sort and then merged per sample by dorado_merge
+            description: unsorted bam file with aligned reads and the original `@RG` header lines of the unaligned bam (other header lines are kept as written by dorado; the header is unchanged if the unaligned bam has no `@RG` lines). It is sorted downstream by samtools_sort into `alignment/dorado_align/{sample}_{type}.bam`
 
   fgbio_call_and_filter_consensus_reads:
     type: object

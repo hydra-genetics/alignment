@@ -46,6 +46,15 @@ else:  # assume that the platform Illumina data with a lane and flowcell columns
     units = units.set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False).sort_index()
 validate(units, schema="../schemas/units.schema.yaml")
 
+# ONT samples are aligned with dorado without a merge step, so each sample and type can only have one unit
+ont_units_per_sample = units[units.platform == "ONT"].reset_index(drop=True).groupby(["sample", "type"]).size()
+if (ont_units_per_sample > 1).any():
+    sys.exit(
+        "ONT data must have one unit (one row in units.tsv) per sample and type, but these have several: "
+        + ", ".join(f"{sample}_{unit_type}" for sample, unit_type in ont_units_per_sample[ont_units_per_sample > 1].index)
+        + ". Combine the reads of each sample into one unaligned bam before running the workflow."
+    )
+
 ### Set wildcard constraints
 
 
@@ -113,25 +122,53 @@ def get_ubam_query(wildcards):
     return bam_file
 
 
+def get_dorado_unit(wildcards):
+    """
+    Returns the single units.tsv row of an ONT sample (one unit per sample and type is checked when units.tsv is read).
+
+    Args:
+        wildcards: Snakemake wildcards (sample, type).
+
+    Returns:
+        pandas.Series: The unit of the sample and type.
+    """
+    return units.loc[(wildcards.sample, wildcards.type)].iloc[0]
+
+
+def get_dorado_ubam(wildcards):
+    """
+    Returns the unaligned bam given in units.tsv for an ONT sample.
+
+    Args:
+        wildcards: Snakemake wildcards (sample, type).
+
+    Returns:
+        str: Path in the `bam` column of units.tsv.
+    """
+    return get_dorado_unit(wildcards)["bam"]
+
+
 def get_dorado_align_input(wildcards):
     """
     Returns the ONT reads to align with dorado_align, following `filter_ont`.
 
     Args:
-        wildcards: Snakemake wildcards (sample, type, processing_unit, barcode).
+        wildcards: Snakemake wildcards (sample, type).
 
     Returns:
         str: The unaligned bam from units.tsv ("None"), the chopper-filtered unaligned bam
-            ("chopper") or the filtlong-filtered fastq ("filtlong").
+            ("chopper") or the filtlong-filtered fastq ("filtlong"). The filtered files are named
+            after the unit by the prealignment module.
     """
-    unit_name = f"{wildcards.sample}_{wildcards.type}_{wildcards.processing_unit}_{wildcards.barcode}"
+    unit = get_dorado_unit(wildcards)
+    unit_name = f"{unit['sample']}_{unit['type']}_{unit['processing_unit']}_{unit['barcode']}"
     filter_ont = config.get("filter_ont", "None")
     if filter_ont == "chopper":
         return f"prealignment/chopper/{unit_name}.filtered.bam"
     if filter_ont == "filtlong":
         return f"prealignment/filtlong/{unit_name}.filtered.fastq.gz"
     if filter_ont == "None":
-        return get_ubam_query(wildcards)
+        return unit["bam"]
     raise ValueError(f"Unknown filter_ont value: {filter_ont!r}; expected 'chopper', 'filtlong' or 'None'")
 
 
