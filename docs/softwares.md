@@ -683,8 +683,31 @@ Align `.fastq` files to a reference genome and generate a `.bam` file. Star is a
 
 ---
 
+## [vacmap_index](https://github.com/lh3/minimap2)
+Build the minimap2 index of the reference genome that vacmap_align loads, with the same command vacmap runs itself when it finds no index (`minimap2 -d -w -k -I 1000G`). Building it once in its own rule, before any vacmap_align job starts, keeps parallel vacmap_align jobs from writing and reading the same index file at the same time. The index is written to `alignment/vacmap_index/{reference}.w{window_size}_k{kmer_size}.mmi`. `kmer_size` and `window_size` are also passed to vacmap_align.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__vacmap__vacmap_index#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__vacmap__vacmap_index#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__vacmap_index#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__vacmap_index#
+
+---
+
 ## [vacmap_align](https://github.com/micahvista/VACmap)
-Align PacBio long read sequencing data stored in an unmapped `.bam` file to a reference genome. Each processing unit is aligned separately and the output is coordinate sorted (vacmap sorts when the output filename contains `sorted`). Read group information (`ID`, `SM`, `PL`, `PM`) is derived from the uBAM header and `units.tsv`.
+Align PacBio long read sequencing data stored in an unmapped `.bam` file to a reference genome, using the index built by vacmap_index. Each processing unit is aligned separately and the output is coordinate sorted (vacmap sorts when the output filename contains `sorted`). Read group information (`ID`, `SM`, `PL`, `PM`) is derived from the uBAM header and `units.tsv`.
 
 ### :snake: Rule
 

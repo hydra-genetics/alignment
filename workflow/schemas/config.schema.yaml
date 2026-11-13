@@ -654,6 +654,30 @@ properties:
     required:
       - mode
 
+  vacmap_index:
+    type: object
+    description: |
+      parameters for vacmap_index, which builds the minimap2 index that vacmap_align loads.
+      kmer_size and window_size are also passed to vacmap_align, so set them here and not in vacmap_align extra
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container with minimap2 (e.g. docker://hydragenetics/minimap2:2.26)
+      extra:
+        type: string
+        description: parameters that should be forwarded to minimap2 -d
+      kmer_size:
+        type: integer
+        description: minimizer k-mer size (minimap2 and vacmap -k)
+        default: 15
+      window_size:
+        type: integer
+        description: minimizer window size (minimap2 and vacmap -w)
+        default: 10
+
   vacmap_merge:
     type: object
     description: parameters for merging vacmap bam files

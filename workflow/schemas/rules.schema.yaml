@@ -648,9 +648,9 @@ properties:
           ubam:
             type: string
             description: unmapped bam file for one processing unit
-          ref:
+          index:
             type: string
-            description: reference genome file
+            description: minimap2 index of the reference genome, built by vacmap_index
       output:
         type: object
         description: list of outputs
@@ -658,6 +658,27 @@ properties:
           bam:
             type: string
             description: aligned and sorted bam file for one processing unit
+
+  vacmap_index:
+    type: object
+    description: input and output parameters for vacmap_index
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          fasta:
+            type: string
+            description: reference genome fasta file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          mmi:
+            type: string
+            description: |
+              minimap2 index of the reference genome for vacmap_align,
+              named alignment/vacmap_index/{reference}.w{window_size}_k{kmer_size}.mmi
 
   vacmap_merge:
     type: object

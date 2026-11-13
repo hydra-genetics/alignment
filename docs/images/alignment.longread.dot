@@ -70,7 +70,12 @@ digraph snakemake_dag {
 		height=0.5,
 		label=vacmap_merge,
 		width=1.4306];
-	10 -> 8
+	15	[color="0.48 0.6 0.85",
+		height=0.5,
+		label=vacmap_index,
+		width=1.4306];
+	10 -> 15
+	15 -> 8
 	8 -> 9
 	9 -> 0
 	11	[color="0.28 0.6 0.85",
