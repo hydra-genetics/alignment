@@ -191,6 +191,20 @@ properties:
         type: string
         description: parameters that should be forwarded to dorado aligner (e.g. `--mm2-opts "-x lr:hq"`; do not set --threads here, this is set from {threads})
 
+  dorado_reheader:
+    type: object
+    description: parameters for dorado_reheader
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container (needs samtools and awk)
+      extra:
+        type: string
+        description: parameters that should be forwarded to samtools reheader
+
   fgbio_call_and_filter_consensus_reads:
     type: object
     description: parameters for fgbio_call_and_filter_consensus_reads
@@ -282,6 +296,21 @@ properties:
       umi_strategy:
         type: string
         description: umi strategy for how the umis should be grouped (paired for duplex umis)
+
+  filter_ont:
+    type: string
+    description: |
+      set the input reads for dorado_align, i.e. which prealignment filtering software was used for ONT reads:
+      "chopper" uses the filtered unaligned bam `prealignment/chopper/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam`,
+      "filtlong" uses the filtered fastq `prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.fastq.gz`
+      (expected to be converted from the unaligned bam with `samtools fastq -T` so that the bam tags are kept in the read headers),
+      "None" uses the unaligned bam given in the `bam` column of `units.tsv`.
+      For reads with modified base tags (MM/ML), do not trim or split reads with filtlong (`--trim`, `--split`), and only
+      trim with chopper (`--trim-approach`, `--trim-poly-tails`) together with `--update-mods`: otherwise the MM/ML tags
+      of the shortened reads no longer match their sequence.
+      default is "None"
+    default: "None"
+    pattern: "^(chopper|filtlong|None)$"
 
   minimap2_align:
     type: object

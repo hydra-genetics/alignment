@@ -95,7 +95,27 @@ Realign after consensus read creation by fgbio_call_and_filter_consensus_reads a
 ---
 
 ## [dorado_align](https://github.com/nanoporetech/dorado)
-Align basecalled Oxford Nanopore (ONT) reads stored in a `bam` file to a reference genome with `dorado aligner` (minimap2-based), to produce an unsorted `bam` with aligned reads. The `bam` is then sorted by [samtools sort](#samtools-sort) and indexed by [samtools index](#samtools-index).
+Align basecalled Oxford Nanopore (ONT) reads stored in a `bam` file to a reference genome with `dorado aligner` (minimap2-based), to produce an unsorted `bam` with aligned reads. The read group header lines are then restored by [dorado_reheader](#dorado_reheader), and the `bam` is sorted by [samtools sort](#samtools-sort) into `alignment/dorado_align/{sample}_{type}.bam`.
+
+ONT units (`platform` `ONT` in `units.tsv`) are aligned with dorado only; minimap2, pbmm2 and vacmap outputs are requested for PacBio units. Each ONT sample and type must have exactly one unit (one row in `units.tsv`), since the reads are not merged after alignment: combine the reads of a sample into one unaligned `bam` beforehand, e.g. the time-stepped `bam_pass` files written by MinKNOW with `samtools cat`. The workflow stops with an error otherwise.
+
+The input reads are selected with `filter_ont` in `config.yaml`:
+
+| `filter_ont` | Input reads |
+|---|---|
+| `"None"` (default) | the unaligned `bam` given in the `bam` column of `units.tsv` |
+| `"chopper"` | the filtered unaligned `bam` from chopper, `prealignment/chopper/{sample}_{type}_{processing_unit}_{barcode}.filtered.bam` |
+| `"filtlong"` | the filtered `fastq` from filtlong, `prealignment/filtlong/{sample}_{type}_{processing_unit}_{barcode}.filtered.fastq.gz` |
+
+The filtlong `fastq` is expected to be converted from the unaligned `bam` with `samtools fastq -T`, so that the bam tags are written to the read headers and kept in the aligned `bam`.
+
+!!! warning "Reads with modified base tags (`MM`/`ML`)"
+    `MM`/`ML` tags give modified base positions along the read, so they no longer match a read that has been trimmed or split.
+
+    - **filtlong**: do not use `--trim` or `--split`. Filtlong copies the original read header, tags included, to the shortened reads.
+    - **chopper**: only trim (`--trim-approach`, `--trim-poly-tails`) together with `--update-mods`. Without it, chopper copies the original `MM`/`ML` tags to the trimmed reads; with it, chopper recomputes `MM`, `ML` and `MN` for the trimmed range (checked for chopper 0.15.0).
+
+    Filtering reads without trimming them keeps the tags valid with both tools.
 
 ### :snake: Rule
 
@@ -114,6 +134,29 @@ Align basecalled Oxford Nanopore (ONT) reads stored in a `bam` file to a referen
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__dorado_align#
+
+---
+
+## [dorado_reheader](http://www.htslib.org/doc/samtools-reheader.html)
+Replace the `@RG` header lines of the `bam` written by [dorado_align](#dorado_align) with the `@RG` lines of the unaligned `bam` in `units.tsv`, using samtools reheader. With a `fastq` input (`filter_ont: "filtlong"`), dorado rebuilds the `@RG` lines from the read tags and sets `PU`, `PM`, `DT` and `LB` to `unknown`; this rule restores the original values. The read group IDs are the same in both headers, since dorado keeps the `RG` tag of each read. Other header lines are kept as written by dorado, and the header is left unchanged if the unaligned `bam` has no `@RG` lines.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__dorado__dorado_reheader#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__dorado__dorado_reheader#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__dorado_reheader#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__dorado_reheader#
 
 ---
 
