@@ -6,6 +6,7 @@ __license__ = "GPL-3"
 
 include: "rules/common.smk"
 include: "rules/bwa.smk"
+include: "rules/dorado.smk"
 include: "rules/fgbio.smk"
 include: "rules/minimap2.smk"
 include: "rules/pbmm2.smk"

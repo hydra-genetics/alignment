@@ -29,4 +29,5 @@ pbmm2_index:
 
 vacmap_align:
   mode: "L"
+  extra: "--nowriteindex" # build the index in memory, so parallel jobs never read an index file another job is still writing
   container: "docker://hydragenetics/vacmap:1.0.0"
