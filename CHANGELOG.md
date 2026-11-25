@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.10.0](https://github.com/hydra-genetics/alignment/compare/v0.9.0...v0.10.0) (2026-11-25)
+
+
+### Features
+
+* add dorado_align rule for aligning ONT reads ([1424a18](https://github.com/hydra-genetics/alignment/commit/1424a185d9cff51657b29db1121a6ec9fd4fa44d))
+* add dorado_align rule for aligning ONT reads ([7321d69](https://github.com/hydra-genetics/alignment/commit/7321d69a4d2396294aec3bdf745ebc5bdf2c57cb))
+* add filter_ont option to align filtered ONT reads with dorado ([8bc6ab4](https://github.com/hydra-genetics/alignment/commit/8bc6ab41b3ee135081d3561f75cca44133677a4d))
+* align ONT units with dorado and PacBio units with minimap2/pbmm2/vacmap ([ff21a1c](https://github.com/hydra-genetics/alignment/commit/ff21a1c65c11e0f8208dceb616861ecca38a5fb1))
+* align ONT units with dorado, optionally on chopper or filtlong filtered reads ([4db5cfa](https://github.com/hydra-genetics/alignment/commit/4db5cfa87ca85e6e618f64f00b26fdc0d812fbd4))
+* select chopper or filtlong output as dorado_align input with filter_ont ([a8d8828](https://github.com/hydra-genetics/alignment/commit/a8d8828e19dbea0cacc23d72435336bda90795c0))
+* sort and index dorado_align output with samtools ([4a24369](https://github.com/hydra-genetics/alignment/commit/4a24369080735a41173c443b06f292b15dc17129))
+
+
+### Bug Fixes
+
+* apply filter_ont to minimap2_align and restore dorado read groups ([cfbed53](https://github.com/hydra-genetics/alignment/commit/cfbed53f309b23325dbf2114d46e6d27ac01d4f8))
+* keep minimap2_align unchanged and limit filter_ont to dorado_align ([aa7d98d](https://github.com/hydra-genetics/alignment/commit/aa7d98d6df0238dcd50c922995e2a700e9b29931))
+
 ## [0.9.0](https://github.com/hydra-genetics/alignment/compare/v0.8.0...v0.9.0) (2026-10-02)
 
 
