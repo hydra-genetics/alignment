@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.10.0](https://github.com/hydra-genetics/alignment/compare/v0.9.0...v0.10.0) (2026-11-25)
+
+
+### Features
+
+* align ONT reads with dorado (`dorado_align`), restore the read groups of the unaligned bam (`dorado_reheader`) and sort with `samtools_sort` ([#187](https://github.com/hydra-genetics/alignment/pull/187), [#188](https://github.com/hydra-genetics/alignment/pull/188))
+* `filter_ont` option to align the chopper or filtlong output of prealignment v2.1.0 instead of the unaligned bam ([#188](https://github.com/hydra-genetics/alignment/pull/188))
+* align ONT units with dorado only and PacBio units with minimap2, pbmm2 and vacmap; ONT samples must have one unit per sample and type ([#188](https://github.com/hydra-genetics/alignment/pull/188))
+
+
+### Bug Fixes
+
+* intermittent `vacmap_align` failure in the longread integration test ([#192](https://github.com/hydra-genetics/alignment/pull/192))
+
 ## [0.9.0](https://github.com/hydra-genetics/alignment/compare/v0.8.0...v0.9.0) (2026-10-02)
 
 
